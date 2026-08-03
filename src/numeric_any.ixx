@@ -50,11 +50,11 @@ enum class numeric_types : unsigned char {
         EMPTY = 0
 };
 // Type names.
-inline constexpr ::std::string_view type_names[]{
-#define FUNCTION(type_name, type_enum_name, enum_value) #type_name,
-    FOR_EACH_TYPES_TO(FUNCTION)
+inline constexpr ::std::string_view type_names[]{"empty"
+#define FUNCTION(type_name, type_enum_name, enum_value) , #type_name
+                                                 FOR_EACH_TYPES_TO(FUNCTION)
 #undef FUNCTION
-        "empty"};
+};
 // To determine type tag.
 template <typename T>
 constexpr numeric_types types() noexcept {
@@ -289,7 +289,7 @@ export template <typename T, casting_policy Policy>
     } else if constexpr (Policy == casting_policy::normal) {
         if (x.empty()) return ::std::nullopt;
         if constexpr (::std::is_floating_point_v<T>) {
-            if (x.width <= sizeof(T)) return ::std::nullopt;
+            if (x.width < sizeof(T)) return ::std::nullopt;
         } else if constexpr (::std::is_unsigned_v<T>) {
             if (x.float_point || !x.positive) return ::std::nullopt;
         } else {
