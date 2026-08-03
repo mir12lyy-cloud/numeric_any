@@ -199,7 +199,7 @@ TEST(TypeMetadataTest, BoolMetadata) {
     numeric_any a{true};
     EXPECT_EQ(a.type_name(), "bool");
     EXPECT_FALSE(a.is_floating_point());
-    // std::is_unsigned_v<bool> is true in C++, so bool is treated as unsigned
+
     EXPECT_TRUE(a.is_unsigned_number());
     EXPECT_TRUE(a.is_nonnegative());
 }
@@ -434,8 +434,6 @@ TEST(EmptyPropagationTest, EmptyArithmeticReturnsEmpty) {
     numeric_any a{10};
     numeric_any b;
     auto c = a + b; // Should be empty
-    // According to implementation, a+b where b is empty returns empty
-    // Actually operator+= sets *this to empty
 }
 
 // ============================================================================
@@ -473,9 +471,6 @@ TEST(ComparisonTest, CrossTypeComparison) {
 TEST(ComparisonTest, SignedUnsignedComparison) {
     numeric_any a{-3};
     numeric_any b{32U};
-    // Library checks sign first: negative vs positive → negative < positive
-    // This differs from C++ standard where -3 < 32U is false
-    // (because -3 converts to large unsigned)
     EXPECT_EQ(a <=> b, std::partial_ordering::less);
 }
 
@@ -490,7 +485,6 @@ TEST(ComparisonTest, CrossTypeComparisonIntAndDouble) {
 TEST(ComparisonTest, FloatAndDoubleComparison) {
     numeric_any a{3.14f};
     numeric_any b{3.14};
-    // float 3.14f != double 3.14 exactly
     EXPECT_NE(a <=> b, std::partial_ordering::equivalent);
 }
 
@@ -722,18 +716,10 @@ TEST(NumericCastTest, StrictPolicyFailureFloatToInt) {
 
 TEST(NumericCastTest, NormalPolicyAllowsIntToFloat) {
     numeric_any a{42};
-    // Normal policy: int->float with equal width (4==4) is rejected
-    // by the condition (x.width <= sizeof(T)). The README suggests
-    // int->float should be allowed, but the implementation is stricter.
     auto res = numeric_cast<double, casting_policy::normal>(a);
-    EXPECT_FALSE(res.has_value()); // int(4) → float(4): width <= sizeof(float) → rejected
-    // But int->double should work: int(4) -> double(8): 4 <= 8 → still true...
-    // Actually, 4 <= 8 is true, so it also rejects. The condition seems to
-    // always reject integer-to-float when int width <= float width.
-    // Let's verify with a wider case:
+    EXPECT_TRUE(res.has_value());
     auto res2 = numeric_cast<long double, casting_policy::normal>(a);
-    // int(4) → long double(16): 4 <= 16 → true → also rejected
-    EXPECT_FALSE(res2.has_value());
+    EXPECT_TRUE(res2.has_value());
 }
 
 TEST(NumericCastTest, NormalPolicyAllowsUnsignedNarrowing) {
@@ -1106,11 +1092,6 @@ TEST(CastingPolicyEdgeTest, StrictUnsignedToWiderUnsigned) {
 
 TEST(CastingPolicyEdgeTest, NormalPolicyFloatToIntAllowed) {
     numeric_any a{3.14f};
-    // Normal policy: float -> int is integer-to-float? Actually float->int...
-    // Normal policy allows int->float and signed positive->unsigned narrowing
-    // float->int in normal: check: x.float_point true, T is integral signed
-    // else branch: x.float_point || (x.is_unsigned && x.width >= sizeof(T)) -> x.float_point true -> return nullopt
-    // So float->int fails in normal policy
     auto res = numeric_cast<int, casting_policy::normal>(a);
     EXPECT_FALSE(res.has_value());
 }

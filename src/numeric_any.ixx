@@ -289,7 +289,7 @@ export template <typename T, casting_policy Policy>
     } else if constexpr (Policy == casting_policy::normal) {
         if (x.empty()) return ::std::nullopt;
         if constexpr (::std::is_floating_point_v<T>) {
-            if (x.width < sizeof(T)) return ::std::nullopt;
+            if (x.width > sizeof(T)) return ::std::nullopt;
         } else if constexpr (::std::is_unsigned_v<T>) {
             if (x.float_point || !x.positive) return ::std::nullopt;
         } else {
