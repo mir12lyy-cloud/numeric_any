@@ -1,0 +1,16 @@
+IndentWidth: 4
+UseTab: Never
+ColumnLimit: 120
+AllowShortFunctionsOnASingleLine: None
+PointerAlignment: Left
+SortIncludes: true
+AllowAllParametersOfDeclarationOnNextLine: true
+
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AlignConsecutiveAssignments: true
+AccessModifierOffset: -4
+
+BreakBeforeBraces: Attach
+NamespaceIndentation: None
+AlwaysBreakTemplateDeclarations: Yes
