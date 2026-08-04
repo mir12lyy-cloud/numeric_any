@@ -60,9 +60,9 @@ If you are using the `.hpp` version and wish to avoid the compilation overhead o
 **Method 1: Copy `.hpp` directly:**  
 Simply copy `numeric_any.hpp` from the root directory of this project into your project.
 
-**Method 2: Introduce `.hpp` via CMake (requires at least CMake 3.20):**  
+**Method 2: Introduce `.hpp` via CMake (requires at least CMake 4.0):**  
 ```cmake
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 4.0)
 project(MyProject)
 include(FetchContent)
 FetchContent_Declare(
