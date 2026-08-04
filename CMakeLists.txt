@@ -17,4 +17,8 @@ target_include_directories(numeric_any_for_hpp
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
-target_compile_features(numeric_any PRIVATE cxx_std_20)
+if(CMAKE_CXX_STANDARD EQUAL 23)
+    target_compile_features(numeric_any PUBLIC cxx_std_23)
+else()
+    target_compile_features(numeric_any PUBLIC cxx_std_20)
+endif()

@@ -63,7 +63,6 @@ Simply copy `numeric_any.hpp` from the root directory of this project into your 
 **Method 2: Introduce `.hpp` via CMake (requires at least CMake 4.0):**  
 ```cmake
 cmake_minimum_required(VERSION 4.0)
-project(MyProject)
 include(FetchContent)
 FetchContent_Declare(
   numeric_any_for_hpp
@@ -79,6 +78,7 @@ target_link_libraries(my_app PRIVATE numeric_any_for_hpp)
 ```cmake
 cmake_minimum_required(VERSION 4.0)
 project(MyProject)
+set(CMAKE_CXX_STANDARD 23) # Or 20.
 include(FetchContent)
 FetchContent_Declare(
   numeric_any
