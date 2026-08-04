@@ -257,7 +257,11 @@ FOR_EACH_OPERATOR(FUNCTION_TWO_OPERATION)
 template <typename T>
     requires(::std::is_arithmetic_v<T> && !::std::is_same_v<T, char>)
 constexpr T unchecked_numeric_cast(numeric_any const& x) noexcept {
+#if __cplusplus < 202106L
     if (!::std::is_constant_evaluated()) {
+#else
+    if !consteval {
+#endif
         switch (x.type) {
             FOR_EACH_TYPES_TO(FAST_FUNCTION_TO_CAST)
         case details::numeric_types::EMPTY:
@@ -320,8 +324,12 @@ template <typename T>
 constexpr numeric_any::numeric_any(T x) noexcept
     : width{sizeof(T)}, type{details::types<T>()}, float_point{::std::is_floating_point_v<T>},
       is_unsigned{::std::is_unsigned_v<T>}, positive{x >= T{}} {
-    // Base on the std::bit_cast;
+// Base on the std::bit_cast;
+#if __cplusplus < 202106L
     if (!::std::is_constant_evaluated()) {
+#else
+    if !consteval {
+#endif
         ::std::memcpy(storage_.data(), &x, sizeof(T));
     } else {
         ::std::array<unsigned char, sizeof(T)> temp_{};
@@ -339,7 +347,11 @@ constexpr void numeric_any::reset(T x) noexcept {
     width       = sizeof(T);
     is_unsigned = ::std::is_unsigned_v<T>;
     positive    = x >= T{};
+#if __cplusplus < 202106L
     if (!::std::is_constant_evaluated()) {
+#else
+    if !consteval {
+#endif
         ::std::memcpy(storage_.data(), &x, sizeof(T));
     } else {
         ::std::array<unsigned char, sizeof(T)> temp_{};
