@@ -1,4 +1,4 @@
-// Benchmark: Type conversion & policy overhead �?expanded types
+// Benchmark: Type conversion & policy overhead expanded types
 #include <benchmark/benchmark.h>
 #define DISABLE_FORMAT_IN_NUMERIC_ANY
 #include "../../src/numeric_any.hpp"
@@ -129,7 +129,7 @@ BENCH_VARGET(double, dbl)
 BENCH_VARGET(ldouble, ldbl)
 #undef BENCH_VARGET
 
-// ── Promotion cast: int �?long long ──
+// ── Promotion cast: int �?long long ──
 static void BM_Unchecked_Promote_IntToLL(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
@@ -160,7 +160,7 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
 }
 BENCHMARK(BM_Strict_Promote_IntToLL);
 
-// ── Narrowing: int �?short ──
+// ── Narrowing: int �?short ──
 static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
@@ -194,7 +194,7 @@ static void BM_Relaxed_Narrow_IntToShort(benchmark::State& s) {
 }
 BENCHMARK(BM_Relaxed_Narrow_IntToShort);
 
-// ── Three policies: int �?long ──
+// ── Three policies: int �?long ──
 static void BM_Strict_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
@@ -244,7 +244,7 @@ static void BM_Relaxed_Policy_IntToLong(benchmark::State& s) {
 }
 BENCHMARK(BM_Relaxed_Policy_IntToLong);
 
-// ── Cross-type: double �?int, long double �?int (relaxed) ──
+// ── Cross-type: double �?int, long double �?int (relaxed) ──
 static void BM_Relaxed_Cross_DoubleToInt(benchmark::State& s) {
     auto data = mk_dbl(N);
     std::vector<numeric_any> na;

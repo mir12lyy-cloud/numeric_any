@@ -1,4 +1,4 @@
-// Benchmark: Same-type operations �?numeric_any vs std::any vs std::variant vs native
+// Benchmark: Same-type operations numeric_any vs std::any vs std::variant vs native
 // Covers: int, long long, unsigned long long, float, double, long double
 #include <benchmark/benchmark.h>
 #define DISABLE_FORMAT_IN_NUMERIC_ANY
@@ -94,7 +94,7 @@ BENCH_CONSTRUCT_V(double, double)
 BENCH_CONSTRUCT_V(ldouble, ldouble)
 #undef BENCH_CONSTRUCT_V
 
-// ── Construct (no variant �?ullong, float not in variant) ──
+// ── Construct (no variant �?ullong, float not in variant) ──
 #define BENCH_CONSTRUCT_NV(T, tname)                                                                                   \
     static void BM_Native_Construct_##tname(benchmark::State& s) {                                                     \
         auto data = make_##tname##s(N);                                                                                \

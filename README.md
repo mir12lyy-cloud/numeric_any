@@ -60,9 +60,9 @@ If you are using the `.hpp` version and wish to avoid the compilation overhead o
 **Method 1: Copy `.hpp` directly:**  
 Simply copy `numeric_any.hpp` from the root directory of this project into your project.
 
-**Method 2: Introduce `.hpp` via CMake (requires at least CMake 4.0):**  
+**Method 2: Introduce `.hpp` via CMake (requires at least CMake 3.20):**  
 ```cmake
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.20)
 project(MyProject)
 include(FetchContent)
 FetchContent_Declare(
@@ -308,6 +308,12 @@ auto k = unchecked_numeric_cast<double>(b) // Return double(0.0);
 ## Tests
 
 - [Unit test files](/tests/result_numeric_any/) - You can use or modify these test files to check if there are any issues with the library.
+
+- [Benchmark result](/tests/benchmarks/BENCHMARK.md) - Overview of the result of benchmarks.
+
+- [Benchmark charts](/tests/benchmarks/charts/) - Charts of the result of benchmarks.
+
+- [Benchmark test files](/tests/benchmarks/) - You can use or modify these test files to do basic benchmarks with the library.
 
 ---
 

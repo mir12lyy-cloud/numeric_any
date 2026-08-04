@@ -1,1 +1,7 @@
 build*/
+.vs*/
+out*/
+tests/result_numeric_any/gtest_results.txt
+tests/result_numeric_any/TEST_SUMMARY.md
+benchmark_*/
+tests/benchmarks/charts/generate_charts.py
