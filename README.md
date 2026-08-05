@@ -60,9 +60,9 @@ If you are using the `.hpp` version and wish to avoid the compilation overhead o
 **Method 1: Copy `.hpp` directly:**  
 Simply copy `numeric_any.hpp` from the root directory of this project into your project.
 
-**Method 2: Introduce `.hpp` via CMake (requires at least CMake 4.0):**  
+**Method 2: Introduce `.hpp` via CMake (requires at least CMake 3.30):**  
 ```cmake
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.30)
 include(FetchContent)
 FetchContent_Declare(
   numeric_any_for_hpp
@@ -74,9 +74,9 @@ add_executable(my_app main.cpp)
 target_link_libraries(my_app PRIVATE numeric_any_for_hpp)
 ```
 
-**Method 3: Introduce `.ixx` via CMake (requires at least CMake 4.0):**  
+**Method 3: Introduce `.ixx` via CMake (requires at least CMake 3.30):**  
 ```cmake
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.30)
 project(MyProject)
 set(CMAKE_CXX_STANDARD 23) # Or 20.
 include(FetchContent)

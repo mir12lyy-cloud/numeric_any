@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.30)
 project(numeric_any LANGUAGES CXX)
 
 add_library(numeric_any STATIC)
