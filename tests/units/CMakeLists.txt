@@ -19,7 +19,11 @@ target_include_directories(test_numeric_any PRIVATE
     ${CMAKE_SOURCE_DIR}/../../src
 )
 
-target_compile_features(test_numeric_any PRIVATE cxx_std_20)
+if(CMAKE_CXX_STANDARD EQUAL 23)
+    target_compile_features(test_numeric_any PUBLIC cxx_std_23)
+else()
+    target_compile_features(test_numeric_any PUBLIC cxx_std_20)
+endif()
 
 target_link_libraries(test_numeric_any PRIVATE
     GTest::gtest_main

@@ -307,7 +307,7 @@ auto k = unchecked_numeric_cast<double>(b) // Return double(0.0);
 ---
 ## Tests (Using Agent to generate)
 
-- [Unit test files](/tests/result_numeric_any/) - You can use or modify these test files to check if there are any issues with the library.
+- [Unit test files](/tests/units/) - You can use or modify these test files to check if there are any issues with the library.
 
 - [Benchmark result](/tests/benchmarks/BENCHMARK.md) - Overview of the result of benchmarks.
 
