@@ -18,22 +18,22 @@ jobs:
         build_type: [Release]
         build_to: ["tests/units/build", "tests/benchmarks/build"]
         codes: ["tests/units", "tests/benchmarks"]
-        cpp_complier: [g++, clang++, cl]
+        cpp_compiler: [g++, clang++, cl]
         cpp_standard: [20, 23]
         include:
           - os: windows-latest
-            cpp_complier: cl
+            cpp_compiler: cl
           - os: windows-latest
-            cpp_complier: clang++
+            cpp_compiler: clang++
           - os: ubuntu-latest
-            cpp_complier: g++
+            cpp_compiler: g++
           - os: ubuntu-latest
-            cpp_complier: clang++
+            cpp_compiler: clang++
         exclude:
           - os: windows-latest
-            cpp_complier: g++
+            cpp_compiler: g++
           - os: ubuntu-latest
-            cpp_complier: cl
+            cpp_compiler: cl
 
     steps:
     - uses: actions/checkout@v4
