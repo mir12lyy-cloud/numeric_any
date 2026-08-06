@@ -1,0 +1,60 @@
+name: UnitsTests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os: [ubuntu-26.04, windows-latest]
+        generator_code: ["-G Ninja", ""]
+        cpp_compiler: [g++-15, clang++, cl]
+        cpp_standard: [20, 23]
+        include:
+          - os: windows-latest
+            cpp_compiler: cl
+          - os: windows-latest
+            cpp_compiler: clang++
+          - os: windows-latest
+            generator_code: ""
+          - os: ubuntu-26.04
+            cpp_compiler: g++-15
+          - os: ubuntu-26.04
+            cpp_compiler: clang++
+          - os: ubuntu-26.04
+            generator_code: "-G Ninja"
+        exclude:
+          - os: windows-latest
+            cpp_compiler: g++-15
+          - os: windows-latest
+            generator_code: "-G Ninja"
+          - os: ubuntu-26.04
+            cpp_compiler: cl
+          - os: ubuntu-26.04
+            generator_code: ""
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configure CMake
+      run: >
+        cmake -B tests/units/build
+        ${{ matrix.generator_code }}
+        -DCMAKE_CXX_STANDARD=${{ matrix.cpp_standard }}
+        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+        -DCMAKE_BUILD_TYPE=Release
+        -S tests/units
+
+    - name: Build
+      run: cmake --build tests/units/build --config Release
+    
+    - name: Units Test
+      working-directory: tests/units/build
+      run: ctest --output-on-failure -C Release

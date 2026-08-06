@@ -1,4 +1,4 @@
-name: TestingComplie
+name: TestingBenchmarksComplie
 
 on:
   push:
@@ -15,8 +15,6 @@ jobs:
 
       matrix:
         os: [ubuntu-26.04, windows-latest]
-        build_type: [Debug, Release]
-        codes: ["tests/units", "tests/benchmarks"]
         generator_code: ["-G Ninja", ""]
         cpp_compiler: [g++-15, clang++, cl]
         cpp_standard: [20, 23]
@@ -33,10 +31,6 @@ jobs:
             cpp_compiler: clang++
           - os: ubuntu-26.04
             generator_code: "-G Ninja"
-          - codes: "tests/units"
-            build_type: Debug
-          - codes: "tests/benchmarks"
-            build_type: Release
         exclude:
           - os: windows-latest
             cpp_compiler: g++-15
@@ -46,21 +40,18 @@ jobs:
             cpp_compiler: cl
           - os: ubuntu-26.04
             generator_code: ""
-          - codes: "tests/benchmarks"
-            build_type: Debug
-          - codes: "tests/units"
-            build_type: Release
     steps:
     - uses: actions/checkout@v4
 
     - name: Configure CMake
       run: >
-        cmake -B ${{ matrix.codes }}/build
+        cmake -B tests/benchmarks/build
         ${{ matrix.generator_code }}
         -DCMAKE_CXX_STANDARD=${{ matrix.cpp_standard }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        -S ${{ matrix.codes }}
+        -DCMAKE_BUILD_TYPE=Release
+        -S tests/benchmarks
 
     - name: Build
-      run: cmake --build ${{ matrix.codes }}/build --config ${{ matrix.build_type }}
+      run: cmake --build tests/benchmarks/build --config Release
+    

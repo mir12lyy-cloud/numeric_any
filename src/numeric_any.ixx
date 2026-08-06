@@ -276,9 +276,9 @@ constexpr T unchecked_numeric_cast(numeric_any const& x) noexcept {
     case numeric_types::type_enum_name: {                                                                              \
         auto restore_value = unchecked_numeric_cast<type_name>(x);                                                     \
         if constexpr (::std::is_floating_point_v<type_name>) {                                                         \
-            if (is_normal_number(restore_value)) return ::std::nullopt;                                                \
+            if (!is_normal_number(restore_value)) return ::std::nullopt;                                               \
             auto res = static_cast<T>(restore_value);                                                                  \
-            if (is_normal_number(restore_value)) return ::std::nullopt;                                                \
+            if (!is_normal_number(restore_value)) return ::std::nullopt;                                               \
             return res;                                                                                                \
         }                                                                                                              \
         return static_cast<T>(restore_value);                                                                          \
