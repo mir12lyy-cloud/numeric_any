@@ -14,37 +14,53 @@ jobs:
       fail-fast: false
 
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        build_type: [Release]
-        build_to: ["tests/units/build", "tests/benchmarks/build"]
+        os: [ubuntu-26.04, windows-latest]
+        build_type: [Debug, Release]
         codes: ["tests/units", "tests/benchmarks"]
-        cpp_compiler: [g++, clang++, cl]
+        generator_code: ["-G Ninja", ""]
+        cpp_compiler: [g++-15, clang++, cl]
         cpp_standard: [20, 23]
         include:
           - os: windows-latest
             cpp_compiler: cl
           - os: windows-latest
             cpp_compiler: clang++
-          - os: ubuntu-latest
-            cpp_compiler: g++
-          - os: ubuntu-latest
+          - os: windows-latest
+            generator_code: ""
+          - os: ubuntu-26.04
+            cpp_compiler: g++-15
+          - os: ubuntu-26.04
             cpp_compiler: clang++
+          - os: ubuntu-26.04
+            generator_code: "-G Ninja"
+          - codes: "tests/units"
+            build_type: Debug
+          - codes: "tests/benchmarks"
+            build_type: Release
         exclude:
           - os: windows-latest
-            cpp_compiler: g++
-          - os: ubuntu-latest
+            cpp_compiler: g++-15
+          - os: windows-latest
+            generator_code: "-G Ninja"
+          - os: ubuntu-26.04
             cpp_compiler: cl
-
+          - os: ubuntu-26.04
+            generator_code: ""
+          - codes: "tests/benchmarks"
+            build_type: Debug
+          - codes: "tests/units"
+            build_type: Release
     steps:
     - uses: actions/checkout@v4
 
     - name: Configure CMake
       run: >
-        cmake -B ${{ matrix.build_to }}
+        cmake -B ${{ matrix.codes }}/build
+        ${{ matrix.generator_code }}
         -DCMAKE_CXX_STANDARD=${{ matrix.cpp_standard }}
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         -S ${{ matrix.codes }}
 
     - name: Build
-      run: cmake --build ${{ matrix.build_to }} --config ${{ matrix.build_type }}
+      run: cmake --build ${{ matrix.codes }}/build --config ${{ matrix.build_type }}
