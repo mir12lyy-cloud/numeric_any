@@ -3,11 +3,10 @@ UseTab: Never
 ColumnLimit: 120
 AllowShortFunctionsOnASingleLine: None
 PointerAlignment: Left
-SortIncludes: true
 AllowAllParametersOfDeclarationOnNextLine: true
 
-AllowShortIfStatementsOnASingleLine: true
-AllowShortLoopsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: false
 AlignConsecutiveAssignments: true
 AccessModifierOffset: -4
 

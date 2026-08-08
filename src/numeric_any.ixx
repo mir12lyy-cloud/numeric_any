@@ -14,6 +14,7 @@ module;
 #include <type_traits>
 
 export module casyyy.maths.numeric_any;
+import casyyy.maths.numeric_any_parser;
 // To disable some unnecessary warnings.
 #ifdef _MSC_VER
 #pragma warning(push)
@@ -90,9 +91,6 @@ constexpr bool is_normal_number(T x) noexcept {
  */
 export class numeric_any {
 public:
-    // To get the member.
-    friend struct ::std::formatter<numeric_any>;
-    friend struct ::std::hash<numeric_any>;
     // The former declarations.
     template <typename T>
         requires(::std::is_arithmetic_v<T> && !::std::is_same_v<T, char>)
@@ -101,14 +99,20 @@ public:
         requires(::std::is_arithmetic_v<T> && !::std::is_same_v<T, char>)
     friend constexpr ::std::optional<T> numeric_cast(numeric_any const&) noexcept;
 
-    friend ::std::ostream& operator<<(::std::ostream&, numeric_any const&);
-
     constexpr numeric_any() noexcept = default;
     // Only for arithmetic types, except the char.
     template <typename T>
         requires(::std::is_arithmetic_v<T> && !::std::is_same_v<T, char>)
     constexpr numeric_any(T) noexcept;
 
+    constexpr numeric_any operator-() const noexcept;
+    constexpr numeric_any operator+() const noexcept {
+        return *this;
+    }
+    constexpr numeric_any& operator++() noexcept;
+    constexpr numeric_any operator++(int) noexcept;
+    constexpr numeric_any& operator--() noexcept;
+    constexpr numeric_any operator--(int) noexcept;
     // Operations. It will cast the inner bytes to a number first.
     // Declare first, the definitions will be placed after numeric_cast, to avoid undefined symbols.
     template <typename T>
@@ -240,7 +244,8 @@ FOR_EACH_OPERATOR(FUNCTION_TWO_OPERATION)
 #define CONSTEXPR_TO_CAST(type_name, type_enum_name, enum_value)                                                       \
     case numeric_types::type_enum_name: {                                                                              \
         ::std::array<unsigned char, sizeof(type_name)> temp_{};                                                        \
-        for (::size_t i = 0; i < sizeof(type_name); ++i) temp_[i] = x.storage_[i];                                     \
+        for (::size_t i = 0; i < sizeof(type_name); ++i)                                                               \
+            temp_[i] = x.storage_[i];                                                                                  \
         return static_cast<T>(::std::bit_cast<type_name, decltype(temp_)>(temp_));                                     \
     }
 
@@ -324,7 +329,8 @@ constexpr numeric_any::numeric_any(T x) noexcept
     } else {
         ::std::array<unsigned char, sizeof(T)> temp_{};
         temp_ = ::std::bit_cast<decltype(temp_), T>(x);
-        for (::std::size_t i = 0; i < sizeof(T); ++i) storage_[i] = temp_[i];
+        for (::std::size_t i = 0; i < sizeof(T); ++i)
+            storage_[i] = temp_[i];
     }
 }
 template <typename T>
@@ -345,9 +351,67 @@ constexpr void numeric_any::reset(T x) noexcept {
     } else {
         ::std::array<unsigned char, sizeof(T)> temp_{};
         temp_ = ::std::bit_cast<decltype(temp_), T>(x);
-        for (::std::size_t i = 0; i < sizeof(T); ++i) storage_[i] = temp_[i];
+        for (::std::size_t i = 0; i < sizeof(T); ++i)
+            storage_[i] = temp_[i];
     }
 }
+
+#define FUNCTION_TO_RESTORE_VALUE(type_name, type_enum_name, enum_value)                                               \
+    case numeric_types::type_enum_name: {                                                                              \
+        type_name restore_value = unchecked_numeric_cast<type_name>(*this);                                            \
+        return numeric_any{-restore_value};                                                                            \
+    }
+
+constexpr numeric_any numeric_any::operator-() const noexcept {
+    switch (type) {
+        FOR_EACH_TYPES_TO(FUNCTION_TO_RESTORE_VALUE)
+    case numeric_types::EMPTY:
+    default:
+        return numeric_any{};
+    }
+}
+
+#undef FUNCTION_TO_RESTORE_VALUE
+// When inner type is bool, same as static_cast<bool>(restore - 1) or static_cast<bool>(restore + 1).
+#define FUNCTION_TO_ADD(type_name, type_enum_name, enum_value)                                                         \
+    case numeric_types::type_enum_name: {                                                                              \
+        auto restore = unchecked_numeric_cast<type_name>(*this);                                                       \
+        return *this = static_cast<type_name>(restore + static_cast<type_name>(1));                                    \
+    }
+
+#define FUNCTION_TO_SUB(type_name, type_enum_name, enum_value)                                                         \
+    case numeric_types::type_enum_name: {                                                                              \
+        auto restore = unchecked_numeric_cast<type_name>(*this);                                                       \
+        return *this = static_cast<type_name>(restore - static_cast<type_name>(1));                                    \
+    }
+
+constexpr numeric_any& numeric_any::operator++() noexcept {
+    switch (type) {
+        FOR_EACH_TYPES_TO(FUNCTION_TO_ADD)
+    case numeric_types::EMPTY:
+    default:
+        return *this;
+    }
+}
+constexpr numeric_any numeric_any::operator++(int) noexcept {
+    auto repeat = *this;
+    ++*this;
+    return repeat;
+}
+constexpr numeric_any& numeric_any::operator--() noexcept {
+    switch (type) {
+        FOR_EACH_TYPES_TO(FUNCTION_TO_SUB)
+    case numeric_types::EMPTY:
+    default:
+        return *this;
+    }
+}
+constexpr numeric_any numeric_any::operator--(int) noexcept {
+    auto repeat = *this;
+    --*this;
+    return repeat;
+}
+
 // Check whether inner value isn't zero. The empty will be set to false.
 constexpr numeric_any::operator bool() const noexcept {
     return unchecked_numeric_cast<bool>(*this);
@@ -357,10 +421,8 @@ template <typename T>
     requires(::std::is_arithmetic_v<T> && !::std::is_same_v<T, char>)
 constexpr bool numeric_any::can_safe_convert_to() const noexcept {
     if (empty()) return false;
-    if (is_same_type<T>()) return true; // Safe when the tag of the "T" is same as inner tag.
-    if (type == numeric_types::BOOL) {
-        return true; // Bool is safe to cast to all types.
-    }
+    if (is_same_type<T>()) return true;           // Safe when the tag of the "T" is same as inner tag.
+    if (type == numeric_types::BOOL) return true; // Bool is safe to cast to all types.
     if constexpr (::std::is_floating_point_v<T>) {
         return float_point && width <= sizeof(T); // Only support promotions in floating numbers.
     } else if constexpr (::std::is_unsigned_v<T>) {
@@ -538,23 +600,24 @@ template <typename T>
 }
 #undef FUNCTION_TP_EQUAL
 #undef FUNCTION_TO_COMPARISON
+
 // To restore the number before output.
 #define FUNCTION_OUTPUT(type_name, type_enum_name, enum_value)                                                         \
-    case numeric_types::type_enum_name: {                                                                              \
+    if (x.is_same_type<type_name>()) {                                                                                 \
         auto res = unchecked_numeric_cast<type_name>(x);                                                               \
         os << res;                                                                                                     \
         return os;                                                                                                     \
     }
 
-// Support using "std::cout" to output inner number.
+// Support using "std::cout" and "std::wcout" to output inner number.
 export inline ::std::ostream& operator<<(::std::ostream& os, numeric_any const& x) {
-    switch (x.type) {
-        FOR_EACH_TYPES_TO(FUNCTION_OUTPUT)
-    case numeric_types::EMPTY:
-    default:
-        os << "empty";
-        break;
-    }
+    FOR_EACH_TYPES_TO(FUNCTION_OUTPUT)
+    os << "empty";
+    return os;
+}
+export inline ::std::wostream& operator<<(::std::wostream& os, numeric_any const& x) {
+    FOR_EACH_TYPES_TO(FUNCTION_OUTPUT)
+    os << L"empty";
     return os;
 }
 #undef FUNCTION_OUTPUT
@@ -567,10 +630,11 @@ constexpr numeric_any make_numeric_any(T x) noexcept {
 }
 } // namespace casyyy::maths
 
+// The inner hash will try to process every member.
 #define FUNCTION_HASH(type_name, type_enum_name, enum_value)                                                           \
-    case ::casyyy::maths::numeric_types::type_enum_name: {                                                             \
-        auto res = ::casyyy::maths::unchecked_numeric_cast<type_name>(x);                                              \
-        return hash<type_name>{}(res);                                                                                 \
+    if (x.is_same_type<type_name>()) {                                                                                 \
+        type_name restore = unchecked_numeric_cast<type_name>(x);                                                      \
+        return hash<type_name>{}(restore);                                                                             \
     }
 
 namespace std {
@@ -578,45 +642,46 @@ namespace std {
 template <>
 struct hash<::casyyy::maths::numeric_any> {
     size_t operator()(const ::casyyy::maths::numeric_any& x) const noexcept {
-        switch (x.type) {
-            FOR_EACH_TYPES_TO(FUNCTION_HASH)
-        case ::casyyy::maths::numeric_types::EMPTY:
-        default:
-            break;
-        }
+        FOR_EACH_TYPES_TO(FUNCTION_HASH)
         return 0;
     }
 };
 #undef FUNCTION_HASH
 #define FUNCTION_FORMAT(type_name, type_enum_name, enum_value)                                                         \
-    case ::casyyy::maths::numeric_types::type_enum_name: {                                                             \
-        auto res = ::casyyy::maths::unchecked_numeric_cast<type_name>(x);                                              \
-        return format_to(ctx.out(), "{}", res);                                                                        \
-    }                                                                                                                  \
-/*                                                                                                                     \
-  You can use std::formatter to print the numeric_any.                                                                 \
-  But you can't control the format since the type is erased before casting to a number.                                \
-  If you want to control the format, please casting to a number first.                                                 \
-*/
-template <>
-struct formatter<::casyyy::maths::numeric_any> {
-    constexpr auto parse(auto& ctx) {
-        auto it = ctx.begin();
-        while (it != ctx.end() && *it != '}') ++it;
-        return it;
+    if (x.is_same_type<type_name>()) {                                                                                 \
+        type_name restore = unchecked_numeric_cast<type_name>(x);                                                      \
+        if constexpr (is_same_v<CharT, wchar_t>)                                                                       \
+            return vformat_to(ctx.out(), fmt, make_wformat_args(restore));                                             \
+        else                                                                                                           \
+            return vformat_to(ctx.out(), fmt, make_format_args(restore));                                              \
     }
+
+#ifndef DISABLE_FORMAT_IN_NUMERIC_ANY
+// Support formatter. But can't parse dynamic width and dynamic precision now.
+template <typename CharT>
+struct formatter<::casyyy::maths::numeric_any, CharT> {
+    static constexpr unsigned FORMAT_STRING_BUFFER_SIZE = 60; // To store format string for value.
+
+    constexpr auto parse(auto& ctx) {
+        return parser_.parse(ctx);
+    }
+
     auto format(const ::casyyy::maths::numeric_any& x, auto& ctx) const {
-        switch (x.type) {
-            FOR_EACH_TYPES_TO(FUNCTION_FORMAT)
-        case ::casyyy::maths::numeric_types::EMPTY:
-        default:
-            break;
+        CharT format_buffer[FORMAT_STRING_BUFFER_SIZE]{};
+        auto finish = parser_.restore_format_string(format_buffer, format_buffer + FORMAT_STRING_BUFFER_SIZE, ctx);
+        basic_string_view<CharT> fmt{format_buffer, finish};
+        FOR_EACH_TYPES_TO(FUNCTION_FORMAT)
+        if constexpr (is_same_v<CharT, wchar_t>) {
+            return format_to(ctx.out(), L"{}", L"empty");
         }
         return format_to(ctx.out(), "{}", "empty");
     }
-};
-} // namespace std
 
+private:
+    ::casyyy::utils::numeric_any_parser<CharT> parser_;
+};
+#endif
+} // namespace std
 #undef FUNCTION_FORMAT
 #undef FOR_EACH_OPERATOR
 #undef FOR_EACH_TYPES_TO

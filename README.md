@@ -22,7 +22,7 @@
 
 - Based on C++20/23.
 
-- Header-only, single-header class, provided in both `.ixx` and `.hpp` build variants.
+- Header-only, provided in both `.ixx` and `.hpp` build variants.
 
 ---
 
@@ -37,6 +37,8 @@
 
 - Dependencies: No external dependencies; uses only the C++20 standard library.
 
+**Note:** If you want to use .ixx, Recommand GCC15.
+
 ### Standard Library Dependencies
 - `<array>` – Static array storage
 - `<bit>` – Bit manipulation functions
@@ -49,7 +51,8 @@
 - `<span>` – For returning the byte representation of internal values
 - `<string_view>` – For providing type name strings
 - `<type_traits>` – Type traits
-- `<format>` – Specialization of std::formatter (optional).
+- `<format>` – Specialization of std::formatter.
+- `<charconv>` - For parser tranforms numbers to strings.
 
 If you are using the `.hpp` version and wish to avoid the compilation overhead of `<format>`, you can define the `DISABLE_FORMAT_IN_NUMERIC_ANY` macro to exclude `<format>` from compilation.
 
@@ -58,7 +61,7 @@ If you are using the `.hpp` version and wish to avoid the compilation overhead o
 **Two integration methods are provided: based on the `.hpp` header file, or based on the `.ixx` module. You may choose only one of them.**
 
 **Method 1: Copy `.hpp` directly:**  
-Simply copy `numeric_any.hpp` from the root directory of this project into your project.
+Simply copy `numeric_any.hpp`, `numeric_any_parser.hpp` from the root directory of this project into your project.
 
 **Method 2: Introduce `.hpp` via CMake (requires at least CMake 3.30):**  
 ```cmake
@@ -91,14 +94,16 @@ target_link_libraries(my_app PRIVATE numeric_any)
 ```
 
 **Method 4: Download `.ixx` and build manually:**  
-Download `numeric_any.ixx` from the root directory of this project, then build according to your own build tools. A simple CMake build example:
+Download `numeric_any.ixx`, `numeric_any_parser.ixx` from the root directory of this project, then build according to your own build tools. A simple CMake build example:
 
 ```cmake
 target_sources(YourProject
     PUBLIC
         FILE_SET CXX_MODULES
         BASE_DIRS xxx
-        FILES numeric_any.ixx
+        FILES
+        numeric_any_parser.ixx 
+        numeric_any.ixx
 )
 ```
 
@@ -219,6 +224,8 @@ v.can_safe_convert_to<float>();              // false (Might lossing precision)
 
 ### Operations
 
+- `opeartor+`, `operator-`, `operator++`, `operator--` - As same as a nomal value doing it. **Except `bool`.**
+
 - `operator+=`, `operator-=`, `operator*=`, `operator/=` - Support with a value or `numeric_any`. **Behaviours in operatrions are based on C++ standard.**
 
 - `operator<=>`, `opeartor==` - Support with a value or `numeric_any`. **Behaviours mostly in operatrions are based on C++ standard.**
@@ -228,9 +235,10 @@ v.can_safe_convert_to<float>();              // false (Might lossing precision)
 #### Example
 ```C++
 numeric_any a = 13;    // a is int(13);
-a += 12.3;             // Same as "13 + 12.3" in C++;
-numeric_any b = -32;   // b is int(-32);
-bool c = a > b;        // Same as "(13 + 12.3) > -32" in C++;
+++a;                   // a is int(14);
+a += 12.3;             // Same as "14 + 12.3" in C++;
+numeric_any b = -a;   // b is double(-(14 + 12.3));
+bool c = a > b;        // Same as "(14 + 12.3) > -(14 + 12.3)" in C++;
 auto d = a.type_name() // "double"
 ```
 
@@ -239,6 +247,13 @@ auto d = a.type_name() // "double"
 ```C++
 numreic_any a = -3;
 bool b = a > 32U;   // false.
+```
+
+#### About `bool`
+```C++
+numeric_any a = true;
+a++;                  // same as static_cast<bool>(a + 1);
+a--;                  // same as static_cast<bool>(a - 1);
 ```
 
 **About empty:** If either operand is empty, **propagates the empty state in `operator+=`, `operator-=`, `operator*=`, `operator/=`**. Return `false` in `operator bool`, and empty == empty returns `false`, return `std::partial_ordering::unordered` in `operator<=>`.
@@ -302,7 +317,7 @@ auto k = unchecked_numeric_cast<double>(b) // Return double(0.0);
 
 - `std::formatter` - Could used `std::format`, `std::print` and `std::println`.
 
-**Limits:** `std::formatter` can't parse format string.
+**Limits:** `std::formatter` can't exactly check type matching at compile time。
 
 ---
 ## Tests (Using Agent to generate)
@@ -319,7 +334,7 @@ auto k = unchecked_numeric_cast<double>(b) // Return double(0.0);
 
 ## Roadmap
 
-- [ ] Support parsing format string in `std::formatter`.
+- [x] Support parsing format string in `std::formatter`.
 - [ ] Support math functions.
 - [ ] More casting policy.
 

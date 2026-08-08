@@ -4,11 +4,13 @@
 #include <gtest/gtest.h>
 
 #include <cmath>
+#include <format>
 #include <limits>
 #include <sstream>
 #include <string>
 #include <type_traits>
 #include <vector>
+
 
 import casyyy.maths.numeric_any;
 
@@ -810,42 +812,60 @@ TEST(ByteViewTest, ViewBytesEmpty) {
 TEST(OutputStreamTest, OutputInt) {
     numeric_any a{42};
     std::ostringstream oss;
+    std::wostringstream oss2;
     oss << a;
+    oss2 << a;
     EXPECT_EQ(oss.str(), "42");
+    EXPECT_EQ(oss2.str(), L"42");
 }
 
 TEST(OutputStreamTest, OutputDouble) {
     numeric_any a{3.14};
     std::ostringstream oss;
+    std::wostringstream oss2;
     oss << a;
+    oss2 << a;
     // The stream output of 3.14 as double
     EXPECT_NE(oss.str().find("3.14"), std::string::npos);
+    EXPECT_NE(oss2.str().find(L"3.14"), std::wstring::npos);
 }
 
 TEST(OutputStreamTest, OutputBool) {
     numeric_any a{true};
     std::ostringstream oss;
+    std::wostringstream woss;
     oss << a;
-    EXPECT_EQ(oss.str(), "1"); // bool outputs as 1/0
+    woss << a;
+    EXPECT_EQ(oss.str(), "1");
+    EXPECT_EQ(woss.str(), L"1");
 
     numeric_any b{false};
     std::ostringstream oss2;
+    std::wostringstream woss2;
     oss2 << b;
+    woss2 << b;
     EXPECT_EQ(oss2.str(), "0");
+    EXPECT_EQ(woss2.str(), L"0");
 }
 
 TEST(OutputStreamTest, OutputEmpty) {
     numeric_any a;
     std::ostringstream oss;
+    std::wostringstream oss2;
     oss << a;
+    oss2 << a;
     EXPECT_EQ(oss.str(), "empty");
+    EXPECT_EQ(oss2.str(), L"empty");
 }
 
 TEST(OutputStreamTest, OutputNegativeInt) {
     numeric_any a{-42};
     std::ostringstream oss;
+    std::wostringstream oss2;
     oss << a;
+    oss2 << a;
     EXPECT_EQ(oss.str(), "-42");
+    EXPECT_EQ(oss2.str(), L"-42");
 }
 
 // ============================================================================
@@ -1228,6 +1248,382 @@ TEST(RoundTripTest, LongDoubleRoundTrip) {
         numeric_any a{v};
         EXPECT_DOUBLE_EQ(static_cast<double>(unchecked_numeric_cast<long double>(a)), static_cast<double>(v));
     }
+}
+
+// ============================================================================
+// 22. Unary Operator Tests (new: operator- / operator+ / ++ / --)
+// ============================================================================
+
+TEST(UnaryOperatorTest, UnaryPlusReturnsCopy) {
+    numeric_any a{42};
+    auto b = +a;
+    EXPECT_EQ(b.type_name(), "int");
+    EXPECT_EQ(unchecked_numeric_cast<int>(b), 42);
+    EXPECT_EQ(a <=> b, std::partial_ordering::equivalent);
+    // + doesn't modify the source
+    EXPECT_EQ(unchecked_numeric_cast<int>(a), 42);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusInt) {
+    numeric_any a{42};
+    auto b = -a;
+    EXPECT_EQ(b.type_name(), "int");
+    EXPECT_EQ(unchecked_numeric_cast<int>(b), -42);
+
+    numeric_any c{-42};
+    auto d = -c;
+    EXPECT_EQ(unchecked_numeric_cast<int>(d), 42);
+    // Source unchanged
+    EXPECT_EQ(unchecked_numeric_cast<int>(a), 42);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusDouble) {
+    numeric_any a{3.14};
+    auto b = -a;
+    EXPECT_EQ(b.type_name(), "double");
+    EXPECT_DOUBLE_EQ(unchecked_numeric_cast<double>(b), -3.14);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusFloat) {
+    numeric_any a{1.5f};
+    auto b = -a;
+    EXPECT_EQ(b.type_name(), "float");
+    EXPECT_FLOAT_EQ(unchecked_numeric_cast<float>(b), -1.5f);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusLongDouble) {
+    numeric_any a{2.5L};
+    auto b = -a;
+    EXPECT_EQ(b.type_name(), "long double");
+    EXPECT_DOUBLE_EQ(static_cast<double>(unchecked_numeric_cast<long double>(b)), -2.5);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusUnsignedWraps) {
+    numeric_any a{5U};
+    auto b = -a;
+    // -5U wraps around modulo 2^32
+    EXPECT_EQ(b.type_name(), "unsigned int");
+    EXPECT_EQ(unchecked_numeric_cast<unsigned int>(b), 4294967291U);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusBool) {
+    numeric_any a{true};
+    auto b = -a;
+    // -true promotes to int -> -1
+    EXPECT_EQ(b.type_name(), "int");
+    EXPECT_EQ(unchecked_numeric_cast<int>(b), -1);
+}
+
+TEST(UnaryOperatorTest, UnaryMinusEmpty) {
+    numeric_any a;
+    auto b = -a;
+    EXPECT_TRUE(b.empty());
+}
+
+TEST(UnaryOperatorTest, PrefixIncrementInt) {
+    numeric_any a{41};
+    auto& ref = ++a;
+    EXPECT_EQ(&ref, &a); // returns *this
+    EXPECT_EQ(a.type_name(), "int");
+    EXPECT_EQ(unchecked_numeric_cast<int>(a), 42);
+}
+
+TEST(UnaryOperatorTest, PostfixIncrementInt) {
+    numeric_any a{41};
+    auto old = a++;
+    EXPECT_EQ(old.type_name(), "int");
+    EXPECT_EQ(unchecked_numeric_cast<int>(old), 41); // old value
+    EXPECT_EQ(unchecked_numeric_cast<int>(a), 42);   // incremented
+}
+
+TEST(UnaryOperatorTest, PrefixDecrementInt) {
+    numeric_any a{43};
+    auto& ref = --a;
+    EXPECT_EQ(&ref, &a);
+    EXPECT_EQ(a.type_name(), "int");
+    EXPECT_EQ(unchecked_numeric_cast<int>(a), 42);
+}
+
+TEST(UnaryOperatorTest, PostfixDecrementInt) {
+    numeric_any a{43};
+    auto old = a--;
+    EXPECT_EQ(unchecked_numeric_cast<int>(old), 43);
+    EXPECT_EQ(unchecked_numeric_cast<int>(a), 42);
+}
+
+TEST(UnaryOperatorTest, IncrementPreservesType) {
+    numeric_any a{1.5};
+    ++a;
+    EXPECT_EQ(a.type_name(), "double");
+    EXPECT_DOUBLE_EQ(unchecked_numeric_cast<double>(a), 2.5);
+
+    numeric_any b{100ULL};
+    ++b;
+    EXPECT_EQ(b.type_name(), "unsigned long long");
+    EXPECT_EQ(unchecked_numeric_cast<unsigned long long>(b), 101ULL);
+}
+
+TEST(UnaryOperatorTest, DecrementPreservesType) {
+    numeric_any a{3.5f};
+    --a;
+    EXPECT_EQ(a.type_name(), "float");
+    EXPECT_FLOAT_EQ(unchecked_numeric_cast<float>(a), 2.5f);
+
+    numeric_any b{10L};
+    --b;
+    EXPECT_EQ(b.type_name(), "long");
+    EXPECT_EQ(unchecked_numeric_cast<long>(b), 9L);
+}
+
+TEST(UnaryOperatorTest, IncrementBool) {
+    // bool increment: false->true, true->true (true + 1 casts back to bool)
+    numeric_any a{false};
+    ++a;
+    EXPECT_EQ(unchecked_numeric_cast<bool>(a), true);
+
+    numeric_any b{true};
+    ++b;
+    EXPECT_EQ(unchecked_numeric_cast<bool>(b), true);
+}
+
+TEST(UnaryOperatorTest, DecrementBool) {
+    // bool decrement: true->false, false->true (false - 1 = -1 casts back to true)
+    numeric_any a{true};
+    --a;
+    EXPECT_EQ(unchecked_numeric_cast<bool>(a), false);
+
+    numeric_any b{false};
+    --b;
+    EXPECT_EQ(unchecked_numeric_cast<bool>(b), true);
+}
+
+TEST(UnaryOperatorTest, IncrementEmptyDoesNothing) {
+    numeric_any a;
+    auto& ref = ++a;
+    EXPECT_EQ(&ref, &a);
+    EXPECT_TRUE(a.empty());
+
+    auto old = a++;
+    EXPECT_TRUE(a.empty());
+    EXPECT_TRUE(old.empty());
+}
+
+TEST(UnaryOperatorTest, DecrementEmptyDoesNothing) {
+    numeric_any a;
+    --a;
+    EXPECT_TRUE(a.empty());
+
+    a--;
+    EXPECT_TRUE(a.empty());
+}
+
+// ============================================================================
+// 23. std::formatter Format-String Parsing Tests (char)
+//     (new: numeric_any_parser supports align/sign/#/0/width/precision/L/type)
+// ============================================================================
+
+TEST(FormatterTest, FormatBasic) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{}", a), "42");
+
+    numeric_any b{3.14};
+    EXPECT_EQ(std::format("{}", b), "3.14");
+
+    numeric_any c{true};
+    EXPECT_EQ(std::format("{}", c), "true");
+}
+
+TEST(FormatterTest, FormatIntegerSpecifiers) {
+    numeric_any a{255};
+    EXPECT_EQ(std::format("{:d}", a), "255");
+    EXPECT_EQ(std::format("{:x}", a), "ff");
+    EXPECT_EQ(std::format("{:X}", a), "FF");
+    EXPECT_EQ(std::format("{:o}", a), "377");
+    EXPECT_EQ(std::format("{:b}", a), "11111111");
+    EXPECT_EQ(std::format("{:B}", a), "11111111");
+}
+
+TEST(FormatterTest, FormatFloatSpecifiers) {
+    numeric_any a{3.14};
+    EXPECT_EQ(std::format("{:f}", a), "3.140000");
+    EXPECT_EQ(std::format("{:e}", a), "3.140000e+00");
+    EXPECT_EQ(std::format("{:g}", a), "3.14");
+    // Note: this libstdc++ emits hex-float without the "0x" prefix
+    EXPECT_EQ(std::format("{:a}", a), "1.91eb851eb851fp+1");
+
+    numeric_any b{2.0};
+    EXPECT_EQ(std::format("{:a}", b), "1p+1");
+}
+
+TEST(FormatterTest, FormatWidth) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{:6d}", a), "    42");
+    EXPECT_EQ(std::format("{:2d}", a), "42"); // width smaller than needed
+}
+
+TEST(FormatterTest, FormatAlignment) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{:<6d}", a), "42    ");
+    EXPECT_EQ(std::format("{:>6d}", a), "    42");
+    EXPECT_EQ(std::format("{:^6d}", a), "  42  ");
+}
+
+TEST(FormatterTest, FormatFillAndAlign) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{:*<6d}", a), "42****");
+    EXPECT_EQ(std::format("{:*>6d}", a), "****42");
+    EXPECT_EQ(std::format("{:*^6d}", a), "**42**");
+    EXPECT_EQ(std::format("{:0>6d}", a), "000042");
+}
+
+TEST(FormatterTest, FormatZeroPadding) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{:06d}", a), "000042");
+    EXPECT_EQ(std::format("{:04d}", a), "0042");
+}
+
+TEST(FormatterTest, FormatPrecision) {
+    numeric_any a{3.14159};
+    EXPECT_EQ(std::format("{:.2f}", a), "3.14");
+    EXPECT_EQ(std::format("{:.4f}", a), "3.1416");
+    EXPECT_EQ(std::format("{:.1e}", a), "3.1e+00");
+    EXPECT_EQ(std::format("{:.2g}", a), "3.1");
+}
+
+TEST(FormatterTest, FormatSign) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{:+d}", a), "+42");
+    EXPECT_EQ(std::format("{: d}", a), " 42");
+    EXPECT_EQ(std::format("{:-d}", a), "42");
+
+    numeric_any b{-42};
+    EXPECT_EQ(std::format("{:+d}", b), "-42");
+    EXPECT_EQ(std::format("{: d}", b), "-42");
+    EXPECT_EQ(std::format("{:-d}", b), "-42");
+}
+
+TEST(FormatterTest, FormatAlternateForm) {
+    numeric_any a{255};
+    EXPECT_EQ(std::format("{:#x}", a), "0xff");
+    EXPECT_EQ(std::format("{:#X}", a), "0XFF");
+    EXPECT_EQ(std::format("{:#o}", a), "0377");
+    EXPECT_EQ(std::format("{:#b}", a), "0b11111111");
+}
+
+TEST(FormatterTest, FormatDynamicWidth) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format("{:{}d}", a, 6), "    42");
+    EXPECT_EQ(std::format("{:*<{}d}", a, 6), "42****");
+}
+
+TEST(FormatterTest, FormatDynamicPrecision) {
+    numeric_any a{3.14159};
+    EXPECT_EQ(std::format("{:.{}f}", a, 1), "3.1");
+    EXPECT_EQ(std::format("{:.{}f}", a, 3), "3.142");
+}
+
+TEST(FormatterTest, FormatEmpty) {
+    numeric_any a;
+    EXPECT_EQ(std::format("{}", a), "empty");
+    // format spec ignored for empty
+    EXPECT_EQ(std::format("{:04d}", a), "empty");
+}
+
+TEST(FormatterTest, FormatErrorInvalidSpecifier) {
+    numeric_any a{42};
+    EXPECT_THROW((void)std::vformat("{:q}", std::make_format_args(a)), std::format_error);
+    EXPECT_THROW((void)std::vformat("{:qd}", std::make_format_args(a)), std::format_error);
+}
+
+// ============================================================================
+// 24. std::formatter Wide-Character (wchar_t) Tests
+// ============================================================================
+
+TEST(WideFormatterTest, FormatBasic) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format(L"{}", a), L"42");
+
+    numeric_any b{3.14};
+    EXPECT_EQ(std::format(L"{}", b), L"3.14");
+
+    numeric_any c{true};
+    EXPECT_EQ(std::format(L"{}", c), L"true");
+}
+
+TEST(WideFormatterTest, FormatSpecifiers) {
+    numeric_any a{255};
+    EXPECT_EQ(std::format(L"{:x}", a), L"ff");
+    EXPECT_EQ(std::format(L"{:o}", a), L"377");
+    EXPECT_EQ(std::format(L"{:#x}", a), L"0xff");
+
+    numeric_any b{3.14159};
+    EXPECT_EQ(std::format(L"{:.2f}", b), L"3.14");
+}
+
+TEST(WideFormatterTest, FormatWidthAndAlign) {
+    numeric_any a{42};
+    EXPECT_EQ(std::format(L"{:06d}", a), L"000042");
+    EXPECT_EQ(std::format(L"{:<6d}", a), L"42    ");
+    EXPECT_EQ(std::format(L"{:*>6d}", a), L"****42");
+}
+
+TEST(WideFormatterTest, FormatEmpty) {
+    numeric_any a;
+    EXPECT_EQ(std::format(L"{}", a), L"empty");
+}
+
+// ============================================================================
+// 25. Additional wostream Output Tests (float / unsigned / long double)
+// ============================================================================
+
+TEST(WideStreamOutputTest, OutputFloat) {
+    numeric_any a{3.14f};
+    std::ostringstream oss;
+    std::wostringstream woss;
+    oss << a;
+    woss << a;
+    EXPECT_NE(oss.str().find("3.14"), std::string::npos);
+    EXPECT_NE(woss.str().find(L"3.14"), std::wstring::npos);
+}
+
+TEST(WideStreamOutputTest, OutputUnsignedInt) {
+    numeric_any a{123U};
+    std::ostringstream oss;
+    std::wostringstream woss;
+    oss << a;
+    woss << a;
+    EXPECT_EQ(oss.str(), "123");
+    EXPECT_EQ(woss.str(), L"123");
+}
+
+TEST(WideStreamOutputTest, OutputUnsignedLongLong) {
+    numeric_any a{18446744073709551615ULL};
+    std::ostringstream oss;
+    std::wostringstream woss;
+    oss << a;
+    woss << a;
+    EXPECT_EQ(oss.str(), "18446744073709551615");
+    EXPECT_EQ(woss.str(), L"18446744073709551615");
+}
+
+TEST(WideStreamOutputTest, OutputLongDouble) {
+    numeric_any a{2.5L};
+    std::ostringstream oss;
+    std::wostringstream woss;
+    oss << a;
+    woss << a;
+    EXPECT_NE(oss.str().find("2.5"), std::string::npos);
+    EXPECT_NE(woss.str().find(L"2.5"), std::wstring::npos);
+}
+
+TEST(WideStreamOutputTest, OutputShort) {
+    numeric_any a{short{-5}};
+    std::ostringstream oss;
+    std::wostringstream woss;
+    oss << a;
+    woss << a;
+    EXPECT_EQ(oss.str(), "-5");
+    EXPECT_EQ(woss.str(), L"-5");
 }
 
 // ============================================================================

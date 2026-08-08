@@ -38,7 +38,8 @@ function(setup_bench_target_ixx target_name source_name)
         PUBLIC
             FILE_SET CXX_MODULES
             BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../../src
-            FILES 
+            FILES
+                ../../src/numeric_any_parser.ixx
                 ../../src/numeric_any.ixx
     )
     if(CMAKE_CXX_STANDARD EQUAL 23)

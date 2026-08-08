@@ -5,3 +5,5 @@ benchmark_*/
 tests/benchmarks/charts/generate_charts.py
 tests/units/TEST_SUMMARY.md
 tests/units/gtest_results.txt
+continue*/
+.idea/

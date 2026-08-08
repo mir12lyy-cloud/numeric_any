@@ -8,7 +8,8 @@ target_sources(numeric_any
     PUBLIC
         FILE_SET CXX_MODULES
         BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
-        FILES 
+        FILES
+        src/numeric_any_parser.ixx
         src/numeric_any.ixx
 )
 
