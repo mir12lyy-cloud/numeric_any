@@ -4,8 +4,6 @@ on:
   push:
     tag:
       - 'v*'
-    branches-ignore:
-      - '**'
 
 jobs:
   Deploy:
