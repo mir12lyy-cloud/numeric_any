@@ -3,6 +3,7 @@
 
 #include <charconv>
 #include <format>
+#include <string_view>
 #include <type_traits>
 
 namespace casyyy::utils {
@@ -10,6 +11,9 @@ namespace casyyy::utils {
 template <typename CharT>
 class numeric_any_parser {
 public:
+    static constexpr CharT int_type[]{'b', 'B', 'x', 'X', 'o', 'O', 'd', 'D'};
+    static constexpr CharT float_type[]{'a', 'A', 'e', 'E', 'f', 'F', 'g', 'G'};
+
     template <typename ParseContext>
     constexpr ParseContext::iterator parse(ParseContext& ctx) {
         auto begin = ctx.begin();
@@ -37,20 +41,21 @@ public:
 
         return begin;
     }
+    // The function will basically restore the format string based on what parser parsed.
     CharT* restore_format_string(CharT* begin, CharT* end, auto& ctx) const {
-        *begin = static_cast<CharT>('{'), ++begin;
-        *begin = static_cast<CharT>(':'), ++begin;
+        *begin++ = static_cast<CharT>('{');
+        *begin++ = static_cast<CharT>(':');
         if (has_set_align) {
-            if (fill_charactor != static_cast<CharT>(' ')) {
-                *begin = fill_charactor, ++begin, *begin = align_patten, ++begin;
+            if (fill_charactor != static_cast<CharT>(' ')) { // Ignore ' ', since it is default fill charactor.
+                *begin++ = fill_charactor, *begin++ = align_patten;
             } else {
-                *begin = align_patten, ++begin;
+                *begin++ = align_patten;
             }
         }
-        if (sign_flag) *begin = sign_charactor, ++begin;
+        if (sign_flag) *begin++ = sign_charactor;
         if (has_alternative) *begin = static_cast<CharT>('#'), ++begin;
         if (zero_padding) *begin = static_cast<CharT>('0'), ++begin;
-
+        // It will get final width and precision, then input to format string.
         auto final_width = determine_dynamic_arg(ctx, dynamic_width, width_id, static_width);
         if (final_width != 0) {
             if constexpr (::std::is_same_v<char, CharT>) {
@@ -72,17 +77,18 @@ public:
                 char buffer[20]{};
                 unsigned long long width = ::std::to_chars(buffer, buffer + 20, final_precision).ptr - buffer;
                 for (unsigned long long i = 0; i < width; ++i) {
-                    *begin = static_cast<CharT>(buffer[i]), ++begin;
+                    *begin++ = static_cast<CharT>(buffer[i]);
                 }
             }
         }
-        if (using_locale) *begin = static_cast<CharT>('L'), ++begin;
-        if (set_base) *begin = type_charactor, ++begin;
-        *begin = static_cast<CharT>('}'), ++begin;
+        if (using_locale) *begin++ = static_cast<CharT>('L');
+        if (set_base) *begin++ = type_charactor;
+        *begin++ = static_cast<CharT>('}'); // Finish the format string.
         return begin;
     }
 
 private:
+    // Determine final width and precision.
     unsigned long long determine_dynamic_arg(auto& ctx, bool has_dynamic, unsigned long long id,
                                              unsigned long long static_return) const {
         if (!has_dynamic) return static_return;
@@ -102,6 +108,7 @@ private:
         return dynamic;
     }
 
+    // These functions are used to parsing the format string.
     template <typename Iterator>
     constexpr bool parse_align_with_character(Iterator& begin) {
         Iterator next = begin;
@@ -188,16 +195,14 @@ private:
             if (*begin > static_cast<CharT>('9') || *begin < static_cast<CharT>('0'))
                 throw ::std::format_error{"Is invalid arg index"};
             while (*begin <= static_cast<CharT>('9') && *begin >= static_cast<CharT>('0')) {
-                precision_id = precision_id * 10 + (*begin - static_cast<CharT>('0'));
-                ++begin;
+                precision_id = precision_id * 10 + (*begin++ - static_cast<CharT>('0'));
             }
             return true;
         }
         if (*begin > static_cast<CharT>('9') || *begin < static_cast<CharT>('0')) return false;
         while (*begin <= static_cast<CharT>('9') && *begin >= static_cast<CharT>('0') && begin != end) {
             has_precision    = true;
-            static_precision = static_precision * 10 + (*begin - static_cast<CharT>('0'));
-            ++begin;
+            static_precision = static_precision * 10 + (*begin++ - static_cast<CharT>('0'));
         }
         return true;
     }
@@ -212,28 +217,17 @@ private:
     template <typename Iterator>
     constexpr bool parse_base(Iterator& begin) {
         CharT type = *begin;
-        if (type == static_cast<CharT>('g') || type == static_cast<CharT>('e') || type == static_cast<CharT>('f') ||
-            type == static_cast<CharT>('a')) {
-            type_charactor = type;
-            set_base       = true;
-        } else if (type == static_cast<CharT>('G') || type == static_cast<CharT>('E') ||
-                   type == static_cast<CharT>('F') || type == static_cast<CharT>('A')) {
-            type_charactor = type;
-            set_base       = true;
-        } else if (type == static_cast<CharT>('x') || type == static_cast<CharT>('d') ||
-                   type == static_cast<CharT>('o') || type == static_cast<CharT>('b')) {
-            if (has_precision) return false;
-            type_charactor = type;
-            set_base       = true;
-        } else if (type == static_cast<CharT>('X') || type == static_cast<CharT>('E') ||
-                   type == static_cast<CharT>('O') || type == static_cast<CharT>('B')) {
-            if (has_precision) return false;
-            type_charactor = type;
-            set_base       = true;
+        ::std::basic_string_view<CharT> int_str{int_type, 8};
+        ::std::basic_string_view<CharT> float_str{float_type, 8};
+        if (float_str.find(type) != std::basic_string_view<CharT>::npos) {
+            set_base = true;
+        } else if (int_str.find(type) != std::basic_string_view<CharT>::npos && !has_precision) {
+            set_base = true; // Avoid {:2.3d}.
         }
-        if (set_base) ++begin;
+        if (set_base) ++begin, type_charactor = type;
         return set_base;
     }
+    // Store the staus after formatting.
     unsigned long long static_width     = 0;
     unsigned long long static_precision = 0;
     unsigned long long width_id         = 0;

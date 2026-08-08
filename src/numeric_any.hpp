@@ -664,14 +664,15 @@ struct hash<::casyyy::maths::numeric_any> {
             return vformat_to(ctx.out(), fmt, make_wformat_args(restore));                                             \
         else                                                                                                           \
             return vformat_to(ctx.out(), fmt, make_format_args(restore));                                              \
-    }                                                                                                                  \
-
+    }
 
 #ifndef DISABLE_FORMAT_IN_NUMERIC_ANY
 // Support formatter. But can't parse dynamic width and dynamic precision now.
 template <typename CharT>
 struct formatter<::casyyy::maths::numeric_any, CharT> {
-    static constexpr unsigned FORMAT_STRING_BUFFER_SIZE = 60; // To store format string for value.
+    // To store format string for value.
+    // Based on std::numeric_limits<unsigned long long>::dight10, 60 is enough.
+    static constexpr unsigned FORMAT_STRING_BUFFER_SIZE = 60;
 
     constexpr auto parse(auto& ctx) {
         return parser_.parse(ctx);
@@ -679,7 +680,8 @@ struct formatter<::casyyy::maths::numeric_any, CharT> {
 
     auto format(const ::casyyy::maths::numeric_any& x, auto& ctx) const {
         CharT format_buffer[FORMAT_STRING_BUFFER_SIZE]{};
-        auto finish = parser_.restore_format_string(format_buffer, format_buffer + FORMAT_STRING_BUFFER_SIZE,ctx);
+        // Restore the format stirng, and used vformat_to.
+        auto finish = parser_.restore_format_string(format_buffer, format_buffer + FORMAT_STRING_BUFFER_SIZE, ctx);
         basic_string_view<CharT> fmt{format_buffer, finish};
         FOR_EACH_TYPES_TO(FUNCTION_FORMAT)
         if constexpr (is_same_v<CharT, wchar_t>) {

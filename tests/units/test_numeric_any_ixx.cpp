@@ -11,7 +11,6 @@
 #include <type_traits>
 #include <vector>
 
-
 import casyyy.maths.numeric_any;
 
 using namespace casyyy::maths;

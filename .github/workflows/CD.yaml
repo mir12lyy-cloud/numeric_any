@@ -2,7 +2,7 @@ name: DeployFiles
 
 on:
   push:
-    tag:
+    tags:
       - 'v*'
 
 jobs:
