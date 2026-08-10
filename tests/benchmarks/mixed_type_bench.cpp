@@ -1,4 +1,4 @@
-// Benchmark: Mixed-type operations â€?cross-type arithmetic & comparison
+// Benchmark: Mixed-type operations ï¿½?cross-type arithmetic & comparison
 // Compares numeric_any vs native. Extended: int, long long, ull, float, double, long double
 #include <benchmark/benchmark.h>
 #define DISABLE_FORMAT_IN_NUMERIC_ANY
@@ -7,7 +7,7 @@
 #include <variant>
 #include <vector>
 using namespace casyyy::maths;
-static const size_t N = 1000000;
+static constexpr size_t N = 1000000;
 
 using llong   = long long;
 using ullong  = unsigned long long;
@@ -178,7 +178,7 @@ BENCH_MIXED_CMP(ldouble, ldbl, int, int)
     static void BM_StdVariant_Both_Compare_##n1##_##n2(benchmark::State& s) {                                          \
         auto d1   = mk_##n1(N);                                                                                        \
         auto d2   = mk_##n2(N);                                                                                        \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, ullong, float, double, ldouble>;                                          \
         std::vector<Var> v1, v2;                                                                                       \
         v1.reserve(N);                                                                                                 \
         v2.reserve(N);                                                                                                 \
@@ -207,6 +207,7 @@ BENCH_MIXED_CMP(ldouble, ldbl, int, int)
     BENCHMARK(BM_StdVariant_Both_Compare_##n1##_##n2);
 BENCH_BOTH_ERASED_CMP(int, int, double, dbl)
 BENCH_BOTH_ERASED_CMP(int, int, ldouble, ldbl)
+BENCH_BOTH_ERASED_CMP(float, flt, ldouble, ldbl)
 BENCH_BOTH_ERASED_CMP(double, dbl, ldouble, ldbl)
 #undef BENCH_BOTH_ERASED_CMP
 

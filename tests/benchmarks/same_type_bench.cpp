@@ -8,7 +8,7 @@
 #include <variant>
 #include <vector>
 using namespace casyyy::maths;
-static const size_t N = 1000000;
+static constexpr size_t N = 1000000;
 
 using llong   = long long;
 using ullong  = unsigned long long;
