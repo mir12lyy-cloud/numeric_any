@@ -2,9 +2,13 @@ name: UnitsTests
 
 on:
   push:
-    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - 'tests/units/**'
   pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - 'tests/units/**'
 
 jobs:
   build:

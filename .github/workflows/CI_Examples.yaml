@@ -2,9 +2,13 @@ name: ExamplesTests
 
 on:
   push:
-    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - 'examples/**'
   pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - 'examples/**'
 
 jobs:
   build:

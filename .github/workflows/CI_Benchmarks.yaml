@@ -2,9 +2,13 @@ name: TestingBenchmarksComplie
 
 on:
   push:
-    branches: [ "master" ]
+    paths:
+      - 'src/**'
+      - 'tests/benchmarks/**'
   pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'src/'
+      - 'tests/benchmarks/**'
 
 jobs:
   build:
