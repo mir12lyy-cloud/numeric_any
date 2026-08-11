@@ -10,4 +10,5 @@ int main() {
     a = 32;
     b.reset<unsigned char>('a');
     std::println("{} {}", a, b);
+    return 0;
 }

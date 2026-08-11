@@ -7,10 +7,11 @@
 #include <type_traits>
 
 namespace casyyy::utils {
-
+/// @brief The parser for numeric_any in formatting.
 template <typename CharT>
 class numeric_any_parser {
 public:
+    /// @cond
     static constexpr CharT int_type[]{'b', 'B', 'x', 'X', 'o', 'O', 'd', 'D'};
     static constexpr CharT float_type[]{'a', 'A', 'e', 'E', 'f', 'F', 'g', 'G'};
 
@@ -43,9 +44,10 @@ public:
     }
     // The function will basically restore the format string based on what parser parsed.
     CharT* restore_format_string(CharT* begin, CharT* end, auto& ctx) const {
-        *begin++ = static_cast<CharT>('{');
-        *begin++ = static_cast<CharT>(':');
-        if (has_set_align) {
+        *begin++         = static_cast<CharT>('{');
+        *begin++         = static_cast<CharT>(':');
+        auto final_width = determine_dynamic_arg(ctx, dynamic_width, width_id, static_width);
+        if (has_set_align && final_width) {
             if (fill_charactor != static_cast<CharT>(' ')) { // Ignore ' ', since it is default fill charactor.
                 *begin++ = fill_charactor, *begin++ = align_patten;
             } else {
@@ -53,18 +55,17 @@ public:
             }
         }
         if (sign_flag) *begin++ = sign_charactor;
-        if (has_alternative) *begin = static_cast<CharT>('#'), ++begin;
-        if (zero_padding) *begin = static_cast<CharT>('0'), ++begin;
+        if (has_alternative) *begin++ = static_cast<CharT>('#');
+        if (zero_padding && final_width) *begin++ = static_cast<CharT>('0');
         // It will get final width and precision, then input to format string.
-        auto final_width = determine_dynamic_arg(ctx, dynamic_width, width_id, static_width);
-        if (final_width != 0) {
+        if (final_width) {
             if constexpr (::std::is_same_v<char, CharT>) {
                 begin = ::std::to_chars(begin, end, final_width).ptr;
             } else {
                 char buffer[20]{};
                 unsigned long long width = ::std::to_chars(buffer, buffer + 20, final_width).ptr - buffer;
                 for (unsigned long long i = 0; i < width; ++i) {
-                    *begin = static_cast<CharT>(buffer[i]), ++begin;
+                    *begin++ = static_cast<CharT>(buffer[i]);
                 }
             }
         }
@@ -94,14 +95,15 @@ private:
         if (!has_dynamic) return static_return;
         unsigned long long dynamic = 0;
         auto get_value             = ctx.arg(id);
-        if (!get_value) throw ::std::format_error("Don't input a dynamic width without input a arg.");
+        if (!get_value) throw ::std::format_error("Don't input a dynamic parameter without input a arg.");
         ::std::visit_format_arg(
             [&dynamic](auto&& value) {
                 using U = ::std::decay_t<decltype(value)>;
                 if constexpr (::std::is_integral_v<U>) {
+                    if (value < 0) throw ::std::format_error("Parameter cannot be negative.");
                     dynamic = static_cast<unsigned long long>(value);
                 } else {
-                    throw ::std::format_error("Incorrect value type of the arg.");
+                    throw ::std::format_error("Incorrect type of the arg.");
                 }
             },
             get_value);
@@ -245,6 +247,7 @@ private:
     bool set_base                       = false;
     bool dynamic_width                  = false;
     bool dynamic_precision              = false;
+    /// @endcond
 };
 
 } // namespace casyyy::utils

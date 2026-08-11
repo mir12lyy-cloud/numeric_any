@@ -8,4 +8,5 @@ int main() {
     std::println("{::02x}", a.view_bytes());
     a = 14123.223;
     std::println("{::02x}", a.view_bytes());
+    return 0;
 }

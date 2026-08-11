@@ -27,4 +27,5 @@ int main() {
     check_casting<float, casting_policy::normal>(a);
     std::println("{}", unchecked_numeric_cast<double>(b));
     std::println("{}", unchecked_numeric_cast<double>(c));
+    return 0;
 }

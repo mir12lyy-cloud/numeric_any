@@ -16,4 +16,5 @@ int main() {
     std::println("{:0{}d}", 323423, 8);
     std::println("{:{}.{}f}", b, 8, 2);
     std::println("{:{}.{}f}", 32342.123, 8, 2);
+    return 0;
 }

@@ -1528,6 +1528,11 @@ TEST(FormatterTest, FormatEmpty) {
     EXPECT_EQ(std::format("{:04d}", a), "empty");
 }
 
+TEST(FormatterTest, EraseUnusedPattern) {
+    numeric_any a{42.324};
+    EXPECT_EQ(std::format("{:*>0.0f}", a), std::format("{:f}", 42.324));
+}
+
 TEST(FormatterTest, FormatErrorInvalidSpecifier) {
     numeric_any a{42};
     EXPECT_THROW((void)std::vformat("{:q}", std::make_format_args(a)), std::format_error);
@@ -1564,6 +1569,11 @@ TEST(WideFormatterTest, FormatWidthAndAlign) {
     EXPECT_EQ(std::format(L"{:06d}", a), L"000042");
     EXPECT_EQ(std::format(L"{:<6d}", a), L"42    ");
     EXPECT_EQ(std::format(L"{:*>6d}", a), L"****42");
+}
+
+TEST(WideFormatterTest, EraseUnusedPattern) {
+    numeric_any a{42.324};
+    EXPECT_EQ(std::format(L"{:*>0.0f}", a), std::format(L"{:f}", 42.324));
 }
 
 TEST(WideFormatterTest, FormatEmpty) {

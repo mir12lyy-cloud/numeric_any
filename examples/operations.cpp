@@ -17,4 +17,5 @@ int main() {
     std::println("{}", ++a);
     a = true;
     std::println("{}", --a);
+    return 0;
 }

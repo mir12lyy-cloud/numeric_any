@@ -13,4 +13,5 @@ int main() {
     std::println("{} {} {} {}", b.type_name(), b.is_floating_point(), b.is_unsigned_number(), b.is_nonnegative());
     std::println("{} {} {} {}", c.type_name(), c.is_floating_point(), c.is_unsigned_number(), c.is_nonnegative());
     std::println("{} {} {} {}", d.type_name(), d.is_floating_point(), d.is_unsigned_number(), d.is_nonnegative());
+    return 0;
 }

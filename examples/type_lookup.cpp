@@ -13,4 +13,5 @@ int main() {
     std::println("{}", v.can_safe_convert_to<unsigned>());
     std::println("{}", v.can_safe_convert_to<short>());
     std::println("{}", v.can_safe_convert_to<float>());
+    return 0;
 }
