@@ -6,8 +6,6 @@
 
 > A type-erasure-based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison.
 
----
-
 ## Features
 
 - Supports any arithmetic type that conforms to the C++ standard, except `char` (which requires an explicit `signed` or `unsigned` qualification).
@@ -24,9 +22,7 @@
 
 - Header-only, provided in both `.ixx` and `.hpp` build variants.
 
----
-
-## Quick Start
+## Installation & Integration
 
 ### Environment Requirements
 - C++ Standard: At least C++20; C++23 is recommended for a better experience.
@@ -37,7 +33,7 @@
 
 - Dependencies: No external dependencies; uses only the C++20 standard library.
 
-**Note:** If you want to use .ixx, Recommand GCC15.
+**Note:** If you want to use modules to build, Recommend GCC15.
 
 ### Standard Library Dependencies
 - `<array>` – Static array storage
@@ -51,12 +47,17 @@
 - `<span>` – For returning the byte representation of internal values
 - `<string_view>` – For providing type name strings
 - `<type_traits>` – Type traits
-- `<format>` – Specialization of std::formatter.
-- `<charconv>` - For parser tranforms numbers to strings.
+- `<format>` – Specialization of std::formatter
+- `<charconv>` - For parser transforms numbers to strings
 
-If you are using the `.hpp` version and wish to avoid the compilation overhead of `<format>`, you can define the `DISABLE_FORMAT_IN_NUMERIC_ANY` macro to exclude `<format>` from compilation.
+### Clone The depository
 
-### Installation & Integration
+```bash
+git clone https://github.com/mir12lyy-cloud/numeric_any.git
+cd numeric_any
+```
+
+### Methods
 
 **Two integration methods are provided: based on the `.hpp` header file, or based on the `.ixx` module. You may choose only one of them.**
 
@@ -107,16 +108,52 @@ target_sources(YourProject
 )
 ```
 
-### Example:
-
+### Quick Start
 ```C++
-#include "numeric_any/numeric_any.hpp"
-#include <vector>
-#include <iostream>
-#include <format>
-using casyyy::maths::numeric_any;
+#include <print>
 
-auto process(auto&& ...args) {
+import casyyy.maths.numeric_any;
+using namespace casyyy::maths;
+
+int main() {
+    numeric_any a = 42;
+    std::println("{:03d}", a);
+    a = 31.1653;
+    std::println("{:.2f}", a);
+    return 0;
+}
+```
+
+### Ouput
+```text
+042
+31.16
+```
+
+## Example:
+
+**Ignore basic `import`, `include` and `using namespace`.**
+
+### Construction
+**Code:** [Example Code](/examples/construction.cpp)
+```C++
+numeric_any a;
+numeric_any b = 32;
+std::println("{} {}", a, b);
+a = 32;
+b.reset<unsigned char>('a');
+std::println("{} {}", a, b);
+```
+**Output:**
+```text
+empty 32
+32 97
+```
+
+### Heterogeneous Container
+**Code:** [Example Code](/examples/heterogeneous_container.cpp)
+```C++
+auto process(auto&&... args) {
     std::vector<numeric_any> result;
     ((result.emplace_back(args)), ...);
     return result;
@@ -124,203 +161,173 @@ auto process(auto&& ...args) {
 
 int main() {
     auto result = process(12, 33U, false, 3.14);
-    for (const auto& i : result) {
-        std::cout << std::format("{}", i) << ' ';
-    }
+    std::println("{}", result);
     return 0;
 }
 ```
-### Output：
+**Output:**
+```test
+[12, 33, false, 3.14]
 ```
-12 33 false 3.14
-```
----
-
-## API
-
-To be simple, all examples are seemed to has `using namespace casyyy::maths`. 
-
-### Support types
-
-- Bool - `bool`.
-- Signed integers - `signed char`, `short`, `int`, `long`, `long long`.
-- Unsigned integers - `unsigned char`, `unsigned short`, `unsigned int`, `unsigned long`, `unsigned long long`.
-- Floating points - `float`, `double`, `long double`.
-
-**Note:** To avoid symbol ambiguity in `char`, explict `signed`/`unsigned` is necessary.
-
-### Construction and Storage
-
-- `numeric_any()` / `numreic_any(T x)` - Construct a empty/assigned `numeric_any`.
-
-- `reset<T>(T x)` / `operator=(T x)` - Reset a `numeric_any` to given value. **Type info will change.**
-
-- Copy constructor, move constructor, copy assignment and move assignment keep default.
-
-#### Example:
-
-```C++
-numeric_any a;               // Creat a empty numeric_any.
-numreic_any b = 32;          // Storage as int(32). 
-
-a = 32;                      // Now a storage as int(32).
-b.reset<unsigned char>('a'); // Now b storage as unsigned char('a') -> 97.
-```
-
-### Type metadata:
-
-- `type_name()` - Returns the typename of the stored type. **Return `"empty"` when this `numeric_any` is empty.**
-
-- `is_floating_point()` / `is_unsigend_number` / `is_nonegative()` - Type attribute lookup. **Return `false` when this `numeric_any` is empty.**
-
-#### Example
-
+### Metadatas
+**Code:** [Example Code](/examples/metadata.cpp)
 ```C++
 numeric_any a;
 numeric_any b = 32;
 numeric_any c = 12U;
 numeric_any d = -32.2;
-
-std::cout << std::boolalpha;
-std::cout << a.type_name() << ' ' << a.is_floating_point() << ' ' 
-          << a.is_unsigend_number() << ' ' << a.is_nonegative() << '\n';
-std::cout << b.type_name() << ' ' << b.is_floating_point() << ' ' 
-          << b.is_unsigend_number() << ' ' << b.is_nonegative() << '\n';
-std::cout << c.type_name() << ' ' << c.is_floating_point() << ' ' 
-          << c.is_unsigend_number() << ' ' << c.is_nonegative() << '\n';
-std::cout << d.type_name() << ' ' << d.is_floating_point() << ' ' 
-          << d.is_unsigend_number() << ' ' << d.is_nonegative() << '\n';
+std::println("{} {} {} {}", a.type_name(), a.is_floating_point(), a.is_unsigned_number(), a.is_nonnegative());
+std::println("{} {} {} {}", b.type_name(), b.is_floating_point(), b.is_unsigned_number(), b.is_nonnegative());
+std::println("{} {} {} {}", c.type_name(), c.is_floating_point(), c.is_unsigned_number(), c.is_nonnegative());
+std::println("{} {} {} {}", d.type_name(), d.is_floating_point(), d.is_unsigned_number(), d.is_nonnegative());
 ```
-#### Output
+**Output:**
 ```text
 empty false false false
 int false false true
 unsigned int false true true
 double true false false
 ```
-**Note:** When `numeric_any` storage NaN, `is_nonegative()` returning `false`.
-
-### Type lookup
-
-- `is_same_type<T>()` - Checks if the given type `T` matches the underlying stored type.
-
-- `can_safe_convert_to<T>()` - Checks whether the stored value can be `losslessly` converted to another arithmetic type **without performing the conversion**. 
-
-#### Example:
+### Operations:
+**Code:** [Example Code](/examples/operations.cpp)
+```C++
+numeric_any a = 13;
+std::println("{}", a);
+std::println("{}", ++a);
+std::println("{}", a += 12.3);
+std::println("{}", -a);
+std::println("{}", a > -a);
+std::println("{}", a.type_name());
+a = -3;
+std::println("{}", a > 12U);
+a = true;
+std::println("{}", ++a);
+a = true;
+std::println("{}", --a);
+```
+**Output:**
+```text
+13
+14
+26.3
+-26.3
+true
+double
+false
+true
+false
+```
+### Type Lookup:
+**Code:** [Example Code](/examples/type_lookup.cpp)
 ```C++
 numeric_any v = -42;
 numeric_any u = 12;
-v.is_same_type<int>();                       // true
-v.is_same_type<long>();                      // false
-
-v.can_safe_convert_to<long long>();          // true (Promotion)
-u.can_safe_convert_to<unsigned long long>(); // true (No negative number)
-v.can_safe_convert_to<unsigned>();           // false (Negative number)
-v.can_safe_convert_to<short>();              // false (Narrow casting)
-v.can_safe_convert_to<float>();              // false (Might lossing precision)
+std::println("{}", v.is_same_type<int>());
+std::println("{}", v.is_same_type<long>());
+std::println("{}", v.can_safe_convert_to<long long>());
+std::println("{}", u.can_safe_convert_to<unsigned long long>());
+std::println("{}", v.can_safe_convert_to<unsigned>());
+std::println("{}", v.can_safe_convert_to<short>());
+std::println("{}", v.can_safe_convert_to<float>());
 ```
-
-**Note:** The `can_safe_convert_to<T>()` won't **do conversion and is conservative**. So all narrow-casting will return `false` whatever the inner value is.
-
-### Operations
-
-- `opeartor+`, `operator-`, `operator++`, `operator--` - As same as a nomal value doing it. **Except `bool`.**
-
-- `operator+=`, `operator-=`, `operator*=`, `operator/=` - Support with a value or `numeric_any`. **Behaviours in operatrions are based on C++ standard.**
-
-- `operator<=>`, `opeartor==` - Support with a value or `numeric_any`. **Behaviours mostly in operatrions are based on C++ standard.**
-
-- `operator bool` - Explictly check inner value isn't zero.
-
-#### Example
-```C++
-numeric_any a = 13;    // a is int(13);
-++a;                   // a is int(14);
-a += 12.3;             // Same as "14 + 12.3" in C++;
-numeric_any b = -a;   // b is double(-(14 + 12.3));
-bool c = a > b;        // Same as "(14 + 12.3) > -(14 + 12.3)" in C++;
-auto d = a.type_name() // "double"
+**Output:** 
+```text
+true
+false
+true
+true
+false
+false
+false
 ```
-
-**Note:** It will check the sign in comparison, so:
-
-```C++
-numreic_any a = -3;
-bool b = a > 32U;   // false.
-```
-
-#### About `bool`
-```C++
-numeric_any a = true;
-a++;                  // same as static_cast<bool>(a + 1);
-a--;                  // same as static_cast<bool>(a - 1);
-```
-
-**About empty:** If either operand is empty, **propagates the empty state in `operator+=`, `operator-=`, `operator*=`, `operator/=`**. Return `false` in `operator bool`, and empty == empty returns `false`, return `std::partial_ordering::unordered` in `operator<=>`.
-
-### Byte view
-
-- `view_bytes()` - Return a `std::span<const unsigned char>` to view inner bytes.
-
-- `type_size()` - Returns the size in bytes of the stored type.
-
-#### Example 
-
+### Bytes view:
+**Code:** [Example Code](/examples/bytes_view.cpp)
 ```C++
 numeric_any a = 123U;
-std::cout << a.type_size() << "\n";
-for (auto i : a.view_bytes()) { 
-    std::cout << std::hex << static_cast<unsigned>(i) << ' ';
+std::println("{::02x}", a.view_bytes());
+ a = 14123.223;
+std::println("{::02x}", a.view_bytes());
+```
+**Possible Output(Based on platform):**
+```text
+[7b, 00, 00, 00]
+[81, 95, 43, 8b, 9c, 95, cb, 40]
+```
+### Casting:
+**Code:** [Example Code](/examples/casting.cpp)
+```C++
+template <typename T, casting_policy Policy = casting_policy::strict>
+void check_casting(const numeric_any& x) {
+    auto result = numeric_cast<T, Policy>(x);
+    if (result.has_value()) {
+        std::println("{}", result.value());
+    } else {
+        std::println("std::nullopt");
+    }
+}
+int main() {
+    numeric_any a = 12312;         // int(12312)
+    numeric_any b;                 // Empty.
+    numeric_any c = std::nan("1"); // NaN
+    check_casting<int>(a);
+    check_casting<double>(a);
+    check_casting<long long>(a);
+    check_casting<int>(b);
+    check_casting<double>(c);
+    check_casting<float, casting_policy::normal>(a);
+    std::println("{}", unchecked_numeric_cast<double>(b));
+    std::println("{}", unchecked_numeric_cast<double>(c));
+    return 0;
 }
 ```
-
-### Possible output (Base on platform)
+**Output:**
 ```text
-4
-7b 0 0 0
+12312
+std::nullopt
+12312
+std::nullopt
+std::nullopt
+12312
+0
+nan
 ```
 
-### Casting Policy (enum class `casting_policy`)
-> A simple enum class for policy in casting. Has three policies.
-- `strict` - Requires `lossless` numeric conversion. Base on `can_safe_convert_to<T>()`.
-- `normal` - Allows integer-to-floating-point conversions, allows signed positive values and unsigned narrowing, and truncation to an unsigned type.
-- `relaxed`- Only checks that `numeric_any` is not empty, and that the converted value is not NaN or Inf.
-
-
-**`strict` is default policy.**
-
-### Casting(Free functions)
-- `numreic_cast<T, Policy>(x)` - Casting a `numeric_any` to number based on policy. Return `std::optional<T>`
-- `uncheck_numeric_cast<T>(x)` - Casting a `numeric_any` to number without checked.
-
-**Note:** Always return `std::nullopt` when it storages NaN, inf or empty in `numreic_cast`. Return `T{}` in `unchecked_numreic_cast` when empty.
-
-#### Example
+### Output
+**Code:** [Example Code](/examples/output.cpp)
 ```C++
-numeric_any a = 12312;         // int(12312)
-numeric_any b;                 // Empty.
-numeric_any c = std::nan("1"); // NaN
+numeric_any a = 323423, b = 32342.123;
+std::cout << a << ' ' << b << '\n';
+std::wcout << a << ' ' << b << '\n';
 
-auto d = numeric_cast<int>(a); // Return std::optional<int>(12312);
-auto e = numeric_cast<double>(a); // Return std::nullopt.
-auto f = numreic_cast<long long>(a); // Return Return std::optional<long long>(12312);
-auto g = numreic_cast<int>(b) // Return std::nullopt.
-auto h = numreic_cast<double>(c) // Return std::nullopt.
-auto i = numeric_cast<float, casting_policy::normal>(a) // Ok.
-auto j = unchecked_numeric_cast<double>(c) // Return NaN.
-auto k = unchecked_numeric_cast<double>(b) // Return double(0.0);
+std::println("{} {}", a, b);
+std::println("{:#08x} {:#08x}", a, 323423);
+std::println("{:*<6.2f} {:*<6.2f}", b, 32342.123);
+std::println("{:0{}d}", a, 8);
+std::println("{:0{}d}", 323423, 8);
+std::println("{:{}.{}f}", b, 8, 2);
+std::println("{:{}.{}f}", 32342.123, 8, 2);
+```
+**Output:**
+```text
+323423 32342.1
+323423 32342.1
+323423 32342.123
+0x04ef5f 0x04ef5f
+32342.12 32342.12
+00323423
+00323423
+32342.12
+32342.12
 ```
 
-### Output 
+- [Overall example files](/examples/) - Sample code is provided here for you to try and verify on your own.
 
-- `operator<<` - Output the inner number.
+## API
 
-- `std::formatter` - Could used `std::format`, `std::print` and `std::println`.
+For the online API documentation, please visit：[https://github.com/mir12lyy-cloud/numeric_any/](https://github.com/mir12lyy-cloud/numeric_any/)
 
-**Limits:** `std::formatter` can't exactly check type matching at compile time。
-
----
 ## Tests (Using Agent to generate)
+
 
 - [Unit test files](/tests/units/) - You can use or modify these test files to check if there are any issues with the library.
 
@@ -330,7 +337,6 @@ auto k = unchecked_numeric_cast<double>(b) // Return double(0.0);
 
 - [Benchmark test files](/tests/benchmarks/) - You can use or modify these test files to do basic benchmarks with the library.
 
----
 
 ## Roadmap
 

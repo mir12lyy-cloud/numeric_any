@@ -1,0 +1,631 @@
+\doxysection{numeric\+\_\+any.\+hpp}
+\hypertarget{numeric__any_8hpp_source}{}\label{numeric__any_8hpp_source}\index{src/numeric\_any.hpp@{src/numeric\_any.hpp}}
+\doxymbox{\hyperlink{numeric__any_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CASYYY\_MATH\_NUMERIC\_ANY\_HPP\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CASYYY\_MATH\_NUMERIC\_ANY\_HPP\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ To\ disable\ some\ unnecessary\ warnings.}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#pragma\ warning(push)}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#pragma\ warning(disable\ :\ 4002\ 4061\ 4702\ 4804\ 4146\ 4244)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{numeric__any__parser_8hpp}{numeric\_any\_parser.hpp}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <bit>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <compare>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <format>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <iosfwd>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <span>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ <\ 202106L}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ NOT\_IN\_CONSTANT\_EVALUATION\ (!::std::is\_constant\_evaluated())}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ NOT\_IN\_CONSTANT\_EVALUATION\ !consteval}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ To\ generate\ types.}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ FOR\_EACH\_TYPES\_TO(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\ \ \ \ x(bool,\ BOOL,\ 1)\ x(signed\ char,\ SIGNED\_CHAR,\ 2)\ x(unsigned\ char,\ UNSIGNED\_CHAR,\ 3)\ x(short,\ SHORT,\ 4)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ x(unsigned\ short,\ UNSIGNED\_SHORT,\ 5)\ x(int,\ INT,\ 6)\ x(unsigned\ int,\ UNSIGNED\_INT,\ 7)\ x(long,\ LONG,\ 8)\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ x(unsigned\ long,\ UNSIGNED\_LONG,\ 9)\ x(long\ long,\ LONG\_LONG,\ 10)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x(unsigned\ long\ long,\ UNSIGNED\_LONG\_LONG,\ 11)\ x(float,\ FLOAT,\ 12)\ x(double,\ DOUBLE,\ 13)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x(long\ double,\ LONG\_DOUBLE,\ 14)}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ To\ generate\ operation.}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ FOR\_EACH\_OPERATOR(x)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\ \ \ \ x(add,\ +,\ operator+,\ +=,\ operator+=)\ x(sub,\ -\/,\ operator-\/,\ -\/=,\ operator-\/=)\ x(mul,\ *,\ operator*,\ *=,\ operator*=)\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ x(div,\ /,\ operator/,\ /=,\ operator/=)}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{namespace\ }casyyy::maths::details\ \{}
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ Only\ for\ arithmetic\ types,\ except\ the\ char\ without\ explict\ sign.}}
+\DoxyCodeLine{00044\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00045\ \textcolor{keyword}{concept\ }ArithmeticWithExplictSign\ =\ ::std::is\_arithmetic\_v<T>\ \&\&\ !::std::is\_same\_v<char,\ T>;}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ Type\ tags.}}
+\DoxyCodeLine{00047\ \textcolor{keyword}{enum\ class}\ numeric\_types\ :\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \{}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ FUNCTION(type\_name,\ type\_enum\_name,\ enum\_value)\ type\_enum\_name\ =\ enum\_value,}}
+\DoxyCodeLine{00049\ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION)}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#undef\ FUNCTION}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ EMPTY\ =\ 0}
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ Type\ names.}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{inline}\ constexpr\ ::std::string\_view\ type\_names[]\{\textcolor{stringliteral}{"{}empty"{}},}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ FUNCTION(type\_name,\ type\_enum\_name,\ enum\_value)\ \#type\_name,}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION)}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#undef\ FUNCTION}}
+\DoxyCodeLine{00058\ \};}
+\DoxyCodeLine{00059\ \textcolor{comment}{//\ Check\ for\ a\ floating\ number\ isn't\ a\ NaN\ or\ inf.}}
+\DoxyCodeLine{00060\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ is\_normal\_number(\textcolor{keyword}{auto}\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ <\ 202202L}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ !=\ x)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ NOLINT}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ inf\ =\ ::std::numeric\_limits<\textcolor{keyword}{decltype}(x)>::infinity();}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ x\ !=\ inf\ \&\&\ x\ !=\ -\/inf;}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00066\ \ \ \ \ return\ ::std::isnormal(x);}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00068\ \}}
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ To\ determine\ type\ tag.}}
+\DoxyCodeLine{00070\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>}
+\DoxyCodeLine{00071\ \textcolor{keyword}{constexpr}\ numeric\_types\ types()\ noexcept\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{return}\ numeric\_types::EMPTY;}
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ FUNCTION(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ template\ <>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\ \ \ \ constexpr\ numeric\_types\ types<type\_name>()\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ numeric\_types::type\_enum\_name;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ FOR\_EACH\_TYPES\_TO(FUNCTION)}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#undef\ FUNCTION}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \}\ \textcolor{comment}{//\ namespace\ casyyy::maths::details}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespacecasyyy_1_1maths}{casyyy::maths}}\ \{}
+\DoxyCodeLine{00089\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\_policy}}\ :\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa2133fd717402a7966ee88d06f9e0b792}{strict}},\ }
+\DoxyCodeLine{00096\ \ \ \ \ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555}{normal}},\ }
+\DoxyCodeLine{00102\ \ \ \ \ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b}{relaxed}}\ }
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{keyword}{class\ }numeric\_any;}
+\DoxyCodeLine{00109\ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T,\ casting\_policy\ Policy\ =\ casting\_policy::strict>}
+\DoxyCodeLine{00110\ constexpr\ ::std::optional<T>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{numeric\_cast}}(\textcolor{keyword}{const}\ numeric\_any\&)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00116\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ \{}
+\DoxyCodeLine{00117\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ The\ former\ declarations.}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T>}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{constexpr}\ T\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ab91c22155daa9436a7fadff4934d6e97}{unchecked\_numeric\_cast}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T,\ casting\_policy>}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{friend}\ constexpr\ ::std::optional<T>\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a9d3bee02fd4a6a2162c0f189ca56f119}{numeric\_cast}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a188a20bc537dacf885089424cfac642e}{bpow}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&,\ \textcolor{keywordtype}{unsigned})\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}()\ noexcept\ =\ default;}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00132\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}(details::ArithmeticWithExplictSign\ auto)\ noexcept;}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00137\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ operator-\/()\ const\ noexcept;}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00142\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ operator+()\ const\ noexcept\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00144\ \ \ \ \ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a0f5b666869b14a768cf2c7d02ad156ca}{operator++}}()\ noexcept;}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00156\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ operator++(\textcolor{keywordtype}{int})\ noexcept;}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00162\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ operator-\/-\/()\ noexcept;}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00168\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ operator-\/-\/(\textcolor{keywordtype}{int})\ noexcept;}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00175\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator+=(details::ArithmeticWithExplictSign\ auto\ x)\ noexcept;}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00179\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator-\/=(details::ArithmeticWithExplictSign\ auto\ x)\ noexcept;}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00183\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator*=(details::ArithmeticWithExplictSign\ auto\ x)\ noexcept;}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00187\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator/=(details::ArithmeticWithExplictSign\ auto\ x)\ noexcept;}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00193\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator+=(const\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ noexcept;}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00197\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator-\/=(const\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ noexcept;}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00201\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator*=(const\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ noexcept;}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00205\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator/=(const\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ noexcept;}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00212\ \ \ \ \ constexpr\ \textcolor{keywordtype}{bool}\ operator==(details::ArithmeticWithExplictSign\ auto\ x)\ const\ noexcept;}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00219\ \ \ \ \ constexpr\ ::\doxymbox{\hyperlink{namespacestd}{std}}::partial\_ordering\ operator<=>(details::ArithmeticWithExplictSign\ auto\ x)\ const\ noexcept;}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00225\ \ \ \ \ constexpr\ \textcolor{keywordtype}{bool}\ operator==(const\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ const\ noexcept;}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00231\ \ \ \ \ constexpr\ ::\doxymbox{\hyperlink{namespacestd}{std}}::partial\_ordering\ operator<=>(const\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ const\ noexcept;}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00236\ \ \ \ \ explicit\ constexpr\ operator\ \textcolor{keywordtype}{bool}()\ const\ noexcept;}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00242\ \ \ \ \ constexpr\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ operator=(details::ArithmeticWithExplictSign\ auto\ x)\ noexcept\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ this-\/>\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ab6905c700027cac5339cf2ca4bb2bef4}{reset}}(x);}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00245\ \ \ \ \ \}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00249\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac0b37abb6fabc1868247dc01a63f823d}{empty}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ type\ ==\ details::numeric\_types::EMPTY;}
+\DoxyCodeLine{00251\ \ \ \ \ \}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00255\ \ \ \ \ [[nodiscard]]\ constexpr\ ::std::string\_view\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ details::type\_names[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(type)];}
+\DoxyCodeLine{00257\ \ \ \ \ \}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00261\ \ \ \ \ [[nodiscard]]\ constexpr\ ::std::size\_t\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a93c1571e7e1165a5682660aacea9650a}{type\_size}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ width;}
+\DoxyCodeLine{00263\ \ \ \ \ \}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00267\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ float\_point;}
+\DoxyCodeLine{00269\ \ \ \ \ \}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00273\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ is\_unsigned;}
+\DoxyCodeLine{00275\ \ \ \ \ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00280\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ positive;}
+\DoxyCodeLine{00282\ \ \ \ \ \}}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ab6905c700027cac5339cf2ca4bb2bef4}{reset}}(details::ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T>}
+\DoxyCodeLine{00295\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a782c046baf3d06e457b873ec1cdd4971}{is\_same\_type}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ details::types<T>()\ ==\ type;}
+\DoxyCodeLine{00297\ \ \ \ \ \}}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T>}
+\DoxyCodeLine{00304\ \ \ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}()\ const\ noexcept;}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00309\ \ \ \ \ [[nodiscard]]\ constexpr\ ::\doxymbox{\hyperlink{namespacestd}{std}}::span<const\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}>\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a8c9ee07795e9ead39b1c6d953a056554}{view\_bytes}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ return\ ::std::span\{storage\_.data(),\ width\};}
+\DoxyCodeLine{00311\ \ \ \ \ \}}
+\DoxyCodeLine{00312\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//\ Use\ to\ store\ all\ bytes\ of\ a\ value.}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keyword}{alignas}(8)::std::array<unsigned\ char,\ 16>\ storage\_\{\};}
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ width\ =\ 0;}
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{comment}{//\ These\ data\ use\ to\ switch\ the\ branch\ in\ operations\ and\ castings.}}
+\DoxyCodeLine{00317\ \ \ \ \ details::numeric\_types\ type\{details::numeric\_types::EMPTY\};}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keywordtype}{bool}\ float\_point\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_unsigned\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{keywordtype}{bool}\ positive\ \ \ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{comment}{/*\ \ A\ template\ in\ operation\ :}}
+\DoxyCodeLine{00323\ \textcolor{comment}{\ \ \ \ \ \ \ It\ will\ set\ the\ common\_type,\ to\ determine\ final\ type\ of\ value.}}
+\DoxyCodeLine{00324\ \textcolor{comment}{\ \ \ \ \ \ \ Then\ restore\ the\ value,\ with\ type\ "{}T1"{},\ the\ exact\ or\ promoted\ type\ of\ the\ value.}}
+\DoxyCodeLine{00325\ \textcolor{comment}{\ \ \ \ \ \ \ Finally,\ doing\ operation\ and\ reset\ inner\ storage.\ */}}
+\DoxyCodeLine{00326\ \textcolor{preprocessor}{\#define\ FUNCTIONS\_OPERATION(name,\ op,\ op\_name,\ op2,\ op2\_name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00327\ \textcolor{preprocessor}{\ \ \ \ template\ <typename\ T1,\ typename\ T2>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00328\ \textcolor{preprocessor}{\ \ \ \ constexpr\ void\ casting\_\#\#name(T2\ x)\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00329\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ common\_type\ =\ ::std::common\_type\_t<T1,\ T2>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00330\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ lhs\ \ \ \ \ \ \ \ \ \ =\ unchecked\_numeric\_cast<T1>(*this);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00331\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ result\ \ \ \ \ \ \ =\ static\_cast<common\_type>(lhs)\ op\ static\_cast<common\_type>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00332\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ reset(result);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00333\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00334\ }
+\DoxyCodeLine{00335\ \ \ \ \ FOR\_EACH\_OPERATOR(FUNCTIONS\_OPERATION)}
+\DoxyCodeLine{00336\ \textcolor{preprocessor}{\#undef\ FUNCTIONS\_OPERATION}}
+\DoxyCodeLine{00338\ \};}
+\DoxyCodeLine{00345\ \textcolor{preprocessor}{\#define\ FUNCTION\_TWO\_OPERATION(name,\ op,\ op\_name,\ op2,\ op2\_name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00346\ \textcolor{preprocessor}{\ \ \ \ constexpr\ numeric\_any\ op\_name(numeric\_any\ x,\ details::ArithmeticWithExplictSign\ auto\ y)\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00347\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ x\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00348\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00349\ \textcolor{preprocessor}{\ \ \ \ constexpr\ numeric\_any\ op\_name(details::ArithmeticWithExplictSign\ auto\ x,\ numeric\_any\ y)\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00350\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ numeric\_any\{x\}\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00351\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00352\ \textcolor{preprocessor}{\ \ \ \ constexpr\ numeric\_any\ op\_name(numeric\_any\ x,\ numeric\_any\ y)\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00353\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ x\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00354\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ FOR\_EACH\_OPERATOR(\doxymbox{\hyperlink{numeric__any_8hpp_a7eac2aa0392813b2f68a19a1f241ad85}{FUNCTION\_TWO\_OPERATION}})}
+\DoxyCodeLine{00357\ \textcolor{preprocessor}{\#undef\ FUNCTION\_TWO\_OPERATION}}
+\DoxyCodeLine{00359\ \textcolor{comment}{//\ Based\ on\ the\ std::bit\_cast.}}
+\DoxyCodeLine{00360\ \textcolor{preprocessor}{\#define\ FUNCTION\_TO\_CAST(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00361\ \textcolor{preprocessor}{\ \ \ \ case\ details::numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00362\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ NOT\_IN\_CONSTANT\_EVALUATION\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00363\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ type\_name\ restore\_value\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00364\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ ::std::memcpy(\&restore\_value,\ x.storage\_.data(),\ sizeof(type\_name));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00365\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ return\ static\_cast<T>(restore\_value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00366\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00367\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ ::std::array<unsigned\ char,\ sizeof(type\_name)>\ temp\_\{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00368\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ for\ (::size\_t\ i\ =\ 0;\ i\ <\ sizeof(type\_name);\ ++i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00369\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\_[i]\ =\ x.storage\_[i];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00370\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ return\ static\_cast<T>(::std::bit\_cast<type\_name,\ decltype(temp\_)>(temp\_));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00371\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00372\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00373\ \textcolor{comment}{//\ Using\ the\ fast\ exponentiation\ algorithm.}}
+\DoxyCodeLine{00374\ \textcolor{preprocessor}{\#define\ FUNCTION\_BINARY\_EXP(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00375\ \textcolor{preprocessor}{\ \ \ \ case\ details::numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00376\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ result\ =\ static\_cast<type\_name>(1)\ *\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00377\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (n\ ==\ 0)\ return\ numeric\_any\{result\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00378\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ restore\_value\ =\ unchecked\_numeric\_cast<type\_name>(a);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00379\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ while\ (n)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00380\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (n\ \&\ 1)\ result\ *=\ restore\_value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00381\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ restore\_value\ *=\ restore\_value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00382\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ n\ >>=\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00383\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00384\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ numeric\_any\{result\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00385\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00393\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a4c705e90a22b3660d4d9488c33f5a665}{bpow}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ a,\ \textcolor{keywordtype}{unsigned}\ n)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keywordflow}{switch}\ (a.type)\ \{}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_BINARY\_EXP)\ \textcolor{comment}{//\ Using}}
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a;}
+\DoxyCodeLine{00398\ \ \ \ \ \}}
+\DoxyCodeLine{00399\ \}}
+\DoxyCodeLine{00400\ \textcolor{preprocessor}{\#undef\ FUNCTION\_BINARY\_EXP}}
+\DoxyCodeLine{00407\ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T>}
+\DoxyCodeLine{00408\ \textcolor{keyword}{constexpr}\ T\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keywordflow}{switch}\ (x.type)\ \{}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_TO\_CAST)}
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::EMPTY:}
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ T\{\};}
+\DoxyCodeLine{00414\ \ \ \ \ \}}
+\DoxyCodeLine{00415\ \}}
+\DoxyCodeLine{00416\ \textcolor{preprocessor}{\#undef\ FUNCTION\_TO\_CAST}}
+\DoxyCodeLine{00418\ \textcolor{comment}{//\ The\ cases\ will\ check\ the\ Inf\ and\ NaN.}}
+\DoxyCodeLine{00419\ \textcolor{preprocessor}{\#define\ FUNCTION\_TO\_RESTORE\_VALUE(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00420\ \textcolor{preprocessor}{\ \ \ \ case\ details::numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00421\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ restore\_value\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00422\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ constexpr\ (::std::is\_floating\_point\_v<type\_name>)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00423\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (!details::is\_normal\_number(restore\_value))\ return\ ::std::nullopt;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00424\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ auto\ res\ =\ static\_cast<T>(restore\_value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00425\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (!details::is\_normal\_number(restore\_value))\ return\ ::std::nullopt;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00426\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ return\ res;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00427\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00428\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ static\_cast<T>(restore\_value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00429\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00439\ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T,\ casting\_policy\ Policy>}
+\DoxyCodeLine{00440\ [[nodiscard]]\ constexpr\ ::std::optional<T>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{numeric\_cast}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (Policy\ ==\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa2133fd717402a7966ee88d06f9e0b792}{casting\_policy::strict}})\ \{}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!x.can\_safe\_convert\_to<T>())\ return\ ::std::nullopt;}
+\DoxyCodeLine{00443\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (Policy\ ==\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555}{casting\_policy::normal}})\ \{}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.empty())\ return\ ::std::nullopt;}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_floating\_point\_v<T>)\ \{}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.width\ >\ \textcolor{keyword}{sizeof}(T))\ return\ ::std::nullopt;}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_unsigned\_v<T>)\ \{}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.float\_point\ ||\ !x.positive)\ return\ ::std::nullopt;}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.float\_point\ ||\ (x.is\_unsigned\ \&\&\ x.width\ >=\ \textcolor{keyword}{sizeof}(T)))\ return\ ::std::nullopt;}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00452\ \ \ \ \ \}}
+\DoxyCodeLine{00453\ \ \ \ \ \textcolor{keywordflow}{switch}\ (x.type)\ \{}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_TO\_RESTORE\_VALUE)}
+\DoxyCodeLine{00455\ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::EMPTY:}
+\DoxyCodeLine{00456\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ return\ ::std::nullopt;}
+\DoxyCodeLine{00458\ \ \ \ \ \}}
+\DoxyCodeLine{00459\ \}}
+\DoxyCodeLine{00460\ \textcolor{preprocessor}{\#undef\ FUNCTION\_TO\_RESTORE\_VALUE}}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any::numeric\_any}}(details::ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x)\ noexcept}
+\DoxyCodeLine{00463\ \ \ \ \ :\ width\{\textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x))\},\ type\{details::types<decltype(x)>()\},}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ float\_point\{::std::is\_floating\_point\_v<\textcolor{keyword}{decltype}(x)>\},\ is\_unsigned\{::std::is\_unsigned\_v<\textcolor{keyword}{decltype}(x)>\},}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ positive\{x\ >=\ \textcolor{keyword}{decltype}(x)\{\}\}\ \{}
+\DoxyCodeLine{00466\ \ \ \ \ \textcolor{comment}{//\ Base\ on\ the\ std::bit\_cast;}}
+\DoxyCodeLine{00467\ \ \ \ \ \textcolor{keywordflow}{if}\ NOT\_IN\_CONSTANT\_EVALUATION\ \{}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ ::std::memcpy(storage\_.data(),\ \&x,\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x)));}
+\DoxyCodeLine{00469\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ ::std::array<\textcolor{keywordtype}{unsigned}\ char,\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x))>\ temp\_\{\};}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ temp\_\ =\ ::std::bit\_cast<decltype(temp\_),\ decltype(x)>(x);}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (::std::size\_t\ i\ =\ 0;\ i\ <\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x));\ ++i)}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ storage\_[i]\ =\ temp\_[i];}
+\DoxyCodeLine{00474\ \ \ \ \ \}}
+\DoxyCodeLine{00475\ \}}
+\DoxyCodeLine{00476\ }
+\DoxyCodeLine{00477\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ab6905c700027cac5339cf2ca4bb2bef4}{numeric\_any::reset}}(details::ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00478\ \ \ \ \ storage\_.fill(0);}
+\DoxyCodeLine{00479\ \ \ \ \ type\ \ \ \ \ \ \ \ =\ details::types<decltype(x)>();}
+\DoxyCodeLine{00480\ \ \ \ \ float\_point\ =\ ::std::is\_floating\_point\_v<\textcolor{keyword}{decltype}(x)>;}
+\DoxyCodeLine{00481\ \ \ \ \ width\ \ \ \ \ \ \ =\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x));}
+\DoxyCodeLine{00482\ \ \ \ \ is\_unsigned\ =\ ::std::is\_unsigned\_v<\textcolor{keyword}{decltype}(x)>;}
+\DoxyCodeLine{00483\ \ \ \ \ positive\ \ \ \ =\ x\ >=\ \textcolor{keyword}{decltype}(x)\{\};}
+\DoxyCodeLine{00484\ \ \ \ \ \textcolor{keywordflow}{if}\ NOT\_IN\_CONSTANT\_EVALUATION\ \{}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ ::std::memcpy(storage\_.data(),\ \&x,\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x)));}
+\DoxyCodeLine{00486\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ ::std::array<\textcolor{keywordtype}{unsigned}\ char,\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x))>\ temp\_\{\};}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ temp\_\ =\ ::std::bit\_cast<decltype(temp\_),\ decltype(x)>(x);}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (::std::size\_t\ i\ =\ 0;\ i\ <\ \textcolor{keyword}{sizeof}(\textcolor{keyword}{decltype}(x));\ ++i)}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \ \ \ \ storage\_[i]\ =\ temp\_[i];}
+\DoxyCodeLine{00491\ \ \ \ \ \}}
+\DoxyCodeLine{00492\ \}}
+\DoxyCodeLine{00494\ \textcolor{preprocessor}{\#define\ FUNCTION\_TO\_RESTORE\_VALUE(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00495\ \textcolor{preprocessor}{\ \ \ \ case\ details::numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00496\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ type\_name\ restore\_value\ =\ unchecked\_numeric\_cast<type\_name>(*this);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00497\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ numeric\_any\{-\/restore\_value\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00498\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00500\ }
+\DoxyCodeLine{00501\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a16ddade7e6f92a8ec7b3e3e6b7d1256f}{numeric\_any::operator-\/}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)\ \{}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_TO\_RESTORE\_VALUE)}
+\DoxyCodeLine{00504\ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::EMPTY:}
+\DoxyCodeLine{00505\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\{\};}
+\DoxyCodeLine{00507\ \ \ \ \ \}}
+\DoxyCodeLine{00508\ \}}
+\DoxyCodeLine{00509\ }
+\DoxyCodeLine{00510\ \textcolor{preprocessor}{\#undef\ FUNCTION\_TO\_RESTORE\_VALUE}}
+\DoxyCodeLine{00512\ \textcolor{preprocessor}{\#define\ FUNCTION\_TO\_ADD(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00513\ \textcolor{preprocessor}{\ \ \ \ case\ details::numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00514\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ restore\ =\ unchecked\_numeric\_cast<type\_name>(*this);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00515\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ *this\ =\ static\_cast<type\_name>(restore\ +\ static\_cast<type\_name>(1));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00516\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00517\ }
+\DoxyCodeLine{00518\ \textcolor{preprocessor}{\#define\ FUNCTION\_TO\_SUB(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00519\ \textcolor{preprocessor}{\ \ \ \ case\ details::numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00520\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ restore\ =\ unchecked\_numeric\_cast<type\_name>(*this);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00521\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ *this\ =\ static\_cast<type\_name>(restore\ -\/\ static\_cast<type\_name>(1));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00522\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00525\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a0f5b666869b14a768cf2c7d02ad156ca}{numeric\_any::operator++}}()\ noexcept\ \{}
+\DoxyCodeLine{00526\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)\ \{}
+\DoxyCodeLine{00527\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_TO\_ADD)}
+\DoxyCodeLine{00528\ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::EMPTY:}
+\DoxyCodeLine{00529\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00531\ \ \ \ \ \}}
+\DoxyCodeLine{00532\ \}}
+\DoxyCodeLine{00533\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a0f5b666869b14a768cf2c7d02ad156ca}{numeric\_any::operator++}}(\textcolor{keywordtype}{int})\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00534\ \ \ \ \ \textcolor{keyword}{auto}\ repeat\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00535\ \ \ \ \ ++*\textcolor{keyword}{this};}
+\DoxyCodeLine{00536\ \ \ \ \ \textcolor{keywordflow}{return}\ repeat;}
+\DoxyCodeLine{00537\ \}}
+\DoxyCodeLine{00538\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ae318d85355fa2531f8e52abf6a2a4ed3}{numeric\_any::operator-\/-\/}}()\ noexcept\ \{}
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)\ \{}
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_TO\_SUB)}
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::EMPTY:}
+\DoxyCodeLine{00542\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00544\ \ \ \ \ \}}
+\DoxyCodeLine{00545\ \}}
+\DoxyCodeLine{00546\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ae318d85355fa2531f8e52abf6a2a4ed3}{numeric\_any::operator-\/-\/}}(\textcolor{keywordtype}{int})\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00547\ \ \ \ \ \textcolor{keyword}{auto}\ repeat\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00548\ \ \ \ \ -\/-\/*\textcolor{keyword}{this};}
+\DoxyCodeLine{00549\ \ \ \ \ \textcolor{keywordflow}{return}\ repeat;}
+\DoxyCodeLine{00550\ \}}
+\DoxyCodeLine{00551\ }
+\DoxyCodeLine{00552\ \textcolor{keyword}{constexpr}\ numeric\_any::operator\ bool()\ const\ noexcept\ \{}
+\DoxyCodeLine{00553\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<bool>}}(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00554\ \}}
+\DoxyCodeLine{00555\ }
+\DoxyCodeLine{00556\ \textcolor{keyword}{template}\ <details::ArithmeticWithExplictSign\ T>}
+\DoxyCodeLine{00557\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{numeric\_any::can\_safe\_convert\_to}}()\ const\ noexcept\ \{}
+\DoxyCodeLine{00558\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac0b37abb6fabc1868247dc01a63f823d}{empty}}())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00559\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a782c046baf3d06e457b873ec1cdd4971}{is\_same\_type<T>}}())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ Safe\ when\ the\ tag\ of\ the\ "{}T"{}\ is\ same\ as\ inner\ tag.}}
+\DoxyCodeLine{00560\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::BOOL)\ \{}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ Bool\ is\ safe\ to\ cast\ to\ all\ types.}}
+\DoxyCodeLine{00562\ \ \ \ \ \}}
+\DoxyCodeLine{00563\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_floating\_point\_v<T>)\ \{}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ float\_point\ \&\&\ width\ <=\ \textcolor{keyword}{sizeof}(T);\ \textcolor{comment}{//\ Only\ support\ promotions\ in\ floating\ numbers.}}
+\DoxyCodeLine{00565\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_unsigned\_v<T>)\ \{}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_unsigned)\ \textcolor{keywordflow}{return}\ width\ <=\ \textcolor{keyword}{sizeof}(T);\ \textcolor{comment}{//\ Promotions\ between\ two\ unsigned\ numbers\ are\ safe.}}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!float\_point)\ \{}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (positive)\ \textcolor{keywordflow}{return}\ width\ <=\ \textcolor{keyword}{sizeof}(T);\ \textcolor{comment}{//\ Promotions\ from\ non-\/negative\ numbers\ are\ safe.}}
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00572\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Support\ to\ promotions\ to\ a\ wider\ signed\ integral\ type.}}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_unsigned)\ \textcolor{keywordflow}{return}\ width\ <\ \textcolor{keyword}{sizeof}(T);}
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Allowing\ equal\ width\ converting\ when\ both\ signed\ integral\ numbers.}}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!float\_point)\ \textcolor{keywordflow}{return}\ width\ <=\ \textcolor{keyword}{sizeof}(T);}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00578\ \ \ \ \ \}}
+\DoxyCodeLine{00579\ \}}
+\DoxyCodeLine{00581\ \textcolor{comment}{/*\ Based\ on\ standard-\/conversions\ in\ C/C++,\ all\ operations\ will\ check\ the\ tag\ to\ determine\ input\ types.}}
+\DoxyCodeLine{00582\ \textcolor{comment}{\ \ \ No\ need\ to\ check\ all\ tags,\ because\ of\ promotions.\ */}}
+\DoxyCodeLine{00583\ \textcolor{preprocessor}{\#define\ FUNCTIONS\_OPERATION(name,\ op,\ op\_name,\ op2,\ op2\_name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00584\ \textcolor{preprocessor}{\ \ \ \ constexpr\ numeric\_any\&\ numeric\_any::op2\_name(details::ArithmeticWithExplictSign\ auto\ x)\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00585\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (empty())\ return\ *this;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00586\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ switch\ (type)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00587\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::UNSIGNED\_INT:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00588\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<unsigned\ int>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00589\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00590\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00591\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::LONG:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00592\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<long>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00593\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00594\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00595\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::UNSIGNED\_LONG:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00596\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<unsigned\ long>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00597\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00598\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00599\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::LONG\_LONG:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00600\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<long\ long>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00601\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00602\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00603\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::UNSIGNED\_LONG\_LONG:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00604\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<unsigned\ long\ long>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00605\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00606\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00607\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::FLOAT:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00608\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<float>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00609\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00610\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00611\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::DOUBLE:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00612\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<double>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00613\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00614\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00615\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ case\ details::numeric\_types::LONG\_DOUBLE:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00616\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<long\ double>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00617\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00618\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00619\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ default:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00620\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<int>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00621\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ break;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00622\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00623\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ *this;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00624\ \textcolor{preprocessor}{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00625\ \textcolor{preprocessor}{\ \ \ \ constexpr\ numeric\_any\&\ numeric\_any::op2\_name(const\ numeric\_any\&\ x)\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00626\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (empty()\ ||\ x.empty())\ return\ *this\ =\ numeric\_any\{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00627\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ (type\ ==\ details::numeric\_types::LONG\_DOUBLE\ ||\ x.type\ ==\ details::numeric\_types::LONG\_DOUBLE)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00628\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<long\ double>(unchecked\_numeric\_cast<long\ double>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00629\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::DOUBLE\ ||\ x.type\ ==\ details::numeric\_types::DOUBLE)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00630\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<double>(unchecked\_numeric\_cast<double>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00631\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::FLOAT\ ||\ x.type\ ==\ details::numeric\_types::FLOAT)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00632\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<float>(unchecked\_numeric\_cast<float>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00633\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::UNSIGNED\_LONG\_LONG\ ||\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00634\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x.type\ ==\ details::numeric\_types::UNSIGNED\_LONG\_LONG)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00635\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<unsigned\ long\ long>(unchecked\_numeric\_cast<unsigned\ long\ long>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00636\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::LONG\_LONG\ ||\ x.type\ ==\ details::numeric\_types::LONG\_LONG)\ \{\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00637\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<long\ long>(unchecked\_numeric\_cast<long\ long>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00638\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::UNSIGNED\_LONG\ ||\ x.type\ ==\ details::numeric\_types::UNSIGNED\_LONG)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00639\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<unsigned\ long>(unchecked\_numeric\_cast<unsigned\ long>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00640\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::LONG\ ||\ x.type\ ==\ details::numeric\_types::LONG)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00641\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<long>(unchecked\_numeric\_cast<long>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00642\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ if\ (type\ ==\ details::numeric\_types::UNSIGNED\_INT\ ||\ x.type\ ==\ details::numeric\_types::UNSIGNED\_INT)\ \{\ \ \ \(\backslash\)}}
+\DoxyCodeLine{00643\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<unsigned>(unchecked\_numeric\_cast<unsigned>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00644\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ else\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00645\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ casting\_\#\#name<int>(unchecked\_numeric\_cast<int>(x));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00646\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00647\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ *this;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00648\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00649\ }
+\DoxyCodeLine{00650\ FOR\_EACH\_OPERATOR(FUNCTIONS\_OPERATION)}
+\DoxyCodeLine{00651\ \textcolor{preprocessor}{\#undef\ FUNCTIONS\_OPERATION}}
+\DoxyCodeLine{00653\ \textcolor{comment}{//\ Comparison\ with\ normal\ number.}}
+\DoxyCodeLine{00654\ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a89bb2f74020043c349bd5a6fa9be748b}{numeric\_any::operator==}}(details::ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00655\ \ \ \ \ \textcolor{keywordflow}{return}\ *this\ <=>\ x\ ==\ ::std::partial\_ordering::equivalent;}
+\DoxyCodeLine{00656\ \}}
+\DoxyCodeLine{00657\ [[nodiscard]]\ constexpr\ ::std::partial\_ordering}
+\DoxyCodeLine{00658\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a96227ebf9e5c6844c889b477170337cd}{numeric\_any::operator<=>}}(details::ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00659\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac0b37abb6fabc1868247dc01a63f823d}{empty}}())\ return\ ::std::partial\_ordering::unordered;}
+\DoxyCodeLine{00660\ \ \ \ \ \textcolor{comment}{//\ The\ NaN\ will\ be\ checked\ first.}}
+\DoxyCodeLine{00661\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_floating\_point\_v<\textcolor{keyword}{decltype}(x)>)\ \{}
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ !=\ x)\ return\ ::std::partial\_ordering::unordered;\ \textcolor{comment}{//\ NOLINT}}
+\DoxyCodeLine{00663\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_same\_v<\textcolor{keyword}{decltype}(x),\ \textcolor{keywordtype}{float}>)\ \{}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::FLOAT)\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<float>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::DOUBLE)\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_same\_v<\textcolor{keyword}{decltype}(x),\ \textcolor{keywordtype}{double}>)\ \{}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ !=\ details::numeric\_types::LONG\_DOUBLE)\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ double>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00670\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (positive\ !=\ x\ >=\ \textcolor{keyword}{decltype}(x)\{\})\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(positive)\ <=>\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(x\ >=\ \textcolor{keyword}{decltype}(x)\{\});}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)\ \{}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::UNSIGNED\_LONG\_LONG:}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<unsigned\ long\ long>}}(*\textcolor{keyword}{this})\ <=>\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\textcolor{keyword}{>}(x);}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::FLOAT:}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<float>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::DOUBLE:}
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ details::numeric\_types::LONG\_DOUBLE:}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ double>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ long>}}(*\textcolor{keyword}{this})\ <=>\ x;}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00684\ \ \ \ \ \}}
+\DoxyCodeLine{00685\ \}}
+\DoxyCodeLine{00686\ \textcolor{comment}{//\ It\ will\ check\ the\ inner\ tag,\ then\ restore\ values\ to\ do\ comparison.}}
+\DoxyCodeLine{00687\ \textcolor{comment}{//\ No\ need\ to\ check\ all\ tags,\ since\ it\ won't\ change\ value.\ Just\ restore\ the\ value\ and\ do\ comparison.}}
+\DoxyCodeLine{00688\ [[nodiscard]]\ constexpr\ ::std::partial\_ordering\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a96227ebf9e5c6844c889b477170337cd}{numeric\_any::operator<=>}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00689\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac0b37abb6fabc1868247dc01a63f823d}{empty}}()\ ||\ x.empty())\ return\ ::std::partial\_ordering::unordered;}
+\DoxyCodeLine{00690\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::LONG\_DOUBLE\ ||\ x.type\ ==\ details::numeric\_types::LONG\_DOUBLE)}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ double>}}(*\textcolor{keyword}{this})\ <=>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ double>}}(x);}
+\DoxyCodeLine{00692\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::DOUBLE\ ||\ x.type\ ==\ details::numeric\_types::DOUBLE)}
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(*\textcolor{keyword}{this})\ <=>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(x);}
+\DoxyCodeLine{00694\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::FLOAT\ ||\ x.type\ ==\ details::numeric\_types::FLOAT)}
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<float>}}(*\textcolor{keyword}{this})\ <=>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<float>}}(x);}
+\DoxyCodeLine{00696\ \ \ \ \ \textcolor{comment}{//\ The\ signed\ will\ be\ checked\ first,\ so\ 12U\ <\ -\/1\ will\ be\ false.}}
+\DoxyCodeLine{00697\ \ \ \ \ \textcolor{keywordflow}{if}\ (positive\ !=\ x.positive)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(positive)\ <=>\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(x.positive);}
+\DoxyCodeLine{00698\ \ \ \ \ \textcolor{keywordflow}{if}\ (type\ ==\ details::numeric\_types::UNSIGNED\_LONG\_LONG\ ||\ x.type\ ==\ details::numeric\_types::UNSIGNED\_LONG\_LONG)}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<unsigned\ long\ long>}}(*\textcolor{keyword}{this})\ <=>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<unsigned\ long\ long>}}(x);}
+\DoxyCodeLine{00700\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ long>}}(*\textcolor{keyword}{this})\ <=>\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<long\ long>}}(x);}
+\DoxyCodeLine{00701\ \}}
+\DoxyCodeLine{00702\ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a89bb2f74020043c349bd5a6fa9be748b}{numeric\_any::operator==}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\_any}}\&\ x)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00703\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac0b37abb6fabc1868247dc01a63f823d}{empty}}()\ ||\ x.empty())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ Remind\ that\ the\ "{}empty\ ==\ empty"{}\ will\ be\ false.}}
+\DoxyCodeLine{00704\ \ \ \ \ \textcolor{keywordflow}{return}\ *this\ <=>\ x\ ==\ ::std::partial\_ordering::equivalent;}
+\DoxyCodeLine{00705\ \}}
+\DoxyCodeLine{00706\ \textcolor{preprocessor}{\#undef\ FUNCTION\_TP\_EQUAL}}
+\DoxyCodeLine{00708\ \textcolor{comment}{//\ To\ restore\ the\ number\ before\ output.}}
+\DoxyCodeLine{00709\ \textcolor{preprocessor}{\#define\ FUNCTION\_OUTPUT(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00710\ \textcolor{preprocessor}{\ \ \ \ if\ (x.is\_same\_type<type\_name>())\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00711\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ auto\ res\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00712\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ os\ <<\ res;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00713\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ os;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00714\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00715\ \textcolor{comment}{//\ Support\ using\ ostream\ to\ output.}}
+\DoxyCodeLine{00717\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ CharT,\ \textcolor{keyword}{typename}\ Trait\ =\ ::std::\textcolor{keywordtype}{char}\_traits<CharT>>}
+\DoxyCodeLine{00718\ ::std::basic\_ostream<CharT,\ Trait>\&\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6d6e4e0ff47509c7e969eacbc47ae2e6}{operator<<}}(::std::basic\_ostream<CharT,\ Trait>\&\ os,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ x)\ \{}
+\DoxyCodeLine{00719\ \ \ \ \ \textcolor{keyword}{constexpr}\ CharT\ empty\_str[]\{\textcolor{charliteral}{'e'},\ \textcolor{charliteral}{'m'},\ \textcolor{charliteral}{'p'},\ \textcolor{charliteral}{'t'},\ \textcolor{charliteral}{'y'},\ \textcolor{charliteral}{'\(\backslash\)0'}\};}
+\DoxyCodeLine{00720\ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_OUTPUT)}
+\DoxyCodeLine{00721\ \ \ \ \ os\ <<\ empty\_str;}
+\DoxyCodeLine{00722\ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{00723\ \}}
+\DoxyCodeLine{00724\ \textcolor{preprocessor}{\#undef\ FUNCTION\_OUTPUT}}
+\DoxyCodeLine{00729\ \textcolor{keyword}{constexpr}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6c994cea9d100868eaceabbc67b504c5}{make\_numeric\_any}}(details::ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00730\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\{x\};}
+\DoxyCodeLine{00731\ \}}
+\DoxyCodeLine{00732\ }
+\DoxyCodeLine{00733\ \}\ \textcolor{comment}{//\ namespace\ casyyy::maths}}
+\DoxyCodeLine{00735\ \textcolor{preprocessor}{\#define\ FUNCTION\_HASH(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00736\ \textcolor{preprocessor}{\ \ \ \ if\ (x.is\_same\_type<type\_name>())\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00737\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ type\_name\ restore\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00738\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ hash<type\_name>\{\}(restore);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00739\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00741\ \textcolor{keyword}{namespace\ }\doxymbox{\hyperlink{namespacestd}{std}}\ \{}
+\DoxyCodeLine{00743\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00744\ \textcolor{keyword}{struct\ }hash<::\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{casyyy::maths::numeric\_any}}>\ \{}
+\DoxyCodeLine{00746\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(const\ ::casyyy::maths::numeric\_any\&\ x)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_HASH)}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00749\ \ \ \ \ \}}
+\DoxyCodeLine{00751\ \};}
+\DoxyCodeLine{00752\ \textcolor{preprocessor}{\#undef\ FUNCTION\_HASH}}
+\DoxyCodeLine{00754\ \textcolor{preprocessor}{\#define\ FUNCTION\_FORMAT(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00755\ \textcolor{preprocessor}{\ \ \ \ if\ (x.is\_same\_type<type\_name>())\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00756\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ type\_name\ restore\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00757\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ if\ constexpr\ (is\_same\_v<CharT,\ wchar\_t>)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00758\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ return\ vformat\_to(ctx.out(),\ fmt,\ make\_wformat\_args(restore));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00759\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ else\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00760\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ return\ vformat\_to(ctx.out(),\ fmt,\ make\_format\_args(restore));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00761\ \textcolor{preprocessor}{\ \ \ \ \}}}
+\DoxyCodeLine{00763\ }
+\DoxyCodeLine{00769\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ CharT>}
+\DoxyCodeLine{00770\ \textcolor{keyword}{struct\ }formatter<::\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{casyyy::maths::numeric\_any}},\ CharT>\ \{}
+\DoxyCodeLine{00772\ \ \ \ \ \textcolor{comment}{//\ To\ store\ format\ string\ for\ value.}}
+\DoxyCodeLine{00773\ \ \ \ \ \textcolor{comment}{//\ Based\ on\ std::numeric\_limits<unsigned\ long\ long>::dight10,\ 60\ is\ enough.}}
+\DoxyCodeLine{00774\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{unsigned}\ FORMAT\_STRING\_BUFFER\_SIZE\ =\ 60;}
+\DoxyCodeLine{00775\ }
+\DoxyCodeLine{00776\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ parse(\textcolor{keyword}{auto}\&\ ctx)\ \{}
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parser\_.parse(ctx);}
+\DoxyCodeLine{00778\ \ \ \ \ \}}
+\DoxyCodeLine{00779\ }
+\DoxyCodeLine{00780\ \ \ \ \ \textcolor{keyword}{auto}\ format(const\ ::casyyy::maths::numeric\_any\&\ x,\ \textcolor{keyword}{auto}\&\ ctx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00781\ \ \ \ \ \ \ \ \ CharT\ format\_buffer[FORMAT\_STRING\_BUFFER\_SIZE]\{\};}
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Restore\ the\ format\ stirng,\ and\ used\ vformat\_to.}}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ finish\ =\ parser\_.restore\_format\_string(format\_buffer,\ format\_buffer\ +\ FORMAT\_STRING\_BUFFER\_SIZE,\ ctx);}
+\DoxyCodeLine{00784\ \ \ \ \ \ \ \ \ basic\_string\_view<CharT>\ fmt\{format\_buffer,\ finish\};}
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ FOR\_EACH\_TYPES\_TO(FUNCTION\_FORMAT)}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (is\_same\_v<CharT,\ wchar\_t>)\ \{}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ format\_to(ctx.out(),\ L\textcolor{stringliteral}{"{}\{\}"{}},\ L\textcolor{stringliteral}{"{}empty"{}});}
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ format\_to(ctx.out(),\ \textcolor{stringliteral}{"{}\{\}"{}},\ \textcolor{stringliteral}{"{}empty"{}});}
+\DoxyCodeLine{00790\ \ \ \ \ \}}
+\DoxyCodeLine{00791\ \ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1utils_1_1numeric__any__parser}{::casyyy::utils::numeric\_any\_parser<CharT>}}\ parser\_;}
+\DoxyCodeLine{00793\ \};}
+\DoxyCodeLine{00794\ \}\ \textcolor{comment}{//\ namespace\ std}}
+\DoxyCodeLine{00795\ \textcolor{preprocessor}{\#undef\ FUNCTION\_FORMAT}}
+\DoxyCodeLine{00796\ \textcolor{preprocessor}{\#undef\ FOR\_EACH\_OPERATOR}}
+\DoxyCodeLine{00797\ \textcolor{preprocessor}{\#undef\ FOR\_EACH\_TYPES\_TO}}
+\DoxyCodeLine{00798\ \textcolor{preprocessor}{\#undef\ NOT\_IN\_CONSTANT\_EVALUATION}}
+\DoxyCodeLine{00799\ }
+\DoxyCodeLine{00800\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00801\ \textcolor{preprocessor}{\#pragma\ warning(pop)}}
+\DoxyCodeLine{00802\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00803\ }
+\DoxyCodeLine{00804\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

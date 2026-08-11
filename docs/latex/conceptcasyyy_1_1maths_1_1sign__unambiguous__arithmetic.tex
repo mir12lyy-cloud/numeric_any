@@ -1,0 +1,19 @@
+\doxysection{casyyy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic Concept Reference}
+\hypertarget{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}{}\label{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}\index{casyyy::maths::sign\_unambiguous\_arithmetic@{casyyy::maths::sign\_unambiguous\_arithmetic}}
+
+
+Only for arithmetic types, except the char without explict sign.  
+
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}{sign\_unambiguous\_arithmetic}}\ =}
+\DoxyCodeLine{\ \ \ \ ::std::is\_arithmetic\_v<T>\ \&\&\ !::std::is\_same\_v<char,\ T>\ \&\&\ !::std::is\_same\_v<wchar\_t,\ T>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Only for arithmetic types, except the char without explict sign. 

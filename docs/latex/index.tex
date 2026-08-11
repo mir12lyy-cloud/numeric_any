@@ -1,0 +1,364 @@
+\chapter{numeric\+\_\+any }
+\hypertarget{index}{}\label{index}\index{numeric\_any@{numeric\_any}}
+\label{index_md__r_e_a_d_m_e}%
+\Hypertarget{index_md__r_e_a_d_m_e}%
+
+
+ 
+
+\begin{quote}
+A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{quote}
+\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Features}{Features}}\label{index_autotoc_md1}
+
+\begin{DoxyItemize}
+\item Supports any arithmetic type that conforms to the C++ standard, except {\ttfamily char} (which requires an explicit {\ttfamily signed} or {\ttfamily unsigned} qualification).
+\item Supports the four arithmetic operations (addition, subtraction, multiplication, division) and comparison operations.
+\item Supports simple print/\+output (formatting control is not currently supported).
+\item No RTTI, no virtual functions, no exceptions, and {\ttfamily constexpr}-\/friendly.
+\item Policy-\/based numeric conversion.
+\item Based on C++20/\+23.
+\item Header-\/only, provided in both {\ttfamily .ixx} and {\ttfamily .hpp} build variants.
+\end{DoxyItemize}\hypertarget{index_autotoc_md2}{}\doxysection{\texorpdfstring{Installation \& Integration}{Installation \& Integration}}\label{index_autotoc_md2}
+\hypertarget{index_autotoc_md3}{}\doxysubsection{\texorpdfstring{Environment Requirements}{Environment Requirements}}\label{index_autotoc_md3}
+
+\begin{DoxyItemize}
+\item C++ Standard:\+ At least C++20; C++23 is recommended for a better experience.
+\item Compiler:\+ At least GCC 13, Clang 17, or MSVC 19.\+30 (Visual Studio 2019 16.\+10) or later.
+\item Operating System:\+ Windows /\+ Linux
+\item Dependencies:\+ No external dependencies; uses only the C++20 standard library.
+\end{DoxyItemize}
+
+{\bfseries{Note:\+}} If you want to use modules to build, Recommend GCC15.\hypertarget{index_autotoc_md4}{}\doxysubsection{\texorpdfstring{Standard Library Dependencies}{Standard Library Dependencies}}\label{index_autotoc_md4}
+
+\begin{DoxyItemize}
+\item {\ttfamily \texorpdfstring{$<$}{<}array\texorpdfstring{$>$}{>}} – Static array storage
+\item {\ttfamily \texorpdfstring{$<$}{<}bit\texorpdfstring{$>$}{>}} – Bit manipulation functions
+\item {\ttfamily \texorpdfstring{$<$}{<}cmath\texorpdfstring{$>$}{>}} – For checking whether a floating-\/point number is normal
+\item {\ttfamily \texorpdfstring{$<$}{<}compare\texorpdfstring{$>$}{>}} – Three-\/way comparison operator support
+\item {\ttfamily \texorpdfstring{$<$}{<}cstring\texorpdfstring{$>$}{>}} – Type punning
+\item {\ttfamily \texorpdfstring{$<$}{<}functional\texorpdfstring{$>$}{>}} – Hash specialization
+\item {\ttfamily \texorpdfstring{$<$}{<}optional\texorpdfstring{$>$}{>}} – For returning whether a numeric conversion succeeded
+\item {\ttfamily \texorpdfstring{$<$}{<}ostream\texorpdfstring{$>$}{>}} – Stream output support
+\item {\ttfamily \texorpdfstring{$<$}{<}span\texorpdfstring{$>$}{>}} – For returning the byte representation of internal values
+\item {\ttfamily \texorpdfstring{$<$}{<}string\+\_\+view\texorpdfstring{$>$}{>}} – For providing type name strings
+\item {\ttfamily \texorpdfstring{$<$}{<}type\+\_\+traits\texorpdfstring{$>$}{>}} – Type traits
+\item {\ttfamily \texorpdfstring{$<$}{<}format\texorpdfstring{$>$}{>}} – Specialization of std::\+formatter
+\item {\ttfamily \texorpdfstring{$<$}{<}charconv\texorpdfstring{$>$}{>}} -\/ For parser transforms numbers to strings
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysubsection{\texorpdfstring{Clone The depository}{Clone The depository}}\label{index_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ https://github.com/mir12lyy-\/cloud/numeric\_any.git}
+\DoxyCodeLine{cd\ numeric\_any}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{Methods}{Methods}}\label{index_autotoc_md6}
+{\bfseries{Two integration methods are provided:\+ based on the {\ttfamily .hpp} header file, or based on the {\ttfamily .ixx} module. You may choose only one of them.}}
+
+{\bfseries{Method 1:\+ Copy {\ttfamily .hpp} directly:\+}} ~\newline
+ Simply copy {\ttfamily numeric\+\_\+any.\+hpp}, {\ttfamily numeric\+\_\+any\+\_\+parser.\+hpp} from the root directory of this project into your project.
+
+{\bfseries{Method 2:\+ Introduce {\ttfamily .hpp} via CMake (requires at least CMake 3.\+30):\+}} ~\newline
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\_minimum\_required(VERSION\ 3.30)}
+\DoxyCodeLine{include(FetchContent)}
+\DoxyCodeLine{FetchContent\_Declare(}
+\DoxyCodeLine{\ \ numeric\_any\_for\_hpp}
+\DoxyCodeLine{\ \ GIT\_REPOSITORY\ https://github.com/mir12lyy-\/cloud/numeric\_any.git}
+\DoxyCodeLine{\ \ GIT\_TAG\ master}
+\DoxyCodeLine{)}
+\DoxyCodeLine{FetchContent\_MakeAvailable(numeric\_any\_for\_hpp)}
+\DoxyCodeLine{add\_executable(my\_app\ main.cpp)}
+\DoxyCodeLine{target\_link\_libraries(my\_app\ PRIVATE\ numeric\_any\_for\_hpp)}
+
+\end{DoxyCode}
+
+
+{\bfseries{Method 3:\+ Introduce {\ttfamily .ixx} via CMake (requires at least CMake 3.\+30):\+}} ~\newline
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\_minimum\_required(VERSION\ 3.30)}
+\DoxyCodeLine{project(MyProject)}
+\DoxyCodeLine{set(CMAKE\_CXX\_STANDARD\ 23)\ \#\ Or\ 20.}
+\DoxyCodeLine{include(FetchContent)}
+\DoxyCodeLine{FetchContent\_Declare(}
+\DoxyCodeLine{\ \ numeric\_any}
+\DoxyCodeLine{\ \ GIT\_REPOSITORY\ https://github.com/mir12lyy-\/cloud/numeric\_any.git}
+\DoxyCodeLine{\ \ GIT\_TAG\ master}
+\DoxyCodeLine{)}
+\DoxyCodeLine{FetchContent\_MakeAvailable(numeric\_any)}
+\DoxyCodeLine{add\_executable(my\_app\ main.cpp)}
+\DoxyCodeLine{target\_link\_libraries(my\_app\ PRIVATE\ numeric\_any)}
+
+\end{DoxyCode}
+
+
+{\bfseries{Method 4:\+ Download {\ttfamily .ixx} and build manually:\+}} ~\newline
+ Download {\ttfamily \doxylink{numeric__any_8ixx}{numeric\+\_\+any.\+ixx}}, {\ttfamily \doxylink{numeric__any__parser_8ixx}{numeric\+\_\+any\+\_\+parser.\+ixx}} from the root directory of this project, then build according to your own build tools. A simple CMake build example:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{target\_sources(YourProject}
+\DoxyCodeLine{\ \ \ \ PUBLIC}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ FILE\_SET\ CXX\_MODULES}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ BASE\_DIRS\ xxx}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ FILES}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ numeric\_any\_parser.ixx\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ numeric\_any.ixx}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md7}{}\doxysubsection{\texorpdfstring{Quick Start}{Quick Start}}\label{index_autotoc_md7}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <print>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{import}\ \doxymbox{\hyperlink{module__casyyy_8maths_8numeric__any}{casyyy.maths.numeric\_any}};}
+\DoxyCodeLine{\textcolor{keyword}{using\ namespace\ }\doxymbox{\hyperlink{namespacecasyyy_1_1maths}{casyyy::maths}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 42;}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{:03d\}"{}},\ a);}
+\DoxyCodeLine{\ \ \ \ a\ =\ 31.1653;}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{:.2f\}"{}},\ a);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md8}{}\doxysubsection{\texorpdfstring{Ouput}{Ouput}}\label{index_autotoc_md8}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{042}
+\DoxyCodeLine{31.16}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md9}{}\doxysection{\texorpdfstring{Example:\+}{Example:\+}}\label{index_autotoc_md9}
+{\bfseries{Ignore basic {\ttfamily import}, {\ttfamily include} and {\ttfamily using namespace}.}}\hypertarget{index_autotoc_md10}{}\doxysubsection{\texorpdfstring{Construction}{Construction}}\label{index_autotoc_md10}
+{\bfseries{Code:\+}} \href{/examples/construction.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ b\ =\ 32;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
+\DoxyCodeLine{a\ =\ 32;}
+\DoxyCodeLine{b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a95dbcfad48e6c7607b9018ad5087a112}{reset}}<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}>(\textcolor{charliteral}{'a'});}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{empty\ 32}
+\DoxyCodeLine{32\ 97}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md11}{}\doxysubsection{\texorpdfstring{Heterogeneous Container}{Heterogeneous Container}}\label{index_autotoc_md11}
+{\bfseries{Code:\+}} \href{/examples/heterogeneous_container.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ process(\textcolor{keyword}{auto}\&\&...\ args)\ \{}
+\DoxyCodeLine{\ \ \ \ std::vector<numeric\_any>\ result;}
+\DoxyCodeLine{\ \ \ \ ((result.emplace\_back(args)),\ ...);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ process(12,\ 33U,\ \textcolor{keyword}{false},\ 3.14);}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ result);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[12,\ 33,\ false,\ 3.14]}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md12}{}\doxysubsection{\texorpdfstring{Metadatas}{Metadatas}}\label{index_autotoc_md12}
+{\bfseries{Code:\+}} \href{/examples/metadata.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ b\ =\ 32;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ c\ =\ 12U;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ d\ =\ -\/32.2;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{empty\ false\ false\ false}
+\DoxyCodeLine{int\ false\ false\ true}
+\DoxyCodeLine{unsigned\ int\ false\ true\ true}
+\DoxyCodeLine{double\ true\ false\ false}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md13}{}\doxysubsection{\texorpdfstring{Operations:\+}{Operations:\+}}\label{index_autotoc_md13}
+{\bfseries{Code:\+}} \href{/examples/operations.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 13;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ ++a);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a\ +=\ 12.3);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ -\/a);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a\ >\ -\/a);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}());}
+\DoxyCodeLine{a\ =\ -\/3;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a\ >\ 12U);}
+\DoxyCodeLine{a\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ ++a);}
+\DoxyCodeLine{a\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ -\/-\/a);}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{13}
+\DoxyCodeLine{14}
+\DoxyCodeLine{26.3}
+\DoxyCodeLine{-\/26.3}
+\DoxyCodeLine{true}
+\DoxyCodeLine{double}
+\DoxyCodeLine{false}
+\DoxyCodeLine{true}
+\DoxyCodeLine{false}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md14}{}\doxysubsection{\texorpdfstring{Type Lookup:\+}{Type Lookup:\+}}\label{index_autotoc_md14}
+{\bfseries{Code:\+}} \href{/examples/type_lookup.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ v\ =\ -\/42;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ u\ =\ 12;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a782c046baf3d06e457b873ec1cdd4971}{is\_same\_type}}<\textcolor{keywordtype}{int}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a782c046baf3d06e457b873ec1cdd4971}{is\_same\_type}}<\textcolor{keywordtype}{long}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ u.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{unsigned}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{short}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{float}>());}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{true}
+\DoxyCodeLine{false}
+\DoxyCodeLine{true}
+\DoxyCodeLine{true}
+\DoxyCodeLine{false}
+\DoxyCodeLine{false}
+\DoxyCodeLine{false}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md15}{}\doxysubsection{\texorpdfstring{Bytes view:\+}{Bytes view:\+}}\label{index_autotoc_md15}
+{\bfseries{Code:\+}} \href{/examples/bytes_view.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 123U;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{::02x\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a8c9ee07795e9ead39b1c6d953a056554}{view\_bytes}}());}
+\DoxyCodeLine{\ a\ =\ 14123.223;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{::02x\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a8c9ee07795e9ead39b1c6d953a056554}{view\_bytes}}());}
+
+\end{DoxyCode}
+ {\bfseries{Possible Output(\+Based on platform):\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[7b,\ 00,\ 00,\ 00]}
+\DoxyCodeLine{[81,\ 95,\ 43,\ 8b,\ 9c,\ 95,\ cb,\ 40]}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md16}{}\doxysubsection{\texorpdfstring{Casting:\+}{Casting:\+}}\label{index_autotoc_md16}
+{\bfseries{Code:\+}} \href{/examples/casting.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ casting\_policy\ Policy\ =\ casting\_policy::strict>}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ check\_casting(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ x)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{numeric\_cast<T,\ Policy>}}(x);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (result.has\_value())\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ result.value());}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::println(\textcolor{stringliteral}{"{}std::nullopt"{}});}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 12312;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ int(12312)}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Empty.}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ c\ =\ std::nan(\textcolor{stringliteral}{"{}1"{}});\ \textcolor{comment}{//\ NaN}}
+\DoxyCodeLine{\ \ \ \ check\_casting<int>(a);}
+\DoxyCodeLine{\ \ \ \ check\_casting<double>(a);}
+\DoxyCodeLine{\ \ \ \ check\_casting<long\ long>(a);}
+\DoxyCodeLine{\ \ \ \ check\_casting<int>(b);}
+\DoxyCodeLine{\ \ \ \ check\_casting<double>(c);}
+\DoxyCodeLine{\ \ \ \ check\_casting<float,\ casting\_policy::normal>(a);}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(b));}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(c));}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{12312}
+\DoxyCodeLine{std::nullopt}
+\DoxyCodeLine{12312}
+\DoxyCodeLine{std::nullopt}
+\DoxyCodeLine{std::nullopt}
+\DoxyCodeLine{12312}
+\DoxyCodeLine{0}
+\DoxyCodeLine{nan}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md17}{}\doxysubsection{\texorpdfstring{Output}{Output}}\label{index_autotoc_md17}
+{\bfseries{Code:\+}} \href{/examples/output.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 323423,\ b\ =\ 32342.123;}
+\DoxyCodeLine{std::cout\ <<\ a\ <<\ \textcolor{charliteral}{'\ '}\ <<\ b\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{std::wcout\ <<\ a\ <<\ \textcolor{charliteral}{'\ '}\ <<\ b\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{:\#08x\}\ \{:\#08x\}"{}},\ a,\ 323423);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{:*<6.2f\}\ \{:*<6.2f\}"{}},\ b,\ 32342.123);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{:0\{\}d\}"{}},\ a,\ 8);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{:0\{\}d\}"{}},\ 323423,\ 8);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{:\{\}.\{\}f\}"{}},\ b,\ 8,\ 2);}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{:\{\}.\{\}f\}"{}},\ 32342.123,\ 8,\ 2);}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{323423\ 32342.1}
+\DoxyCodeLine{323423\ 32342.1}
+\DoxyCodeLine{323423\ 32342.123}
+\DoxyCodeLine{0x04ef5f\ 0x04ef5f}
+\DoxyCodeLine{32342.12\ 32342.12}
+\DoxyCodeLine{00323423}
+\DoxyCodeLine{00323423}
+\DoxyCodeLine{32342.12}
+\DoxyCodeLine{32342.12}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item \href{/examples/}{\texttt{Overall example files}} -\/ Sample code is provided here for you to try and verify on your own.
+\end{DoxyItemize}\hypertarget{index_autotoc_md18}{}\doxysection{\texorpdfstring{API}{API}}\label{index_autotoc_md18}
+For the online API documentation, please visit：\href{https://github.com/mir12lyy-cloud/numeric_any/html/}{\texttt{https:\+/\+/\+github.\+com/\+mir12lyy-\/cloud/\+numeric\+\_\+any/\+html/\+}}\hypertarget{index_autotoc_md19}{}\doxysection{\texorpdfstring{Tests (Using Agent to generate)}{Tests (Using Agent to generate)}}\label{index_autotoc_md19}
+
+\begin{DoxyItemize}
+\item \href{/tests/units/}{\texttt{Unit test files}} -\/ You can use or modify these test files to check if there are any issues with the library.
+\item Benchmark result -\/ Overview of the result of benchmarks.
+\item \href{/tests/benchmarks/charts/}{\texttt{Benchmark charts}} -\/ Charts of the result of benchmarks.
+\item \href{/tests/benchmarks/}{\texttt{Benchmark test files}} -\/ You can use or modify these test files to do basic benchmarks with the library.
+\end{DoxyItemize}\hypertarget{index_autotoc_md20}{}\doxysection{\texorpdfstring{Roadmap}{Roadmap}}\label{index_autotoc_md20}
+
+\begin{DoxyItemize}
+\item[\DoxyChecked] Support parsing format string in {\ttfamily std::\+formatter}.
+\item[\DoxyUnchecked] Support math functions.
+\end{DoxyItemize}
+\begin{DoxyItemize}
+\item[\DoxyUnchecked] More casting policy.
+\end{DoxyItemize}\hypertarget{index_autotoc_md21}{}\doxysection{\texorpdfstring{Contributions}{Contributions}}\label{index_autotoc_md21}
+Welcome contributions of any kind. Whether it\textquotesingle{}s submitting an issue to report a bug or forking the project to send a PR. If you find this project helpful, please click the star in the top right to support. Thanks!\hypertarget{index_autotoc_md22}{}\doxysection{\texorpdfstring{Contact to Me}{Contact to Me}}\label{index_autotoc_md22}
+
+\begin{DoxyItemize}
+\item Email:\+ \href{mailto:huangjinyangyang@hotmail.com}{\texttt{huangjinyangyang@hotmail.\+com}}
+\end{DoxyItemize}\hypertarget{index_autotoc_md23}{}\doxysection{\texorpdfstring{License}{License}}\label{index_autotoc_md23}
+This project is licensed under the MIT License -\/ see the \+[LICENSE]\+(LICENSE) file for details.
+
+{\bfseries{Built with curiosity and caffeine.}} 

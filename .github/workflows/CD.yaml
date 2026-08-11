@@ -15,8 +15,8 @@ jobs:
       
       - name: Package Both
         run: |
-          tar -czvf numeric_any_${{ github.ref_name }}.tar.gz src/ README.md CMakeLists.txt LICENSE.txt
-          zip -r numeric_any_${{ github.ref_name }}.zip src/ README.md CMakeLists.txt LICENSE.txt
+          tar -czvf numeric_any_${{ github.ref_name }}.tar.gz src/ docs/ examples/ README.md CMakeLists.txt LICENSE.txt
+          zip -r numeric_any_${{ github.ref_name }}.zip src/ docs/ examples/ README.md CMakeLists.txt LICENSE.txt
 
       - name: Release
         uses: softprops/action-gh-release@v1
