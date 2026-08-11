@@ -2,7 +2,6 @@
 // Covers all arithmetic types, edge cases, promotions, and policies.
 
 #include <gtest/gtest.h>
-
 #include <cmath>
 #include <format>
 #include <limits>
@@ -1521,6 +1520,11 @@ TEST(FormatterTest, FormatDynamicPrecision) {
     EXPECT_EQ(std::format("{:.{}f}", a, 3), "3.142");
 }
 
+TEST(FormatterTest, EraseUnusedPattern) {
+    numeric_any a{42.324};
+    EXPECT_EQ(std::format("{:*>0.0f}", a), std::format("{:f}", 42.324));
+}
+
 TEST(FormatterTest, FormatEmpty) {
     numeric_any a;
     EXPECT_EQ(std::format("{}", a), "empty");
@@ -1528,9 +1532,18 @@ TEST(FormatterTest, FormatEmpty) {
     EXPECT_EQ(std::format("{:04d}", a), "empty");
 }
 
-TEST(FormatterTest, EraseUnusedPattern) {
-    numeric_any a{42.324};
-    EXPECT_EQ(std::format("{:*>0.0f}", a), std::format("{:f}", 42.324));
+TEST(FormatterTest, WrongTypeFormat) {
+    numeric_any a{42.324}, b{12};
+    try {
+        EXPECT_THROW((void)std::vformat("{:d}", std::make_format_args(a)), std::format_error);
+    } catch (std::format_error& e) {
+        EXPECT_STREQ(e.what(), "Cannot use integer format specifier with a float.");
+    }
+    try {
+        EXPECT_THROW((void)std::vformat("{:.2f}", std::make_format_args(b)), std::format_error);
+    } catch (std::format_error& e) {
+        EXPECT_STREQ(e.what(), "Cannot use float format specifier with an integer.");
+    }
 }
 
 TEST(FormatterTest, FormatErrorInvalidSpecifier) {
@@ -1579,6 +1592,26 @@ TEST(WideFormatterTest, EraseUnusedPattern) {
 TEST(WideFormatterTest, FormatEmpty) {
     numeric_any a;
     EXPECT_EQ(std::format(L"{}", a), L"empty");
+}
+
+TEST(WideFormatterTest, WrongTypeFormat) {
+    numeric_any a{42.324}, b{12};
+    try {
+        EXPECT_THROW((void)std::vformat(L"{:d}", std::make_wformat_args(a)), std::format_error);
+    } catch (std::format_error& e) {
+        EXPECT_STREQ(e.what(), "Cannot use integer format specifier with a float.");
+    }
+    try {
+        EXPECT_THROW((void)std::vformat(L"{:.2f}", std::make_wformat_args(b)), std::format_error);
+    } catch (std::format_error& e) {
+        EXPECT_STREQ(e.what(), "Cannot use float format specifier with an integer.");
+    }
+}
+
+TEST(WideFormatterTest, FormatErrorInvalidSpecifier) {
+    numeric_any a{42};
+    EXPECT_THROW((void)std::vformat(L"{:q}", std::make_wformat_args(a)), std::format_error);
+    EXPECT_THROW((void)std::vformat(L"{:qd}", std::make_wformat_args(a)), std::format_error);
 }
 
 // ============================================================================

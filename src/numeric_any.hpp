@@ -177,15 +177,15 @@ public:
     constexpr numeric_any& operator+=(sign_unambiguous_arithmetic auto x) noexcept;
 
     /// @brief Do a substraction assignment with a normal value.
-    /// @copydetails operator+=(ArithmeticWithExplictSign auto)
+    /// @copydetails operator+=(sign_unambiguous_arithmetic auto)
     constexpr numeric_any& operator-=(sign_unambiguous_arithmetic auto x) noexcept;
 
     /// @brief Do a multiplication assignment with a normal value.
-    /// @copydetails operator+=(ArithmeticWithExplictSign auto)
+    /// @copydetails operator+=(sign_unambiguous_arithmetic auto)
     constexpr numeric_any& operator*=(sign_unambiguous_arithmetic auto x) noexcept;
 
     /// @brief Do a division assignment with a normal value.
-    /// @copydetails operator+=(ArithmeticWithExplictSign auto)
+    /// @copydetails operator+=(sign_unambiguous_arithmetic auto)
     constexpr numeric_any& operator/=(sign_unambiguous_arithmetic auto x) noexcept;
 
     /// @brief Do an addition assignment with another numeric_any.
@@ -206,10 +206,10 @@ public:
     /// @copydetails operator+=(const numeric_any&)
     constexpr numeric_any& operator/=(const numeric_any& x) noexcept;
 
-    /// @brief Compare a numeric_any is equal to a norma; value.
+    /// @brief Compare a numeric_any is equal to a normal value.
     /// @param x Input value, must be the basic arithmetic types in C++, except char without explict sign.
     /// @note char types must be explicitly signed-qualified in constructors to avoid ambiguity.
-    /// @return Whether a numeric_any is equal to a norma value.
+    /// @return Whether a numeric_any is equal to a normal value.
     /// @note When numeric_any is empty, always return false.
     constexpr bool operator==(sign_unambiguous_arithmetic auto x) const noexcept;
 
@@ -226,7 +226,7 @@ public:
     /// @note When left numeric_any or right numeric_any is empty, always return false.
     constexpr bool operator==(const numeric_any& x) const noexcept;
 
-    /// @brief Compare a numeric_any is equal to another numeric_any.
+    /// @brief Three-way comparison between numeric_any with another numeric_any.
     /// @param x The value used to do comparison.
     /// @return A partial_ordering represent the result of three-way comparison.
     /// @note hen left numeric_any or right numeric_any is empty, return std::partial_ordering::unordered.
@@ -789,6 +789,11 @@ struct formatter<::casyyy::maths::numeric_any, CharT> {
 
     auto format(const ::casyyy::maths::numeric_any& x, auto& ctx) const {
         CharT format_buffer[FORMAT_STRING_BUFFER_SIZE]{};
+        if (x.is_floating_point() && parser_.is_for_integer()) {
+            throw ::std::format_error{"Cannot use integer format specifier with a float."};
+        } else if (!x.is_floating_point() && parser_.is_for_floating_point()) {
+            throw ::std::format_error{"Cannot use float format specifier with an integer."};
+        }
         // Restore the format stirng, and used vformat_to.
         auto finish = parser_.restore_format_string(format_buffer, format_buffer + FORMAT_STRING_BUFFER_SIZE, ctx);
         basic_string_view<CharT> fmt{format_buffer, finish};

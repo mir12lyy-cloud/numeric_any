@@ -88,6 +88,15 @@ public:
         *begin++ = static_cast<CharT>('}'); // Finish the format string.
         return begin;
     }
+    bool is_for_integer() const {
+        return ::std::basic_string_view<CharT>{int_type, 8}.find(type_charactor) !=
+               ::std::basic_string_view<CharT>::npos;
+    }
+    bool is_for_floating_point() const {
+        if (has_precision) return true;
+        return ::std::basic_string_view<CharT>{float_type, 8}.find(type_charactor) !=
+               ::std::basic_string_view<CharT>::npos;
+    }
 
 private:
     // Determine final width and precision.
