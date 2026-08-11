@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.2.0</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.2.1</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -164,7 +164,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a28ef51305702df9b9428e6a3dee6bfc2" id="r_a28ef51305702df9b9428e6a3dee6bfc2"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a28ef51305702df9b9428e6a3dee6bfc2">operator==</a> (const <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> &amp;x) const noexcept</td></tr>
 <tr class="memdesc:a28ef51305702df9b9428e6a3dee6bfc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to another <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
 <tr class="memitem:aab5cc5909dcffaf8bd59a291f85bc839" id="r_aab5cc5909dcffaf8bd59a291f85bc839"><td class="memItemLeft">constexpr ::std::partial_ordering&#160;</td><td class="memItemRight"><a class="el" href="#aab5cc5909dcffaf8bd59a291f85bc839">operator&lt;=&gt;</a> (const <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> &amp;x) const noexcept</td></tr>
-<tr class="memdesc:aab5cc5909dcffaf8bd59a291f85bc839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to another <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memdesc:aab5cc5909dcffaf8bd59a291f85bc839"><td class="mdescLeft">&#160;</td><td class="mdescRight">Three-way comparison between <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> with another <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
 <tr class="memitem:a1827cbd078f2396d4b9347f86e081488" id="r_a1827cbd078f2396d4b9347f86e081488"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a1827cbd078f2396d4b9347f86e081488">operator bool</a> () const noexcept</td></tr>
 <tr class="memdesc:a1827cbd078f2396d4b9347f86e081488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether inner value isn't zero.  <br /></td></tr>
 <tr class="memitem:abe816122345e1eebc2cf4cc03b3e714d" id="r_abe816122345e1eebc2cf4cc03b3e714d"><td class="memItemLeft">constexpr <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#abe816122345e1eebc2cf4cc03b3e714d">operator=</a> (sign_unambiguous_arithmetic auto x) noexcept</td></tr>
@@ -975,7 +975,7 @@ For boolean value, as if setting the value to static_cast&lt;bool&gt;(inner - 1)
 </table>
 </div><div class="memdoc">
 
-<p>Compare a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to another <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>. </p>
+<p>Three-way comparison between <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> with another <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>The value used to do comparison. </td></tr>
@@ -1088,7 +1088,7 @@ For boolean value, as if setting the value to static_cast&lt;bool&gt;(inner - 1)
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to a norma value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to a normal value. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>When left <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> or right <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is empty, always return false. </dd></dl>
 
 </div>
@@ -1124,7 +1124,7 @@ For boolean value, as if setting the value to static_cast&lt;bool&gt;(inner - 1)
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>char types must be explicitly signed-qualified in constructors to avoid ambiguity. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to a norma value. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is equal to a normal value. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>When <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is empty, always return false. </dd></dl>
 
 </div>

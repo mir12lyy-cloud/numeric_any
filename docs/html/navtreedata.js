@@ -34,7 +34,7 @@ var NAVTREE =
       [ "Quick Start", "index.html#autotoc_md7", null ],
       [ "Ouput", "index.html#autotoc_md8", null ]
     ] ],
-    [ "Example:", "index.html#autotoc_md9", [
+    [ "Example", "index.html#autotoc_md9", [
       [ "Construction", "index.html#autotoc_md10", null ],
       [ "Heterogeneous Container", "index.html#autotoc_md11", null ],
       [ "Metadatas", "index.html#autotoc_md12", null ],

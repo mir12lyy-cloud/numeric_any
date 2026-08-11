@@ -130,7 +130,7 @@ int main() {
 31.16
 ```
 
-## Example:
+## Example
 
 **Ignore basic `import`, `include` and `using namespace`.**
 
