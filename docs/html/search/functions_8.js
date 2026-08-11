@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['parse_0',['parse',['../structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html#a8d068aae482ad6134d843ad081deb4d5',1,'std::formatter&lt;::casyyy::maths::numeric_any, CharT &gt;::parse()'],['../classcasyyy_1_1utils_1_1numeric__any__parser.html#ae11fa32e9c340f884899d7d21e2e6080',1,'casyyy::utils::numeric_any_parser::parse()']]]
+  ['type_5fname_0',['type_name',['../classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5',1,'casyyy::maths::numeric_any']]],
+  ['type_5fsize_1',['type_size',['../classcasyyy_1_1maths_1_1numeric__any.html#a93c1571e7e1165a5682660aacea9650a',1,'casyyy::maths::numeric_any']]]
 ];

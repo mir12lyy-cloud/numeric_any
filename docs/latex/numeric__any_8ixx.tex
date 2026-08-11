@@ -17,11 +17,11 @@
 \begin{DoxyCompactItemize}
 \item 
 class \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{casyyy::\+maths::\+numeric\+\_\+any}}
-\item 
+\begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\item 
 struct \doxymbox{\hyperlink{structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4}{std::\+hash$<$::\+casyyy::\+maths::\+numeric\+\_\+any $>$}}
-\item 
+\begin{DoxyCompactList}\small\item\em Provide hash support. \end{DoxyCompactList}\item 
 struct \doxymbox{\hyperlink{structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4}{std::\+formatter$<$::\+casyyy::\+maths::\+numeric\+\_\+any, Char\+T $>$}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Provide formatted support. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -34,47 +34,13 @@ namespace \doxymbox{\hyperlink{namespacestd}{std}}
 \doxysubsubsection*{Concepts}
 \begin{DoxyCompactItemize}
 \item 
-concept \doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1_arithmetic_with_explict_sign}{casyyy::\+maths::\+\+Arithmetic\+With\+Explict\+Sign}}
-\end{DoxyCompactItemize}
+concept \doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}{casyyy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic}}
+\begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explict sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a8b266be8b7140a4b2bb63f1dca9c3e29}{NOT\+\_\+\+IN\+\_\+\+CONSTANT\+\_\+\+EVALUATION}}~(!::\+std::\+is\+\_\+constant\+\_\+evaluated())
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a9f2e40c728be6b871e427d37eb1f44c2}{FOR\+\_\+\+EACH\+\_\+\+TYPES\+\_\+\+TO}}(x)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a4c982621781d68e4821331822dfb12cf}{FOR\+\_\+\+EACH\+\_\+\+OPERATOR}}(x)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a0806327db7f46afca7e89de4a85ff33d}{FUNCTION}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_aae9a2638eec1eda40d2110093238cf00}{FUNCTION}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_aff113fb30db5ce5aeefa94c4756a7cb9}{FUNCTION}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_affe78b474d452c9b6a53221ffe4ab3bf}{FUNCTIONS\+\_\+\+OPERATION}}(name,  op,  op\+\_\+name,  op2,  op2\+\_\+name)
-\item 
 \+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a7eac2aa0392813b2f68a19a1f241ad85}{FUNCTION\+\_\+\+TWO\+\_\+\+OPERATION}}(name,  op,  op\+\_\+name,  op2,  op2\+\_\+name)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a4169ff53b46c30bad9a01a561612ee59}{FUNCTION\+\_\+\+TO\+\_\+\+CAST}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a5460f2ed40b6679814b86e3029df71e8}{FUNCTION\+\_\+\+BINARY\+\_\+\+EXP}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a21026865118ea8ed1b6b5b53e508fc55}{FUNCTION\+\_\+\+TO\+\_\+\+RESTORE\+\_\+\+VALUE}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a6db9674375b2c82ca7961aafb7071093}{FUNCTION\+\_\+\+TO\+\_\+\+RESTORE\+\_\+\+VALUE}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a40a9d2209d716f9e42adb1ff36cc0bf6}{FUNCTION\+\_\+\+TO\+\_\+\+ADD}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_ac69576d334cb019d594fe3e53aec5a88}{FUNCTION\+\_\+\+TO\+\_\+\+SUB}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a79e628dc33b9bd62ca1bab6da26dd37f}{FUNCTIONS\+\_\+\+OPERATION}}(name,  op,  op\+\_\+name,  op2,  op2\+\_\+name)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_afbc1ceeda99492254235aa627ea01b8a}{FUNCTION\+\_\+\+OUTPUT}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a47b3c7f6fc1a337caccb08707412477e}{FUNCTION\+\_\+\+HASH}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_adab27218c388530fa494b6a95e992cf4}{FUNCTION\+\_\+\+FORMAT}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em To generate operator between numeric\+\_\+any with a value or another numeric\+\_\+any. Including:\+ +, -\/, \texorpdfstring{$\ast$}{*}, /\+. And used +=, -\/=, \texorpdfstring{$\ast$}{*}=, /\+= to do operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -82,251 +48,25 @@ enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da
 , \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555}{casyyy::\+maths::\+normal}}
 , \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b}{casyyy::\+maths::\+relaxed}}
  \}
-\item 
-enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}{casyyy::\+maths::\+numeric\+\_\+types}} :\+ unsigned char \{ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08daba2b45bdc11e2a4a6e86aab2ac693cbb}{casyyy::\+maths::\+\+EMPTY}} = 0
- \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Numeric conversion strategy, used for handling different types of number conversions. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-{\footnotesize template$<$typename T$>$ }\\constexpr \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}{numeric\+\_\+types}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a182901e49180de5d715ecc5ec5641eeb}{casyyy::\+maths::\+types}} () noexcept
-\item 
-{\footnotesize template$<$Arithmetic\+With\+Explict\+Sign T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{casyyy::\+maths::\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\item 
-constexpr bool \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a90ca50109933e5040f4cf04ca7d6feb1}{casyyy::\+maths::\+is\+\_\+normal\+\_\+number}} (auto x) noexcept
-\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{casyyy::\+maths::\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a4c705e90a22b3660d4d9488c33f5a665}{casyyy::\+maths::\+bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n)
-\item 
-{\footnotesize template$<$Arithmetic\+With\+Explict\+Sign T$>$ }\\constexpr T \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{casyyy::\+maths::\+unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\item 
-{\footnotesize template$<$typename CharT, typename Trait = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Trait $>$ \& \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6d6e4e0ff47509c7e969eacbc47ae2e6}{casyyy::\+maths::\+operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Trait $>$ \&os, const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad40daee95ef3aaac8559176d73c4c950}{casyyy::\+maths::\+make\+\_\+numeric\+\_\+any}} (Arithmetic\+With\+Explict\+Sign auto x) noexcept
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-constexpr ::\+std::\+string\+\_\+view \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aff314bfcbbd7b5bc930f783588200f1c}{casyyy::\+maths::\+type\+\_\+names}} \+[$\,$]\+
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr T \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{casyyy::\+maths::\+unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aba943ffd942078bb615e72dccc81d1d1}{casyyy::\+maths::\+operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Output \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ac7320982f9e926a61ea8e065d57fc3ef}{casyyy::\+maths::\+make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em A tool function to build \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \label{numeric__any_8ixx_doc-define-members}
 \Hypertarget{numeric__any_8ixx_doc-define-members}
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{numeric__any_8ixx_a4c982621781d68e4821331822dfb12cf}\index{numeric\_any.ixx@{numeric\_any.ixx}!FOR\_EACH\_OPERATOR@{FOR\_EACH\_OPERATOR}}
-\index{FOR\_EACH\_OPERATOR@{FOR\_EACH\_OPERATOR}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FOR\_EACH\_OPERATOR}{FOR\_EACH\_OPERATOR}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a4c982621781d68e4821331822dfb12cf} 
-\+\#define FOR\+\_\+\+EACH\+\_\+\+OPERATOR(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{x(add,\ +,\ \textcolor{keyword}{operator}+,\ +=,\ \textcolor{keyword}{operator}+=)\ x(sub,\ -\/,\ operator-\/,\ -\/=,\ operator-\/=)\ x(mul,\ *,\ operator*,\ *=,\ operator*=)\ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ x(div,\ /,\ operator/,\ /=,\ operator/=)}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a9f2e40c728be6b871e427d37eb1f44c2}\index{numeric\_any.ixx@{numeric\_any.ixx}!FOR\_EACH\_TYPES\_TO@{FOR\_EACH\_TYPES\_TO}}
-\index{FOR\_EACH\_TYPES\_TO@{FOR\_EACH\_TYPES\_TO}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FOR\_EACH\_TYPES\_TO}{FOR\_EACH\_TYPES\_TO}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a9f2e40c728be6b871e427d37eb1f44c2} 
-\+\#define FOR\+\_\+\+EACH\+\_\+\+TYPES\+\_\+\+TO(\begin{DoxyParamCaption}\item[{}]{x}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{x(\textcolor{keywordtype}{bool},\ BOOL,\ 1)\ x(\textcolor{keywordtype}{signed}\ \textcolor{keywordtype}{char},\ SIGNED\_CHAR,\ 2)\ x(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char},\ UNSIGNED\_CHAR,\ 3)\ x(\textcolor{keywordtype}{short},\ SHORT,\ 4)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ x(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short},\ UNSIGNED\_SHORT,\ 5)\ x(\textcolor{keywordtype}{int},\ INT,\ 6)\ x(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int},\ UNSIGNED\_INT,\ 7)\ x(\textcolor{keywordtype}{long},\ LONG,\ 8)\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ x(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long},\ UNSIGNED\_LONG,\ 9)\ x(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long},\ LONG\_LONG,\ 10)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ x(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long},\ UNSIGNED\_LONG\_LONG,\ 11)\ x(\textcolor{keywordtype}{float},\ FLOAT,\ 12)\ x(\textcolor{keywordtype}{double},\ DOUBLE,\ 13)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double},\ LONG\_DOUBLE,\ 14)}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_aff113fb30db5ce5aeefa94c4756a7cb9}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION@{FUNCTION}}
-\index{FUNCTION@{FUNCTION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION}{FUNCTION}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_aff113fb30db5ce5aeefa94c4756a7cb9} 
-\+\#define FUNCTION(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{template}\ <>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{constexpr}\ numeric\_types\ types<type\_name>()\ noexcept\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ numeric\_types::type\_enum\_name;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_aae9a2638eec1eda40d2110093238cf00}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION@{FUNCTION}}
-\index{FUNCTION@{FUNCTION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION}{FUNCTION}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_aae9a2638eec1eda40d2110093238cf00} 
-\+\#define FUNCTION(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{,\ \#type\_name}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a0806327db7f46afca7e89de4a85ff33d}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION@{FUNCTION}}
-\index{FUNCTION@{FUNCTION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION}{FUNCTION}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a0806327db7f46afca7e89de4a85ff33d} 
-\+\#define FUNCTION(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{type\_enum\_name\ =\ enum\_value,}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a5460f2ed40b6679814b86e3029df71e8}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_BINARY\_EXP@{FUNCTION\_BINARY\_EXP}}
-\index{FUNCTION\_BINARY\_EXP@{FUNCTION\_BINARY\_EXP}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_BINARY\_EXP}{FUNCTION\_BINARY\_EXP}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a5460f2ed40b6679814b86e3029df71e8} 
-\+\#define FUNCTION\+\_\+\+BINARY\+\_\+\+EXP(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \textcolor{keyword}{static\_cast<}type\_name\textcolor{keyword}{>}(1)\ *\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ if\ (n\ ==\ 0)\ return\ numeric\_any\{result\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ restore\_value\ =\ unchecked\_numeric\_cast<type\_name>(a);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ while\ (n)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (n\ \&\ 1)\ result\ *=\ restore\_value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ restore\_value\ *=\ restore\_value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ n\ >>=\ 1;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ numeric\_any\{result\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_adab27218c388530fa494b6a95e992cf4}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_FORMAT@{FUNCTION\_FORMAT}}
-\index{FUNCTION\_FORMAT@{FUNCTION\_FORMAT}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_FORMAT}{FUNCTION\_FORMAT}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_adab27218c388530fa494b6a95e992cf4} 
-\+\#define FUNCTION\+\_\+\+FORMAT(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{if}\ (x.is\_same\_type<type\_name>())\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ type\_name\ restore\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (is\_same\_v<CharT,\ wchar\_t>)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ vformat\_to(ctx.out(),\ fmt,\ make\_wformat\_args(restore));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ else\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ return\ vformat\_to(ctx.out(),\ fmt,\ make\_format\_args(restore));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a47b3c7f6fc1a337caccb08707412477e}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_HASH@{FUNCTION\_HASH}}
-\index{FUNCTION\_HASH@{FUNCTION\_HASH}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_HASH}{FUNCTION\_HASH}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a47b3c7f6fc1a337caccb08707412477e} 
-\+\#define FUNCTION\+\_\+\+HASH(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{if}\ (x.is\_same\_type<type\_name>())\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ type\_name\ restore\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ hash<type\_name>\{\}(restore);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_afbc1ceeda99492254235aa627ea01b8a}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_OUTPUT@{FUNCTION\_OUTPUT}}
-\index{FUNCTION\_OUTPUT@{FUNCTION\_OUTPUT}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_OUTPUT}{FUNCTION\_OUTPUT}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_afbc1ceeda99492254235aa627ea01b8a} 
-\+\#define FUNCTION\+\_\+\+OUTPUT(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{if}\ (x.is\_same\_type<type\_name>())\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ res\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ os\ <<\ res;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ os;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a40a9d2209d716f9e42adb1ff36cc0bf6}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TO\_ADD@{FUNCTION\_TO\_ADD}}
-\index{FUNCTION\_TO\_ADD@{FUNCTION\_TO\_ADD}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_TO\_ADD}{FUNCTION\_TO\_ADD}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a40a9d2209d716f9e42adb1ff36cc0bf6} 
-\+\#define FUNCTION\+\_\+\+TO\+\_\+\+ADD(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ restore\ =\ unchecked\_numeric\_cast<type\_name>(*\textcolor{keyword}{this});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this}\ =\ \textcolor{keyword}{static\_cast<}type\_name\textcolor{keyword}{>}(restore\ +\ \textcolor{keyword}{static\_cast<}type\_name\textcolor{keyword}{>}(1));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a4169ff53b46c30bad9a01a561612ee59}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TO\_CAST@{FUNCTION\_TO\_CAST}}
-\index{FUNCTION\_TO\_CAST@{FUNCTION\_TO\_CAST}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_TO\_CAST}{FUNCTION\_TO\_CAST}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a4169ff53b46c30bad9a01a561612ee59} 
-\+\#define FUNCTION\+\_\+\+TO\+\_\+\+CAST(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ \doxymbox{\hyperlink{numeric__any_8ixx_a8b266be8b7140a4b2bb63f1dca9c3e29}{NOT\_IN\_CONSTANT\_EVALUATION}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ type\_name\ restore\_value\ =\ 0;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ ::std::memcpy(\&restore\_value,\ x.storage\_.data(),\ \textcolor{keyword}{sizeof}(type\_name));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(restore\_value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ ::std::array<\textcolor{keywordtype}{unsigned}\ char,\ \textcolor{keyword}{sizeof}(type\_name)>\ temp\_\{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ for\ (::size\_t\ i\ =\ 0;\ i\ <\ \textcolor{keyword}{sizeof}(type\_name);\ ++i)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ temp\_[i]\ =\ x.storage\_[i];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(::std::bit\_cast<type\_name,\ decltype(temp\_)>(temp\_));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a6db9674375b2c82ca7961aafb7071093}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TO\_RESTORE\_VALUE@{FUNCTION\_TO\_RESTORE\_VALUE}}
-\index{FUNCTION\_TO\_RESTORE\_VALUE@{FUNCTION\_TO\_RESTORE\_VALUE}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_TO\_RESTORE\_VALUE}{FUNCTION\_TO\_RESTORE\_VALUE}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a6db9674375b2c82ca7961aafb7071093} 
-\+\#define FUNCTION\+\_\+\+TO\+\_\+\+RESTORE\+\_\+\+VALUE(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ type\_name\ restore\_value\ =\ unchecked\_numeric\_cast<type\_name>(*\textcolor{keyword}{this});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ numeric\_any\{-\/restore\_value\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a21026865118ea8ed1b6b5b53e508fc55}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TO\_RESTORE\_VALUE@{FUNCTION\_TO\_RESTORE\_VALUE}}
-\index{FUNCTION\_TO\_RESTORE\_VALUE@{FUNCTION\_TO\_RESTORE\_VALUE}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_TO\_RESTORE\_VALUE}{FUNCTION\_TO\_RESTORE\_VALUE}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a21026865118ea8ed1b6b5b53e508fc55} 
-\+\#define FUNCTION\+\_\+\+TO\+\_\+\+RESTORE\+\_\+\+VALUE(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ restore\_value\ =\ unchecked\_numeric\_cast<type\_name>(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (::std::is\_floating\_point\_v<type\_name>)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!is\_normal\_number(restore\_value))\ return\ ::std::nullopt;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ res\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(restore\_value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ if\ (!is\_normal\_number(restore\_value))\ return\ ::std::nullopt;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(restore\_value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_ac69576d334cb019d594fe3e53aec5a88}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TO\_SUB@{FUNCTION\_TO\_SUB}}
-\index{FUNCTION\_TO\_SUB@{FUNCTION\_TO\_SUB}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_TO\_SUB}{FUNCTION\_TO\_SUB}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_ac69576d334cb019d594fe3e53aec5a88} 
-\+\#define FUNCTION\+\_\+\+TO\+\_\+\+SUB(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
-
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ restore\ =\ unchecked\_numeric\_cast<type\_name>(*\textcolor{keyword}{this});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this}\ =\ \textcolor{keyword}{static\_cast<}type\_name\textcolor{keyword}{>}(restore\ -\/\ \textcolor{keyword}{static\_cast<}type\_name\textcolor{keyword}{>}(1));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
-
-\end{DoxyCode}
 \Hypertarget{numeric__any_8ixx_a7eac2aa0392813b2f68a19a1f241ad85}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TWO\_OPERATION@{FUNCTION\_TWO\_OPERATION}}
 \index{FUNCTION\_TWO\_OPERATION@{FUNCTION\_TWO\_OPERATION}!numeric\_any.ixx@{numeric\_any.ixx}}
 \doxysubsubsection{\texorpdfstring{FUNCTION\_TWO\_OPERATION}{FUNCTION\_TWO\_OPERATION}}
@@ -335,10 +75,10 @@ constexpr ::\+std::\+string\+\_\+view \doxymbox{\hyperlink{namespacecasyyy_1_1ma
 
 {\bfseries Value:\+}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(numeric\_any\ x,\ ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(numeric\_any\ x,\ sign\_unambiguous\_arithmetic\ \textcolor{keyword}{auto}\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ x\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(ArithmeticWithExplictSign\ \textcolor{keyword}{auto}\ x,\ numeric\_any\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(sign\_unambiguous\_arithmetic\ \textcolor{keyword}{auto}\ x,\ numeric\_any\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ numeric\_any\{x\}\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(numeric\_any\ x,\ numeric\_any\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
@@ -346,32 +86,10 @@ constexpr ::\+std::\+string\+\_\+view \doxymbox{\hyperlink{namespacecasyyy_1_1ma
 \DoxyCodeLine{\}}
 
 \end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a79e628dc33b9bd62ca1bab6da26dd37f}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTIONS\_OPERATION@{FUNCTIONS\_OPERATION}}
-\index{FUNCTIONS\_OPERATION@{FUNCTIONS\_OPERATION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTIONS\_OPERATION}{FUNCTIONS\_OPERATION}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a79e628dc33b9bd62ca1bab6da26dd37f} 
-\+\#define FUNCTIONS\+\_\+\+OPERATION(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{op}{, }\item[{}]{op\+\_\+name}{, }\item[{}]{op2}{, }\item[{}]{op2\+\_\+name}{}\end{DoxyParamCaption})}
 
-\Hypertarget{numeric__any_8ixx_affe78b474d452c9b6a53221ffe4ab3bf}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTIONS\_OPERATION@{FUNCTIONS\_OPERATION}}
-\index{FUNCTIONS\_OPERATION@{FUNCTIONS\_OPERATION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTIONS\_OPERATION}{FUNCTIONS\_OPERATION}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_affe78b474d452c9b6a53221ffe4ab3bf} 
-\+\#define FUNCTIONS\+\_\+\+OPERATION(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{op}{, }\item[{}]{op\+\_\+name}{, }\item[{}]{op2}{, }\item[{}]{op2\+\_\+name}{}\end{DoxyParamCaption})}
 
-{\bfseries Value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{void}\ casting\_\#\#name(T2\ x)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }common\_type\ =\ ::std::common\_type\_t<T1,\ T2>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ lhs\ \ \ \ \ \ \ \ \ \ =\ unchecked\_numeric\_cast<T1>(*\textcolor{keyword}{this});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ \ \ \ \ \ \ =\ \textcolor{keyword}{static\_cast<}common\_type\textcolor{keyword}{>}(lhs)\ op\ \textcolor{keyword}{static\_cast<}common\_type\textcolor{keyword}{>}(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ reset(result);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}}
+To generate operator between numeric\+\_\+any with a value or another numeric\+\_\+any. Including:\+ +, -\/, \texorpdfstring{$\ast$}{*}, /\+. And used +=, -\/=, \texorpdfstring{$\ast$}{*}=, /\+= to do operations. 
 
-\end{DoxyCode}
-\Hypertarget{numeric__any_8ixx_a8b266be8b7140a4b2bb63f1dca9c3e29}\index{numeric\_any.ixx@{numeric\_any.ixx}!NOT\_IN\_CONSTANT\_EVALUATION@{NOT\_IN\_CONSTANT\_EVALUATION}}
-\index{NOT\_IN\_CONSTANT\_EVALUATION@{NOT\_IN\_CONSTANT\_EVALUATION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{NOT\_IN\_CONSTANT\_EVALUATION}{NOT\_IN\_CONSTANT\_EVALUATION}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a8b266be8b7140a4b2bb63f1dca9c3e29} 
-\+\#define NOT\+\_\+\+IN\+\_\+\+CONSTANT\+\_\+\+EVALUATION~(!::\+std::\+is\+\_\+constant\+\_\+evaluated())}
-
+\begin{DoxyReturn}{Returns}
+A new numeric\+\_\+any after operations. 
+\end{DoxyReturn}

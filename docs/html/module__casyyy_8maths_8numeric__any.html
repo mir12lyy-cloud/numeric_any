@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.1.1</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.2.0</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -120,9 +120,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('module__casyyy
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:casyyy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic" id="r_casyyy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic.html">casyyy::maths::sign_unambiguous_arithmetic</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Only for arithmetic types, except the char without explict sign. <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:casyyy_3A_3Amaths_3A_3Anumeric_5Fany" id="r_casyyy_3A_3Amaths_3A_3Anumeric_5Fany"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">casyyy::maths::numeric_any</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type-erasure-based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison.  <a href="classcasyyy_1_1maths_1_1numeric__any.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -130,16 +136,21 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555">casyyy::maths::normal</a>
 , <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b">casyyy::maths::relaxed</a>
  }</td></tr>
+<tr class="memdesc:ad2c5becd5c7b33e58c95da60f595ceea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric conversion strategy, used for handling different types of number conversions.  <a href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a564aac34a8c2493d66adc983d3d05514" id="r_a564aac34a8c2493d66adc983d3d05514"><td class="memTemplParams" colspan="2">template&lt;ArithmeticWithExplictSign T, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">casting_policy</a> Policy = casting_policy::strict&gt; </td></tr>
+<tr class="memitem:a564aac34a8c2493d66adc983d3d05514" id="r_a564aac34a8c2493d66adc983d3d05514"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">casting_policy</a> Policy = casting_policy::strict&gt; </td></tr>
 <tr class="memitem:a564aac34a8c2493d66adc983d3d05514 template"><td class="memItemLeft">constexpr ::std::optional&lt; T &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a564aac34a8c2493d66adc983d3d05514">casyyy::maths::numeric_cast</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c" id="r_ae92937bd2c2736954266ffdf85a13b3c"><td class="memTemplParams" colspan="2">template&lt;ArithmeticWithExplictSign T&gt; </td></tr>
+<tr class="memdesc:a564aac34a8c2493d66adc983d3d05514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number with check based on policy.  <br /></td></tr>
+<tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c" id="r_ae92937bd2c2736954266ffdf85a13b3c"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T&gt; </td></tr>
 <tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c template"><td class="memItemLeft">constexpr T&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c">casyyy::maths::unchecked_numeric_cast</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memitem:a6d6e4e0ff47509c7e969eacbc47ae2e6" id="r_a6d6e4e0ff47509c7e969eacbc47ae2e6"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Trait = ::std::char_traits&lt;CharT&gt;&gt; </td></tr>
-<tr class="memitem:a6d6e4e0ff47509c7e969eacbc47ae2e6 template"><td class="memItemLeft">::std::basic_ostream&lt; CharT, Trait &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a6d6e4e0ff47509c7e969eacbc47ae2e6">casyyy::maths::operator&lt;&lt;</a> (::std::basic_ostream&lt; CharT, Trait &gt; &amp;os, const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memitem:ad40daee95ef3aaac8559176d73c4c950" id="r_ad40daee95ef3aaac8559176d73c4c950"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ad40daee95ef3aaac8559176d73c4c950">casyyy::maths::make_numeric_any</a> (ArithmeticWithExplictSign auto x) noexcept</td></tr>
+<tr class="memdesc:ae92937bd2c2736954266ffdf85a13b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number without check.  <br /></td></tr>
+<tr class="memitem:aba943ffd942078bb615e72dccc81d1d1" id="r_aba943ffd942078bb615e72dccc81d1d1"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits = ::std::char_traits&lt;CharT&gt;&gt; </td></tr>
+<tr class="memitem:aba943ffd942078bb615e72dccc81d1d1 template"><td class="memItemLeft">::std::basic_ostream&lt; CharT, Traits &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#aba943ffd942078bb615e72dccc81d1d1">casyyy::maths::operator&lt;&lt;</a> (::std::basic_ostream&lt; CharT, Traits &gt; &amp;os, const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
+<tr class="memdesc:aba943ffd942078bb615e72dccc81d1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to the stream.  <br /></td></tr>
+<tr class="memitem:ac7320982f9e926a61ea8e065d57fc3ef" id="r_ac7320982f9e926a61ea8e065d57fc3ef"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ac7320982f9e926a61ea8e065d57fc3ef">casyyy::maths::make_numeric_any</a> (sign_unambiguous_arithmetic auto x) noexcept</td></tr>
+<tr class="memdesc:ac7320982f9e926a61ea8e065d57fc3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tool function to build <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
 </table>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-files" class="groupheader"><a id="files" name="files"></a>

@@ -1,12 +1,5 @@
 var searchData=
 [
-  ['tests_20using_20agent_20to_20generate_0',['Tests (Using Agent to generate)',['../index.html#autotoc_md19',1,'']]],
-  ['the_20depository_1',['Clone The depository',['../index.html#autotoc_md5',1,'']]],
-  ['to_20generate_2',['Tests (Using Agent to generate)',['../index.html#autotoc_md19',1,'']]],
-  ['to_20me_3',['Contact to Me',['../index.html#autotoc_md22',1,'']]],
-  ['type_20lookup_3a_4',['Type Lookup:',['../index.html#autotoc_md14',1,'']]],
-  ['type_5fname_5',['type_name',['../classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5',1,'casyyy::maths::numeric_any']]],
-  ['type_5fnames_6',['type_names',['../namespacecasyyy_1_1maths.html#aff314bfcbbd7b5bc930f783588200f1c',1,'casyyy::maths']]],
-  ['type_5fsize_7',['type_size',['../classcasyyy_1_1maths_1_1numeric__any.html#a93c1571e7e1165a5682660aacea9650a',1,'casyyy::maths::numeric_any']]],
-  ['types_8',['types',['../namespacecasyyy_1_1maths.html#a182901e49180de5d715ecc5ec5641eeb',1,'casyyy::maths']]]
+  ['unchecked_5fnumeric_5fcast_0',['unchecked_numeric_cast',['../classcasyyy_1_1maths_1_1numeric__any.html#ab91c22155daa9436a7fadff4934d6e97',1,'casyyy::maths::numeric_any::unchecked_numeric_cast()'],['../namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c',1,'casyyy::maths::unchecked_numeric_cast()']]],
+  ['using_20agent_20to_20generate_1',['Tests (Using Agent to generate)',['../index.html#autotoc_md19',1,'']]]
 ];

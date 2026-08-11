@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arithmeticwithexplictsign_0',['ArithmeticWithExplictSign',['../conceptcasyyy_1_1maths_1_1_arithmetic_with_explict_sign.html',1,'casyyy::maths']]]
+  ['sign_5funambiguous_5farithmetic_0',['sign_unambiguous_arithmetic',['../conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic.html',1,'casyyy::maths']]]
 ];

@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.1.1</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.2.0</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -136,8 +136,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('numeric__any_8
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:casyyy_3A_3Amaths_3A_3Anumeric_5Fany" id="r_casyyy_3A_3Amaths_3A_3Anumeric_5Fany"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">casyyy::maths::numeric_any</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type-erasure-based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison.  <a href="classcasyyy_1_1maths_1_1numeric__any.html#details">More...</a><br /></td></tr>
 <tr class="memitem:std_3A_3Ahash_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E" id="r_std_3A_3Ahash_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4.html">std::hash&lt;::casyyy::maths::numeric_any &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide hash support.  <a href="structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4.html#details">More...</a><br /></td></tr>
 <tr class="memitem:std_3A_3Aformatter_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20CharT_20_3E" id="r_std_3A_3Aformatter_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20CharT_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html">std::formatter&lt;::casyyy::maths::numeric_any, CharT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide formatted support.  <a href="structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -147,28 +150,13 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
-<tr class="memitem:casyyy_3A_3Amaths_3A_3AArithmeticWithExplictSign" id="r_casyyy_3A_3Amaths_3A_3AArithmeticWithExplictSign"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="conceptcasyyy_1_1maths_1_1_arithmetic_with_explict_sign.html">casyyy::maths::ArithmeticWithExplictSign</a></td></tr>
+<tr class="memitem:casyyy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic" id="r_casyyy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic.html">casyyy::maths::sign_unambiguous_arithmetic</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Only for arithmetic types, except the char without explict sign. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a8b266be8b7140a4b2bb63f1dca9c3e29" id="r_a8b266be8b7140a4b2bb63f1dca9c3e29"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a8b266be8b7140a4b2bb63f1dca9c3e29">NOT_IN_CONSTANT_EVALUATION</a>&#160;&#160;&#160;(!::std::is_constant_evaluated())</td></tr>
-<tr class="memitem:a9f2e40c728be6b871e427d37eb1f44c2" id="r_a9f2e40c728be6b871e427d37eb1f44c2"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a9f2e40c728be6b871e427d37eb1f44c2">FOR_EACH_TYPES_TO</a>(x)</td></tr>
-<tr class="memitem:a4c982621781d68e4821331822dfb12cf" id="r_a4c982621781d68e4821331822dfb12cf"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a4c982621781d68e4821331822dfb12cf">FOR_EACH_OPERATOR</a>(x)</td></tr>
-<tr class="memitem:a0806327db7f46afca7e89de4a85ff33d" id="r_a0806327db7f46afca7e89de4a85ff33d"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a0806327db7f46afca7e89de4a85ff33d">FUNCTION</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:aae9a2638eec1eda40d2110093238cf00" id="r_aae9a2638eec1eda40d2110093238cf00"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aae9a2638eec1eda40d2110093238cf00">FUNCTION</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:aff113fb30db5ce5aeefa94c4756a7cb9" id="r_aff113fb30db5ce5aeefa94c4756a7cb9"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aff113fb30db5ce5aeefa94c4756a7cb9">FUNCTION</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:affe78b474d452c9b6a53221ffe4ab3bf" id="r_affe78b474d452c9b6a53221ffe4ab3bf"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#affe78b474d452c9b6a53221ffe4ab3bf">FUNCTIONS_OPERATION</a>(name,  op,  op_name,  op2,  op2_name)</td></tr>
 <tr class="memitem:a7eac2aa0392813b2f68a19a1f241ad85" id="r_a7eac2aa0392813b2f68a19a1f241ad85"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a7eac2aa0392813b2f68a19a1f241ad85">FUNCTION_TWO_OPERATION</a>(name,  op,  op_name,  op2,  op2_name)</td></tr>
-<tr class="memitem:a4169ff53b46c30bad9a01a561612ee59" id="r_a4169ff53b46c30bad9a01a561612ee59"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a4169ff53b46c30bad9a01a561612ee59">FUNCTION_TO_CAST</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:a5460f2ed40b6679814b86e3029df71e8" id="r_a5460f2ed40b6679814b86e3029df71e8"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a5460f2ed40b6679814b86e3029df71e8">FUNCTION_BINARY_EXP</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:a21026865118ea8ed1b6b5b53e508fc55" id="r_a21026865118ea8ed1b6b5b53e508fc55"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a21026865118ea8ed1b6b5b53e508fc55">FUNCTION_TO_RESTORE_VALUE</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:a6db9674375b2c82ca7961aafb7071093" id="r_a6db9674375b2c82ca7961aafb7071093"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a6db9674375b2c82ca7961aafb7071093">FUNCTION_TO_RESTORE_VALUE</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:a40a9d2209d716f9e42adb1ff36cc0bf6" id="r_a40a9d2209d716f9e42adb1ff36cc0bf6"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a40a9d2209d716f9e42adb1ff36cc0bf6">FUNCTION_TO_ADD</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:ac69576d334cb019d594fe3e53aec5a88" id="r_ac69576d334cb019d594fe3e53aec5a88"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ac69576d334cb019d594fe3e53aec5a88">FUNCTION_TO_SUB</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:a79e628dc33b9bd62ca1bab6da26dd37f" id="r_a79e628dc33b9bd62ca1bab6da26dd37f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a79e628dc33b9bd62ca1bab6da26dd37f">FUNCTIONS_OPERATION</a>(name,  op,  op_name,  op2,  op2_name)</td></tr>
-<tr class="memitem:afbc1ceeda99492254235aa627ea01b8a" id="r_afbc1ceeda99492254235aa627ea01b8a"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#afbc1ceeda99492254235aa627ea01b8a">FUNCTION_OUTPUT</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:a47b3c7f6fc1a337caccb08707412477e" id="r_a47b3c7f6fc1a337caccb08707412477e"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a47b3c7f6fc1a337caccb08707412477e">FUNCTION_HASH</a>(type_name,  type_enum_name,  enum_value)</td></tr>
-<tr class="memitem:adab27218c388530fa494b6a95e992cf4" id="r_adab27218c388530fa494b6a95e992cf4"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#adab27218c388530fa494b6a95e992cf4">FUNCTION_FORMAT</a>(type_name,  type_enum_name,  enum_value)</td></tr>
+<tr class="memdesc:a7eac2aa0392813b2f68a19a1f241ad85"><td class="mdescLeft">&#160;</td><td class="mdescRight">To generate operator between numeric_any with a value or another numeric_any. Including: +, -, *, /. And used +=, -=, *=, /= to do operations.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -176,449 +164,25 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555">casyyy::maths::normal</a>
 , <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b">casyyy::maths::relaxed</a>
  }</td></tr>
-<tr class="memitem:aeb15cc7bd0ae3f7dda69825f241fa08d" id="r_aeb15cc7bd0ae3f7dda69825f241fa08d"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#aeb15cc7bd0ae3f7dda69825f241fa08d">casyyy::maths::numeric_types</a> : unsigned char { <a class="el" href="namespacecasyyy_1_1maths.html#aeb15cc7bd0ae3f7dda69825f241fa08daba2b45bdc11e2a4a6e86aab2ac693cbb">casyyy::maths::EMPTY</a> = 0
- }</td></tr>
+<tr class="memdesc:ad2c5becd5c7b33e58c95da60f595ceea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric conversion strategy, used for handling different types of number conversions.  <a href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a182901e49180de5d715ecc5ec5641eeb" id="r_a182901e49180de5d715ecc5ec5641eeb"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a182901e49180de5d715ecc5ec5641eeb template"><td class="memItemLeft">constexpr <a class="el" href="namespacecasyyy_1_1maths.html#aeb15cc7bd0ae3f7dda69825f241fa08d">numeric_types</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a182901e49180de5d715ecc5ec5641eeb">casyyy::maths::types</a> () noexcept</td></tr>
-<tr class="memitem:a564aac34a8c2493d66adc983d3d05514" id="r_a564aac34a8c2493d66adc983d3d05514"><td class="memTemplParams" colspan="2">template&lt;ArithmeticWithExplictSign T, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">casting_policy</a> Policy = casting_policy::strict&gt; </td></tr>
+<tr class="memitem:a564aac34a8c2493d66adc983d3d05514" id="r_a564aac34a8c2493d66adc983d3d05514"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">casting_policy</a> Policy = casting_policy::strict&gt; </td></tr>
 <tr class="memitem:a564aac34a8c2493d66adc983d3d05514 template"><td class="memItemLeft">constexpr ::std::optional&lt; T &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a564aac34a8c2493d66adc983d3d05514">casyyy::maths::numeric_cast</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memitem:a90ca50109933e5040f4cf04ca7d6feb1" id="r_a90ca50109933e5040f4cf04ca7d6feb1"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a90ca50109933e5040f4cf04ca7d6feb1">casyyy::maths::is_normal_number</a> (auto x) noexcept</td></tr>
+<tr class="memdesc:a564aac34a8c2493d66adc983d3d05514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number with check based on policy.  <br /></td></tr>
 <tr class="memitem:a4c705e90a22b3660d4d9488c33f5a665" id="r_a4c705e90a22b3660d4d9488c33f5a665"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a4c705e90a22b3660d4d9488c33f5a665">casyyy::maths::bpow</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;a, unsigned n)</td></tr>
-<tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c" id="r_ae92937bd2c2736954266ffdf85a13b3c"><td class="memTemplParams" colspan="2">template&lt;ArithmeticWithExplictSign T&gt; </td></tr>
+<tr class="memdesc:a4c705e90a22b3660d4d9488c33f5a665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the integer power of a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c" id="r_ae92937bd2c2736954266ffdf85a13b3c"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T&gt; </td></tr>
 <tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c template"><td class="memItemLeft">constexpr T&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c">casyyy::maths::unchecked_numeric_cast</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memitem:a6d6e4e0ff47509c7e969eacbc47ae2e6" id="r_a6d6e4e0ff47509c7e969eacbc47ae2e6"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Trait = ::std::char_traits&lt;CharT&gt;&gt; </td></tr>
-<tr class="memitem:a6d6e4e0ff47509c7e969eacbc47ae2e6 template"><td class="memItemLeft">::std::basic_ostream&lt; CharT, Trait &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a6d6e4e0ff47509c7e969eacbc47ae2e6">casyyy::maths::operator&lt;&lt;</a> (::std::basic_ostream&lt; CharT, Trait &gt; &amp;os, const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memitem:ad40daee95ef3aaac8559176d73c4c950" id="r_ad40daee95ef3aaac8559176d73c4c950"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ad40daee95ef3aaac8559176d73c4c950">casyyy::maths::make_numeric_any</a> (ArithmeticWithExplictSign auto x) noexcept</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aff314bfcbbd7b5bc930f783588200f1c" id="r_aff314bfcbbd7b5bc930f783588200f1c"><td class="memItemLeft">constexpr ::std::string_view&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#aff314bfcbbd7b5bc930f783588200f1c">casyyy::maths::type_names</a> []</td></tr>
+<tr class="memdesc:ae92937bd2c2736954266ffdf85a13b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number without check.  <br /></td></tr>
+<tr class="memitem:aba943ffd942078bb615e72dccc81d1d1" id="r_aba943ffd942078bb615e72dccc81d1d1"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits = ::std::char_traits&lt;CharT&gt;&gt; </td></tr>
+<tr class="memitem:aba943ffd942078bb615e72dccc81d1d1 template"><td class="memItemLeft">::std::basic_ostream&lt; CharT, Traits &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#aba943ffd942078bb615e72dccc81d1d1">casyyy::maths::operator&lt;&lt;</a> (::std::basic_ostream&lt; CharT, Traits &gt; &amp;os, const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
+<tr class="memdesc:aba943ffd942078bb615e72dccc81d1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to the stream.  <br /></td></tr>
+<tr class="memitem:ac7320982f9e926a61ea8e065d57fc3ef" id="r_ac7320982f9e926a61ea8e065d57fc3ef"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ac7320982f9e926a61ea8e065d57fc3ef">casyyy::maths::make_numeric_any</a> (sign_unambiguous_arithmetic auto x) noexcept</td></tr>
+<tr class="memdesc:ac7320982f9e926a61ea8e065d57fc3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tool function to build <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
 </table>
 <a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
-<a id="a4c982621781d68e4821331822dfb12cf" name="a4c982621781d68e4821331822dfb12cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c982621781d68e4821331822dfb12cf">&#9670;&#160;</a></span>FOR_EACH_OPERATOR</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FOR_EACH_OPERATOR</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">x(add, +, <span class="keyword">operator</span>+, +=, <span class="keyword">operator</span>+=) x(sub, -, operator-, -=, operator-=) x(mul, *, operator*, *=, operator*=)     \</div>
-<div class="line">    x(div, /, operator/, /=, operator/=)</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a9f2e40c728be6b871e427d37eb1f44c2" name="a9f2e40c728be6b871e427d37eb1f44c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f2e40c728be6b871e427d37eb1f44c2">&#9670;&#160;</a></span>FOR_EACH_TYPES_TO</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FOR_EACH_TYPES_TO</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">x(<span class="keywordtype">bool</span>, BOOL, 1) x(<span class="keywordtype">signed</span> <span class="keywordtype">char</span>, SIGNED_CHAR, 2) x(<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>, UNSIGNED_CHAR, 3) x(<span class="keywordtype">short</span>, SHORT, 4)              \</div>
-<div class="line">    x(<span class="keywordtype">unsigned</span> <span class="keywordtype">short</span>, UNSIGNED_SHORT, 5) x(<span class="keywordtype">int</span>, INT, 6) x(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>, UNSIGNED_INT, 7) x(<span class="keywordtype">long</span>, LONG, 8)          \</div>
-<div class="line">        x(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>, UNSIGNED_LONG, 9) x(<span class="keywordtype">long</span> <span class="keywordtype">long</span>, LONG_LONG, 10)                                             \</div>
-<div class="line">            x(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span>, UNSIGNED_LONG_LONG, 11) x(<span class="keywordtype">float</span>, FLOAT, 12) x(<span class="keywordtype">double</span>, DOUBLE, 13)                \</div>
-<div class="line">                x(<span class="keywordtype">long</span> <span class="keywordtype">double</span>, LONG_DOUBLE, 14)</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aff113fb30db5ce5aeefa94c4756a7cb9" name="aff113fb30db5ce5aeefa94c4756a7cb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff113fb30db5ce5aeefa94c4756a7cb9">&#9670;&#160;</a></span>FUNCTION <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt;                                                                                                        \</div>
-<div class="line"><span class="keyword">constexpr</span> numeric_types types&lt;type_name&gt;() noexcept {                                                              \</div>
-<div class="line">    <span class="keywordflow">return</span> numeric_types::type_enum_name;                                                                          \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aae9a2638eec1eda40d2110093238cf00" name="aae9a2638eec1eda40d2110093238cf00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae9a2638eec1eda40d2110093238cf00">&#9670;&#160;</a></span>FUNCTION <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">, #type_name</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a0806327db7f46afca7e89de4a85ff33d" name="a0806327db7f46afca7e89de4a85ff33d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0806327db7f46afca7e89de4a85ff33d">&#9670;&#160;</a></span>FUNCTION <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">type_enum_name = enum_value,</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a5460f2ed40b6679814b86e3029df71e8" name="a5460f2ed40b6679814b86e3029df71e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5460f2ed40b6679814b86e3029df71e8">&#9670;&#160;</a></span>FUNCTION_BINARY_EXP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_BINARY_EXP</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> result = <span class="keyword">static_cast&lt;</span>type_name<span class="keyword">&gt;</span>(1) * 1;                                                                   \</div>
-<div class="line">    if (n == 0) return numeric_any{result};                                                                        \</div>
-<div class="line">    <span class="keyword">auto</span> restore_value = unchecked_numeric_cast&lt;type_name&gt;(a);                                                     \</div>
-<div class="line">    while (n) {                                                                                                    \</div>
-<div class="line">        if (n &amp; 1) result *= restore_value;                                                                        \</div>
-<div class="line">        restore_value *= restore_value;                                                                            \</div>
-<div class="line">        n &gt;&gt;= 1;                                                                                                   \</div>
-<div class="line">    }                                                                                                              \</div>
-<div class="line">    <span class="keywordflow">return</span> numeric_any{result};                                                                                    \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="adab27218c388530fa494b6a95e992cf4" name="adab27218c388530fa494b6a95e992cf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adab27218c388530fa494b6a95e992cf4">&#9670;&#160;</a></span>FUNCTION_FORMAT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_FORMAT</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (x.is_same_type&lt;type_name&gt;()) {                                                                                 \</div>
-<div class="line">    type_name restore = unchecked_numeric_cast&lt;type_name&gt;(x);                                                      \</div>
-<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (is_same_v&lt;CharT, wchar_t&gt;)                                                                       \</div>
-<div class="line">        <span class="keywordflow">return</span> vformat_to(ctx.out(), fmt, make_wformat_args(restore));                                             \</div>
-<div class="line">    else                                                                                                           \</div>
-<div class="line">        return vformat_to(ctx.out(), fmt, make_format_args(restore));                                              \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a47b3c7f6fc1a337caccb08707412477e" name="a47b3c7f6fc1a337caccb08707412477e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47b3c7f6fc1a337caccb08707412477e">&#9670;&#160;</a></span>FUNCTION_HASH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_HASH</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (x.is_same_type&lt;type_name&gt;()) {                                                                                 \</div>
-<div class="line">    type_name restore = unchecked_numeric_cast&lt;type_name&gt;(x);                                                      \</div>
-<div class="line">    <span class="keywordflow">return</span> hash&lt;type_name&gt;{}(restore);                                                                             \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="afbc1ceeda99492254235aa627ea01b8a" name="afbc1ceeda99492254235aa627ea01b8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbc1ceeda99492254235aa627ea01b8a">&#9670;&#160;</a></span>FUNCTION_OUTPUT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_OUTPUT</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (x.is_same_type&lt;type_name&gt;()) {                                                                                 \</div>
-<div class="line">    <span class="keyword">auto</span> res = unchecked_numeric_cast&lt;type_name&gt;(x);                                                               \</div>
-<div class="line">    os &lt;&lt; res;                                                                                                     \</div>
-<div class="line">    <span class="keywordflow">return</span> os;                                                                                                     \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a40a9d2209d716f9e42adb1ff36cc0bf6" name="a40a9d2209d716f9e42adb1ff36cc0bf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40a9d2209d716f9e42adb1ff36cc0bf6">&#9670;&#160;</a></span>FUNCTION_TO_ADD</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_TO_ADD</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> restore = unchecked_numeric_cast&lt;type_name&gt;(*<span class="keyword">this</span>);                                                       \</div>
-<div class="line">    <span class="keywordflow">return</span> *<span class="keyword">this</span> = <span class="keyword">static_cast&lt;</span>type_name<span class="keyword">&gt;</span>(restore + <span class="keyword">static_cast&lt;</span>type_name<span class="keyword">&gt;</span>(1));                                    \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a4169ff53b46c30bad9a01a561612ee59" name="a4169ff53b46c30bad9a01a561612ee59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4169ff53b46c30bad9a01a561612ee59">&#9670;&#160;</a></span>FUNCTION_TO_CAST</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_TO_CAST</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
-<div class="line">    <span class="keywordflow">if</span> <a class="code hl_define" href="#a8b266be8b7140a4b2bb63f1dca9c3e29">NOT_IN_CONSTANT_EVALUATION</a> {                                                                                \</div>
-<div class="line">        type_name restore_value = 0;                                                                               \</div>
-<div class="line">        ::std::memcpy(&amp;restore_value, x.storage_.data(), <span class="keyword">sizeof</span>(type_name));                                       \</div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(restore_value);                                                                      \</div>
-<div class="line">    } <span class="keywordflow">else</span> {                                                                                                       \</div>
-<div class="line">        ::std::array&lt;<span class="keywordtype">unsigned</span> char, <span class="keyword">sizeof</span>(type_name)&gt; temp_{};                                                    \</div>
-<div class="line">        for (::size_t i = 0; i &lt; <span class="keyword">sizeof</span>(type_name); ++i)                                                           \</div>
-<div class="line">            temp_[i] = x.storage_[i];                                                                              \</div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(::std::bit_cast&lt;type_name, decltype(temp_)&gt;(temp_));                                 \</div>
-<div class="line">    }                                                                                                              \</div>
-<div class="line">}</div>
-<div class="ttc" id="anumeric__any_8ixx_html_a8b266be8b7140a4b2bb63f1dca9c3e29"><div class="ttname"><a href="#a8b266be8b7140a4b2bb63f1dca9c3e29">NOT_IN_CONSTANT_EVALUATION</a></div><div class="ttdeci">#define NOT_IN_CONSTANT_EVALUATION</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:25</div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a6db9674375b2c82ca7961aafb7071093" name="a6db9674375b2c82ca7961aafb7071093"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6db9674375b2c82ca7961aafb7071093">&#9670;&#160;</a></span>FUNCTION_TO_RESTORE_VALUE <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_TO_RESTORE_VALUE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
-<div class="line">    type_name restore_value = unchecked_numeric_cast&lt;type_name&gt;(*<span class="keyword">this</span>);                                            \</div>
-<div class="line">    <span class="keywordflow">return</span> numeric_any{-restore_value};                                                                            \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a21026865118ea8ed1b6b5b53e508fc55" name="a21026865118ea8ed1b6b5b53e508fc55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21026865118ea8ed1b6b5b53e508fc55">&#9670;&#160;</a></span>FUNCTION_TO_RESTORE_VALUE <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_TO_RESTORE_VALUE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> restore_value = unchecked_numeric_cast&lt;type_name&gt;(x);                                                     \</div>
-<div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (::std::is_floating_point_v&lt;type_name&gt;) {                                                         \</div>
-<div class="line">        if (!is_normal_number(restore_value)) return ::std::nullopt;                                               \</div>
-<div class="line">        <span class="keyword">auto</span> res = <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(restore_value);                                                                  \</div>
-<div class="line">        if (!is_normal_number(restore_value)) return ::std::nullopt;                                               \</div>
-<div class="line">        <span class="keywordflow">return</span> res;                                                                                                \</div>
-<div class="line">    }                                                                                                              \</div>
-<div class="line">    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(restore_value);                                                                          \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="ac69576d334cb019d594fe3e53aec5a88" name="ac69576d334cb019d594fe3e53aec5a88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac69576d334cb019d594fe3e53aec5a88">&#9670;&#160;</a></span>FUNCTION_TO_SUB</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTION_TO_SUB</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> restore = unchecked_numeric_cast&lt;type_name&gt;(*<span class="keyword">this</span>);                                                       \</div>
-<div class="line">    <span class="keywordflow">return</span> *<span class="keyword">this</span> = <span class="keyword">static_cast&lt;</span>type_name<span class="keyword">&gt;</span>(restore - <span class="keyword">static_cast&lt;</span>type_name<span class="keyword">&gt;</span>(1));                                    \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
 <a id="a7eac2aa0392813b2f68a19a1f241ad85" name="a7eac2aa0392813b2f68a19a1f241ad85"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7eac2aa0392813b2f68a19a1f241ad85">&#9670;&#160;</a></span>FUNCTION_TWO_OPERATION</h2>
 
@@ -652,108 +216,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(numeric_any x, ArithmeticWithExplictSign <span class="keyword">auto</span> y) <span class="keyword">noexcept</span> {                   \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(numeric_any x, sign_unambiguous_arithmetic <span class="keyword">auto</span> y) <span class="keyword">noexcept</span> {                 \</div>
 <div class="line">    <span class="keywordflow">return</span> x op2 y;                                                                                                \</div>
 <div class="line">}                                                                                                                  \</div>
-<div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(ArithmeticWithExplictSign <span class="keyword">auto</span> x, numeric_any y) <span class="keyword">noexcept</span> {                   \</div>
+<div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(sign_unambiguous_arithmetic <span class="keyword">auto</span> x, numeric_any y) <span class="keyword">noexcept</span> {                 \</div>
 <div class="line">    <span class="keywordflow">return</span> numeric_any{x} op2 y;                                                                                   \</div>
 <div class="line">}                                                                                                                  \</div>
 <div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(numeric_any x, numeric_any y) <span class="keyword">noexcept</span> {                                      \</div>
 <div class="line">    <span class="keywordflow">return</span> x op2 y;                                                                                                \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
-</div>
-</div>
-<a id="a79e628dc33b9bd62ca1bab6da26dd37f" name="a79e628dc33b9bd62ca1bab6da26dd37f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79e628dc33b9bd62ca1bab6da26dd37f">&#9670;&#160;</a></span>FUNCTIONS_OPERATION <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTIONS_OPERATION</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op2_name</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="affe78b474d452c9b6a53221ffe4ab3bf" name="affe78b474d452c9b6a53221ffe4ab3bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affe78b474d452c9b6a53221ffe4ab3bf">&#9670;&#160;</a></span>FUNCTIONS_OPERATION <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FUNCTIONS_OPERATION</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op2_name</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;                                                                                \</div>
-<div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">void</span> casting_##name(T2 x) <span class="keyword">noexcept</span> {                                                                     \</div>
-<div class="line">    <span class="keyword">using </span>common_type = ::std::common_type_t&lt;T1, T2&gt;;                                                              \</div>
-<div class="line">    <span class="keyword">auto</span> lhs          = unchecked_numeric_cast&lt;T1&gt;(*<span class="keyword">this</span>);                                                         \</div>
-<div class="line">    <span class="keyword">auto</span> result       = <span class="keyword">static_cast&lt;</span>common_type<span class="keyword">&gt;</span>(lhs) op <span class="keyword">static_cast&lt;</span>common_type<span class="keyword">&gt;</span>(x);                              \</div>
-<div class="line">    reset(result);                                                                                                 \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a8b266be8b7140a4b2bb63f1dca9c3e29" name="a8b266be8b7140a4b2bb63f1dca9c3e29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b266be8b7140a4b2bb63f1dca9c3e29">&#9670;&#160;</a></span>NOT_IN_CONSTANT_EVALUATION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NOT_IN_CONSTANT_EVALUATION&#160;&#160;&#160;(!::std::is_constant_evaluated())</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>To generate operator between numeric_any with a value or another numeric_any. Including: +, -, *, /. And used +=, -=, *=, /= to do operations. </p>
+<dl class="section return"><dt>Returns</dt><dd>A new numeric_any after operations. </dd></dl>
 
 </div>
 </div>

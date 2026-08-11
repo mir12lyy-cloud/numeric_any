@@ -4,12 +4,12 @@
 \begin{DoxyCompactItemize}
 \item 
 class \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Concepts}
 \begin{DoxyCompactItemize}
 \item 
-concept \doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1_arithmetic_with_explict_sign}{Arithmetic\+With\+Explict\+Sign}}
-\end{DoxyCompactItemize}
+concept \doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}{sign\+\_\+unambiguous\+\_\+arithmetic}}
+\begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explict sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -17,32 +17,20 @@ enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da
 , \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555}{normal}}
 , \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b}{relaxed}}
  \}
-\item 
-enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}{numeric\+\_\+types}} :\+ unsigned char \{ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08daba2b45bdc11e2a4a6e86aab2ac693cbb}{EMPTY}} = 0
- \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Numeric conversion strategy, used for handling different types of number conversions. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-{\footnotesize template$<$typename T$>$ }\\constexpr \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}{numeric\+\_\+types}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a182901e49180de5d715ecc5ec5641eeb}{types}} () noexcept
-\item 
-{\footnotesize template$<$Arithmetic\+With\+Explict\+Sign T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\item 
-constexpr bool \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a90ca50109933e5040f4cf04ca7d6feb1}{is\+\_\+normal\+\_\+number}} (auto x) noexcept
-\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a4c705e90a22b3660d4d9488c33f5a665}{bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n)
-\item 
-{\footnotesize template$<$Arithmetic\+With\+Explict\+Sign T$>$ }\\constexpr T \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\item 
-{\footnotesize template$<$typename CharT, typename Trait = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Trait $>$ \& \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6d6e4e0ff47509c7e969eacbc47ae2e6}{operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Trait $>$ \&os, const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad40daee95ef3aaac8559176d73c4c950}{make\+\_\+numeric\+\_\+any}} (Arithmetic\+With\+Explict\+Sign auto x) noexcept
-\end{DoxyCompactItemize}
-\doxysubsubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-constexpr ::\+std::\+string\+\_\+view \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aff314bfcbbd7b5bc930f783588200f1c}{type\+\_\+names}} \+[$\,$]\+
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr T \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aba943ffd942078bb615e72dccc81d1d1}{operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Output \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ac7320982f9e926a61ea8e065d57fc3ef}{make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em A tool function to build \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \label{namespacecasyyy_1_1maths_doc-enum-members}
@@ -54,37 +42,36 @@ constexpr ::\+std::\+string\+\_\+view \doxymbox{\hyperlink{namespacecasyyy_1_1ma
 {\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea} 
 enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casyyy::\+maths::\+casting\+\_\+policy}} :\+ unsigned char\hspace{0.3cm}{\ttfamily [export]}, {\ttfamily [strong]}}
 
+
+
+Numeric conversion strategy, used for handling different types of number conversions. 
+
+\begin{DoxyNote}{Note}
+The default policy is set to strict. 
+\end{DoxyNote}
 \begin{DoxyEnumFields}[2]{Enumerator}
 \raisebox{\heightof{T}}[0pt][0pt]{\index{strict@{strict}!casyyy::maths@{casyyy::maths}}
 \index{casyyy::maths@{casyyy::maths}!strict@{strict}}
 }\Hypertarget{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa2133fd717402a7966ee88d06f9e0b792}\label{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa2133fd717402a7966ee88d06f9e0b792} 
-strict&\\
+strict&Require lossless conversion of values. Allow promotions between signed integers, floating point numbers and unsigned numbers. Allow non-\/negative integers promoting to unsigned integers. \begin{DoxyNote}{Note}
+Convert integers to floating point numbers isn\textquotesingle{}t allowed. 
+\end{DoxyNote}
+\\
 \hline
 
 \raisebox{\heightof{T}}[0pt][0pt]{\index{normal@{normal}!casyyy::maths@{casyyy::maths}}
 \index{casyyy::maths@{casyyy::maths}!normal@{normal}}
 }\Hypertarget{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555}\label{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555} 
-normal&\\
+normal&Conversion that allows some data loss. Allow integers convert to a floating numbers. Allow narrow casting from a non-\/negative integer to an unsigned number. \begin{DoxyNote}{Note}
+Positive integers are only allowed to be truncated into unsigned numbers. 
+\end{DoxyNote}
+\\
 \hline
 
 \raisebox{\heightof{T}}[0pt][0pt]{\index{relaxed@{relaxed}!casyyy::maths@{casyyy::maths}}
 \index{casyyy::maths@{casyyy::maths}!relaxed@{relaxed}}
 }\Hypertarget{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b}\label{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b} 
-relaxed&\\
-\hline
-
-\end{DoxyEnumFields}
-\Hypertarget{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}\index{casyyy::maths@{casyyy::maths}!numeric\_types@{numeric\_types}}
-\index{numeric\_types@{numeric\_types}!casyyy::maths@{casyyy::maths}}
-\doxysubsubsection{\texorpdfstring{numeric\_types}{numeric\_types}}
-{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d} 
-enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}{casyyy::\+maths::\+numeric\+\_\+types}} :\+ unsigned char\hspace{0.3cm}{\ttfamily [strong]}}
-
-\begin{DoxyEnumFields}[3]{Enumerator}
-\raisebox{\heightof{T}}[0pt][0pt]{\index{EMPTY@{EMPTY}!casyyy::maths@{casyyy::maths}}
-\index{casyyy::maths@{casyyy::maths}!EMPTY@{EMPTY}}
-}\Hypertarget{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08daba2b45bdc11e2a4a6e86aab2ac693cbb}\label{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08daba2b45bdc11e2a4a6e86aab2ac693cbb} 
-EMPTY&0&\\
+relaxed&The output should be a plain numeric value. Allow all casting except NaN, Inf and empty. \\
 \hline
 
 \end{DoxyEnumFields}
@@ -99,63 +86,129 @@ EMPTY&0&\\
 {\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a4c705e90a22b3660d4d9488c33f5a665} 
 \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} casyyy::\+maths::\+bpow (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{a}{, }\item[{unsigned}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
 
-\Hypertarget{namespacecasyyy_1_1maths_a90ca50109933e5040f4cf04ca7d6feb1}\index{casyyy::maths@{casyyy::maths}!is\_normal\_number@{is\_normal\_number}}
-\index{is\_normal\_number@{is\_normal\_number}!casyyy::maths@{casyyy::maths}}
-\doxysubsubsection{\texorpdfstring{is\_normal\_number()}{is\_normal\_number()}}
-{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a90ca50109933e5040f4cf04ca7d6feb1} 
-bool casyyy::\+maths::\+is\+\_\+normal\+\_\+number (\begin{DoxyParamCaption}\item[{auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
 
-\Hypertarget{namespacecasyyy_1_1maths_ad40daee95ef3aaac8559176d73c4c950}\index{casyyy::maths@{casyyy::maths}!make\_numeric\_any@{make\_numeric\_any}}
+
+Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+{\em n} & Computed exponent. It\textquotesingle{}s an unsigned number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of the exponentiation. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If the internal type is narrower than int, the final type is converted to int. 
+\end{DoxyNote}
+\Hypertarget{namespacecasyyy_1_1maths_ac7320982f9e926a61ea8e065d57fc3ef}\index{casyyy::maths@{casyyy::maths}!make\_numeric\_any@{make\_numeric\_any}}
 \index{make\_numeric\_any@{make\_numeric\_any}!casyyy::maths@{casyyy::maths}}
 \doxysubsubsection{\texorpdfstring{make\_numeric\_any()}{make\_numeric\_any()}}
-{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_ad40daee95ef3aaac8559176d73c4c950} 
-\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} casyyy::\+maths::\+make\+\_\+numeric\+\_\+any (\begin{DoxyParamCaption}\item[{Arithmetic\+With\+Explict\+Sign auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_ac7320982f9e926a61ea8e065d57fc3ef} 
+\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} casyyy::\+maths::\+make\+\_\+numeric\+\_\+any (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
 
+
+
+A tool function to build \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to make \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} store the given value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follow the rules in constructors. 
+\end{DoxyNote}
 \Hypertarget{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}\index{casyyy::maths@{casyyy::maths}!numeric\_cast@{numeric\_cast}}
 \index{numeric\_cast@{numeric\_cast}!casyyy::maths@{casyyy::maths}}
 \doxysubsubsection{\texorpdfstring{numeric\_cast()}{numeric\_cast()}}
 {\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514} 
-template$<$Arithmetic\+With\+Explict\+Sign T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ \\
+template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ \\
 ::\+std::\+optional$<$ T $>$ casyyy::\+maths::\+numeric\+\_\+cast (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [export]}, {\ttfamily [noexcept]}}
 
-\Hypertarget{namespacecasyyy_1_1maths_a6d6e4e0ff47509c7e969eacbc47ae2e6}\index{casyyy::maths@{casyyy::maths}!operator$<$$<$@{operator$<$$<$}}
+
+
+Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The basic arithmetic types in C++, except char without explict sign which is used to check. \\
+\hline
+{\em Policy} & The casting policy which will be based on. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A normal value represents the value stored in a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after casting to given type or null. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+
+Always return std::\+nullopt when a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty. 
+\end{DoxyNote}
+\Hypertarget{namespacecasyyy_1_1maths_aba943ffd942078bb615e72dccc81d1d1}\index{casyyy::maths@{casyyy::maths}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!casyyy::maths@{casyyy::maths}}
 \doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
-{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a6d6e4e0ff47509c7e969eacbc47ae2e6} 
-template$<$typename CharT, typename Trait = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ \\
-::\+std::\+basic\+\_\+ostream$<$ CharT, Trait $>$ \& casyyy::\+maths::\+operator$<$$<$ (\begin{DoxyParamCaption}\item[{::\+std::\+basic\+\_\+ostream$<$ CharT, Trait $>$ \&}]{os}{, }\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [export]}}
+{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_aba943ffd942078bb615e72dccc81d1d1} 
+template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ \\
+::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& casyyy::\+maths::\+operator$<$$<$ (\begin{DoxyParamCaption}\item[{::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&}]{os}{, }\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [export]}}
 
-\Hypertarget{namespacecasyyy_1_1maths_a182901e49180de5d715ecc5ec5641eeb}\index{casyyy::maths@{casyyy::maths}!types@{types}}
-\index{types@{types}!casyyy::maths@{casyyy::maths}}
-\doxysubsubsection{\texorpdfstring{types()}{types()}}
-{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a182901e49180de5d715ecc5ec5641eeb} 
-template$<$typename T$>$ \\
-\doxymbox{\hyperlink{namespacecasyyy_1_1maths_aeb15cc7bd0ae3f7dda69825f241fa08d}{numeric\+\_\+types}} casyyy::\+maths::\+types (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
 
+
+Output \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em CharT} & The character type. (e.\+g., char or wchar\+\_\+t) \\
+\hline
+{\em Traits} & The character traits. (default:\+ std::\+char\+\_\+traits$<$\+Char\+T$>$) \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream reference. \\
+\hline
+{\em x} & The \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} which will be output. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the original output stream reference, enabling chained operations. 
+\end{DoxyReturn}
 \Hypertarget{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}\index{casyyy::maths@{casyyy::maths}!unchecked\_numeric\_cast@{unchecked\_numeric\_cast}}
 \index{unchecked\_numeric\_cast@{unchecked\_numeric\_cast}!casyyy::maths@{casyyy::maths}}
 \doxysubsubsection{\texorpdfstring{unchecked\_numeric\_cast()}{unchecked\_numeric\_cast()}}
 {\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c} 
-template$<$Arithmetic\+With\+Explict\+Sign T$>$ \\
+template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ \\
 T casyyy::\+maths::\+unchecked\+\_\+numeric\+\_\+cast (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
 
 
 
-\label{namespacecasyyy_1_1maths_doc-var-members}
-\Hypertarget{namespacecasyyy_1_1maths_doc-var-members}
-\doxysubsection{Variable Documentation}
-\Hypertarget{namespacecasyyy_1_1maths_aff314bfcbbd7b5bc930f783588200f1c}\index{casyyy::maths@{casyyy::maths}!type\_names@{type\_names}}
-\index{type\_names@{type\_names}!casyyy::maths@{casyyy::maths}}
-\doxysubsubsection{\texorpdfstring{type\_names}{type\_names}}
-{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_aff314bfcbbd7b5bc930f783588200f1c} 
-::\+std::\+string\+\_\+view casyyy::\+maths::\+type\+\_\+names\+[$\,$]\+\hspace{0.3cm}{\ttfamily [inline]}}
+Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. 
 
-{\bfseries Initial value:\+}
-\begin{DoxyCode}{0}
-\DoxyCodeLine{\{\textcolor{stringliteral}{"{}empty"{}}}
-\DoxyCodeLine{\textcolor{preprocessor}{\#define\ FUNCTION(type\_name,\ type\_enum\_name,\ enum\_value)\ \ \ \ \ \ \ \ \ \ \ \ \ }}
-\DoxyCodeLine{}
-\DoxyCodeLine{}
-\DoxyCodeLine{\}}
 
-\end{DoxyCode}
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The basic arithmetic types in C++, except char without explict sign which is used to check. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A normal value represents the value stored in a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after casting to given type. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+
+Always return T\{\} when a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty. 
+\end{DoxyNote}

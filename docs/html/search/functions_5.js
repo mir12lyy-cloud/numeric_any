@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['make_5fnumeric_5fany_0',['make_numeric_any',['../namespacecasyyy_1_1maths.html#ad40daee95ef3aaac8559176d73c4c950',1,'casyyy::maths']]]
+  ['numeric_5fany_0',['numeric_any',['../classcasyyy_1_1maths_1_1numeric__any.html#a48b4c4604a632a57be75835f73a3fec4',1,'casyyy::maths::numeric_any::numeric_any() noexcept=default'],['../classcasyyy_1_1maths_1_1numeric__any.html#a286fe61eb44c3beb3dbca45333caea1d',1,'casyyy::maths::numeric_any::numeric_any(sign_unambiguous_arithmetic auto x) noexcept']]],
+  ['numeric_5fcast_1',['numeric_cast',['../namespacecasyyy_1_1maths.html#a564aac34a8c2493d66adc983d3d05514',1,'casyyy::maths']]]
 ];
