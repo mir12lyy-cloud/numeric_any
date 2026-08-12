@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bpow_0',['bpow',['../namespacecasyyy_1_1maths.html#a4c705e90a22b3660d4d9488c33f5a665',1,'casyyy::maths']]]
+  ['abs_0',['abs',['../namespacecasyyy_1_1maths.html#a943a8c5665bef184e50ef4bf5d980329',1,'casyyy::maths']]]
 ];
