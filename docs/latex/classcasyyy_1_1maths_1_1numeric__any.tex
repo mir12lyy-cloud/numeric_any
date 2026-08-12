@@ -80,7 +80,9 @@ constexpr ::\+std::\+span$<$ const unsigned char $>$ \doxymbox{\hyperlink{classc
 {\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}}$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a9d3bee02fd4a6a2162c0f189ca56f119}{numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&x)
 \begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a188a20bc537dacf885089424cfac642e}{bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&a, unsigned n)
-\begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac4617fdc058949b457d2d5dc318bfdfb}{abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Compute abs. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -707,6 +709,27 @@ The span is read-\/only. And its size is based on the number of bytes used by in
 \label{classcasyyy_1_1maths_1_1numeric__any_doc-related-members}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_doc-related-members}
 \doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classcasyyy_1_1maths_1_1numeric__any_ac4617fdc058949b457d2d5dc318bfdfb}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!abs@{abs}}
+\index{abs@{abs}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{abs}{abs}}
+{\footnotesize\ttfamily \label{classcasyyy_1_1maths_1_1numeric__any_ac4617fdc058949b457d2d5dc318bfdfb} 
+\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} abs (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Compute abs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} which store the abs of the value stored in formal \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+When the \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty, return itself. 
+\end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a188a20bc537dacf885089424cfac642e}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!bpow@{bpow}}
 \index{bpow@{bpow}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
 \doxysubsubsection{\texorpdfstring{bpow}{bpow}}

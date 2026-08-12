@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.2.1</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.3.0</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -202,6 +202,8 @@ Friends</h2></td></tr>
 <tr class="memdesc:a9d3bee02fd4a6a2162c0f189ca56f119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number with check based on policy.  <br /></td></tr>
 <tr class="memitem:a188a20bc537dacf885089424cfac642e" id="r_a188a20bc537dacf885089424cfac642e"><td class="memItemLeft">constexpr <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="#a188a20bc537dacf885089424cfac642e">bpow</a> (const <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> &amp;a, unsigned n)</td></tr>
 <tr class="memdesc:a188a20bc537dacf885089424cfac642e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the integer power of a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:ac4617fdc058949b457d2d5dc318bfdfb" id="r_ac4617fdc058949b457d2d5dc318bfdfb"><td class="memItemLeft">constexpr <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac4617fdc058949b457d2d5dc318bfdfb">abs</a> (const <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> &amp;x)</td></tr>
+<tr class="memdesc:ac4617fdc058949b457d2d5dc318bfdfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute abs.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A type-erasure-based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. </p>
@@ -1251,6 +1253,41 @@ It will change the base type of the internal storage. And must offer a number. <
 </div>
 </div>
 <a name="doc-related-members" id="doc-related-members"></a><h2 id="header-doc-related-members" class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="ac4617fdc058949b457d2d5dc318bfdfb" name="ac4617fdc058949b457d2d5dc318bfdfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4617fdc058949b457d2d5dc318bfdfb">&#9670;&#160;</a></span>abs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> abs </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a48b4c4604a632a57be75835f73a3fec4">numeric_any</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel friend">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute abs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Input <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> which store the abs of the value stored in formal <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When the <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> is empty, return itself. </dd></dl>
+
+</div>
+</div>
 <a id="a188a20bc537dacf885089424cfac642e" name="a188a20bc537dacf885089424cfac642e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a188a20bc537dacf885089424cfac642e">&#9670;&#160;</a></span>bpow</h2>
 
