@@ -75,11 +75,46 @@ FOR_EACH_TYPES_TO(FUNCTION)
 // Check for a floating number isn't a NaN or inf.
 constexpr bool is_normal_number(auto x) noexcept {
 #if __cplusplus < 202202L
-    if (x != x) return false; // Check NaN.
-    constexpr auto inf = ::std::numeric_limits<decltype(x)>::infinity();
-    return x != inf && x != -inf;
+    if NOT_IN_CONSTANT_EVALUATION {
+        return ::std::isnormal(x);
+    } else {
+        if (x != x) return false; // Check NaN. //NOLINT
+        constexpr auto inf = ::std::numeric_limits<decltype(x)>::infinity();
+        return x != inf && x != -inf;
+    }
 #else
     return ::std::isnormal(x);
+#endif
+}
+constexpr decltype(auto) inner_abs(auto x) noexcept {
+#ifdef __cpp_lib_constexpr_cmath
+    return ::std::abs(x);
+#else
+    if NOT_IN_CONSTANT_EVALUATION {
+        if constexpr (::std::is_signed_v<decltype(x)>) {
+            return ::std::abs(x);
+        } else {
+            return x * 1;
+        }
+    } else {
+        using T = ::std::decay_t<decltype(x)>;
+        if constexpr (::std::is_signed_v<T> && ::std::is_integral_v<T>) {
+            auto mask = x >> ::std::numeric_limits<T>::digits;
+            return (mask + x) ^ mask;
+        } else if constexpr (::std::is_unsigned_v<T>) {
+            return x * 1;
+        }
+        auto bytes = ::std::bit_cast<::std::array<unsigned char, sizeof(T)>, T>(x);
+        if constexpr (::std::endian::native == ::std::endian::little) {
+            bytes.back() &= 0x7f;
+        } else if constexpr (::std::endian::native == ::std::endian::big) {
+            bytes.front() &= 0x7f;
+        } else {
+            static_assert(!::std::is_constant_evaluated(), // NOLINT
+                          "In C++20, Compile-time processing of mixed-endian floating-point data is not supported.");
+        }
+        return ::std::bit_cast<T, decltype(bytes)>(bytes);
+    }
 #endif
 }
 /// @endcond
@@ -121,6 +156,8 @@ public:
     template <sign_unambiguous_arithmetic T, casting_policy>
     friend constexpr ::std::optional<T> numeric_cast(const numeric_any&) noexcept;
     friend constexpr numeric_any bpow(const numeric_any&, unsigned) noexcept;
+    friend constexpr numeric_any abs(const numeric_any&) noexcept;
+
     /// @brief Construct an empty numeric_any.
     /// @note Explicitly assign before use to avoid unintended behavior from null states.
     constexpr numeric_any() noexcept = default;
@@ -390,7 +427,7 @@ FOR_EACH_OPERATOR(FUNCTION_TWO_OPERATION)
 /// @param n Computed exponent. It's an unsigned number.
 /// @return The result of the exponentiation.
 /// @note If the internal type is narrower than int, the final type is converted to int.
-constexpr numeric_any bpow(const numeric_any& a, unsigned n) noexcept {
+export constexpr numeric_any bpow(const numeric_any& a, unsigned n) noexcept {
     switch (a.type) {
         FOR_EACH_TYPES_TO(FUNCTION_BINARY_EXP)
     default:
@@ -398,6 +435,26 @@ constexpr numeric_any bpow(const numeric_any& a, unsigned n) noexcept {
     }
 }
 #undef FUNCTION_BINARY_EXP
+/// @cond
+#define FUNCTION_ABS(type_name, type_enum_name, enum_value)                                                            \
+    case numeric_types::type_enum_name: {                                                                              \
+        auto restore_value = unchecked_numeric_cast<type_name>(x);                                                     \
+        return numeric_any{inner_abs(restore_value)};                                                                  \
+    }
+/// @endcond
+
+/// @brief Compute abs.
+/// @param x Input numeric_any.
+/// @return A numeric_any which store the abs of the value stored in formal numeric_any.
+/// @note When the numeric_any is empty, return itself.
+export constexpr numeric_any abs(const numeric_any& x) noexcept {
+    switch (x.type) {
+        FOR_EACH_TYPES_TO(FUNCTION_ABS)
+    default:
+        return x;
+    }
+}
+
 /// @brief Casting a numeric_any to a normal number without check.
 /// @tparam T The basic arithmetic types in C++, except char without explict sign which is used to check.
 /// @param x A numeric_any.
