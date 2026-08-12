@@ -1669,6 +1669,29 @@ TEST(WideStreamOutputTest, OutputShort) {
 }
 
 // ============================================================================
+// 26. MathFunctions
+// ============================================================================
+
+TEST(MathFunctions, ABS) {
+    const numeric_any arr[]{3.14, -3.22f, -12, 12, 12U, static_cast<short>(-3)};
+    EXPECT_EQ(abs(arr[0]), std::abs(3.14));
+    EXPECT_EQ(abs(arr[1]), std::abs(-3.22f));
+    EXPECT_EQ(abs(arr[2]), std::abs(-12));
+    EXPECT_EQ(abs(arr[3]), std::abs(12));
+    EXPECT_EQ(abs(arr[4]), std::abs(12));
+    EXPECT_EQ(abs(arr[5]), std::abs(-3));
+    EXPECT_EQ(abs(arr[5]).type_name(), "int");
+}
+
+TEST(MathFunctions, BPow) {
+    numeric_any a{3};
+    numeric_any b{static_cast<short>(12)};
+    EXPECT_EQ(bpow(a, 3), 27);
+    EXPECT_EQ(bpow(b, 2), 144);
+    EXPECT_EQ(bpow(b, 1).type_name(), "int");
+}
+
+// ============================================================================
 // Main
 // ============================================================================
 

@@ -88,11 +88,11 @@ public:
         *begin++ = static_cast<CharT>('}'); // Finish the format string.
         return begin;
     }
-    bool is_for_integer() const {
+    [[nodiscard]] bool is_for_integer() const {
         return ::std::basic_string_view<CharT>{int_type, 8}.find(type_charactor) !=
                ::std::basic_string_view<CharT>::npos;
     }
-    bool is_for_floating_point() const {
+    [[nodiscard]] bool is_for_floating_point() const {
         if (has_precision) return true;
         return ::std::basic_string_view<CharT>{float_type, 8}.find(type_charactor) !=
                ::std::basic_string_view<CharT>::npos;
@@ -126,14 +126,13 @@ private:
         Iterator next = begin;
         ++next;
         if (*next == static_cast<CharT>('^') || *next == static_cast<CharT>('>') || *next == static_cast<CharT>('<')) {
-            fill_charactor = *begin;
+            fill_charactor = *begin++;
             align_patten   = *next;
-            ++(++begin);
+            ++begin;
             has_set_align = true;
         } else if (*begin == static_cast<CharT>('^') || *begin == static_cast<CharT>('>') ||
                    *begin == static_cast<CharT>('<')) {
-            align_patten = *begin;
-            ++begin;
+            align_patten = *begin++;
             has_set_align = true;
         }
         return has_set_align;
@@ -142,26 +141,19 @@ private:
     constexpr bool parse_sign(Iterator& begin) {
         if (*begin == static_cast<CharT>('-') || *begin == static_cast<CharT>('+') ||
             *begin == static_cast<CharT>(' ')) {
-            sign_charactor = *begin;
+            sign_charactor = *begin++;
             sign_flag      = true;
-            ++begin;
         }
         return sign_flag;
     }
     template <typename Iterator>
     constexpr bool parse_alternate_form(Iterator& begin) {
-        if (*begin == static_cast<CharT>('#')) {
-            has_alternative = true;
-            ++begin;
-        }
+        if (*begin == static_cast<CharT>('#')) has_alternative = true, ++begin;
         return has_alternative;
     }
     template <typename Iterator>
     constexpr bool parse_zero_padding(Iterator& begin) {
-        if (*begin == static_cast<CharT>('0')) {
-            if (!has_set_align) zero_padding = true;
-            ++begin;
-        }
+        if (*begin == static_cast<CharT>('0') && !has_set_align) zero_padding = true, ++begin;
         return zero_padding;
     }
     template <typename Iterator>
@@ -220,23 +212,19 @@ private:
     }
     template <typename Iterator>
     constexpr bool parse_local(Iterator& begin) {
-        if (*begin == static_cast<CharT>('L')) {
-            using_locale = true;
-            ++begin;
-        }
+        if (*begin == static_cast<CharT>('L')) using_locale = true, ++begin;
         return using_locale;
     }
     template <typename Iterator>
     constexpr bool parse_base(Iterator& begin) {
-        CharT type = *begin;
         ::std::basic_string_view<CharT> int_str{int_type, 8};
         ::std::basic_string_view<CharT> float_str{float_type, 8};
-        if (float_str.find(type) != std::basic_string_view<CharT>::npos) {
+        if (float_str.find(*begin) != std::basic_string_view<CharT>::npos) {
             set_base = true;
-        } else if (int_str.find(type) != std::basic_string_view<CharT>::npos && !has_precision) {
+        } else if (int_str.find(*begin) != std::basic_string_view<CharT>::npos && !has_precision) {
             set_base = true; // Avoid {:2.3d}.
         }
-        if (set_base) ++begin, type_charactor = type;
+        if (set_base) type_charactor = *begin++;
         return set_base;
     }
     // Store the staus after formatting.

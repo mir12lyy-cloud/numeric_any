@@ -76,7 +76,37 @@ constexpr numeric_types types() noexcept {
 
 FOR_EACH_TYPES_TO(FUNCTION)
 #undef FUNCTION
-
+constexpr decltype(auto) inner_abs(auto x) noexcept {
+#ifdef __cpp_lib_constexpr_cmath
+    return ::std::abs(x);
+#else
+    if NOT_IN_CONSTANT_EVALUATION {
+        if constexpr (::std::is_signed_v<decltype(x)>) {
+            return ::std::abs(x);
+        } else {
+            return x * 1;
+        }
+    } else {
+        using T = decltype(x * 1);
+        if constexpr (::std::is_signed_v<T> && ::std::is_integral_v<T>) {
+            auto mask = x >> ::std::numeric_limits<T>::digits;
+            return (mask + x) ^ mask;
+        } else if constexpr (::std::is_unsigned_v<T>) {
+            return x * 1;
+        }
+        auto bytes = ::std::bit_cast<::std::array<unsigned char, sizeof(T)>, T>(x);
+        if constexpr (::std::endian::native == ::std::endian::little) {
+            bytes.back() &= 0x7f;
+        } else if constexpr (::std::endian::native == ::std::endian::big) {
+            bytes.front() &= 0x7f;
+        } else {
+            static_assert(!::std::is_constant_evaluated(), //NOLINT
+                          "In C++20, Compile-time processing of mixed-endian floating-point data is not supported.");
+        }
+        return ::std::bit_cast<T, decltype(bytes)>(bytes);
+    }
+#endif
+}
 } // namespace casyyy::maths::details
 /// @endcond
 
@@ -123,6 +153,7 @@ public:
     template <sign_unambiguous_arithmetic T, casting_policy>
     friend constexpr ::std::optional<T> numeric_cast(const numeric_any&) noexcept;
     friend constexpr numeric_any bpow(const numeric_any&, unsigned) noexcept;
+    friend constexpr numeric_any abs(const numeric_any&) noexcept;
 
     /// @brief Construct an empty numeric_any.
     /// @note Explicitly assign before use to avoid unintended behavior from null states.
@@ -401,6 +432,26 @@ constexpr numeric_any bpow(const numeric_any& a, unsigned n) noexcept {
     }
 }
 #undef FUNCTION_BINARY_EXP
+/// @cond
+#define FUNCTION_ABS(type_name, type_enum_name, enum_value)                                                            \
+case details::numeric_types::type_enum_name: {                                                                              \
+auto restore_value = unchecked_numeric_cast<type_name>(x);                                                     \
+return numeric_any{details::inner_abs(restore_value)};                                                                  \
+}
+/// @endcond
+
+/// @brief Compute abs.
+/// @param x Input numeric_any.
+/// @return A numeric_any which store the abs of the value stored in formal numeric_any.
+/// @note When the numeric_any is empty, return itself.
+constexpr numeric_any abs(const numeric_any& x) noexcept {
+    switch (x.type) {
+        FOR_EACH_TYPES_TO(FUNCTION_ABS)
+    default:
+        return x;
+    }
+}
+
 /// @brief Casting a numeric_any to a normal number without check.
 /// @tparam T The basic arithmetic types in C++, except char without explict sign which is used to check.
 /// @param x A numeric_any.
