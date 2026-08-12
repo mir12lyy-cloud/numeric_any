@@ -98,13 +98,14 @@ constexpr decltype(auto) inner_abs(auto x) noexcept {
         }
     } else {
         using T = ::std::decay_t<decltype(x)>;
+        using U = decltype(T{} + 1);
         if constexpr (::std::is_signed_v<T> && ::std::is_integral_v<T>) {
             auto mask = x >> ::std::numeric_limits<T>::digits;
             return (mask + x) ^ mask;
         } else if constexpr (::std::is_unsigned_v<T>) {
             return x * 1;
         }
-        auto bytes = ::std::bit_cast<::std::array<unsigned char, sizeof(T)>, T>(x);
+        auto bytes = ::std::bit_cast<::std::array<unsigned char, sizeof(U)>, U>(x);
         if constexpr (::std::endian::native == ::std::endian::little) {
             bytes.back() &= 0x7f;
         } else if constexpr (::std::endian::native == ::std::endian::big) {
@@ -113,7 +114,7 @@ constexpr decltype(auto) inner_abs(auto x) noexcept {
             static_assert(!::std::is_constant_evaluated(), // NOLINT
                           "In C++20, Compile-time processing of mixed-endian floating-point data is not supported.");
         }
-        return ::std::bit_cast<T, decltype(bytes)>(bytes);
+        return ::std::bit_cast<U, decltype(bytes)>(bytes);
     }
 #endif
 }
