@@ -7,7 +7,7 @@ on:
       - 'tests/benchmarks/**'
   pull_request:
     paths:
-      - 'src/'
+      - 'src/**'
       - 'tests/benchmarks/**'
 
 jobs:
