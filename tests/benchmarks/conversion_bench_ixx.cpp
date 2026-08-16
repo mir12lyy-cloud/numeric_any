@@ -8,7 +8,7 @@
 import casyyy.maths.numeric_any;
 
 using namespace casyyy::maths;
-static const size_t N = 1000000;
+static constexpr size_t N = 1000000;
 
 using llong   = long long;
 using ullong  = unsigned long long;
@@ -112,7 +112,7 @@ BENCH_CAST_SAME(ldouble, ldbl)
 #define BENCH_VARGET(T, tname)                                                                                         \
     static void BM_StdVariant_Same_##tname(benchmark::State& s) {                                                      \
         auto data = mk_##tname(N);                                                                                     \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, double, ldouble, float, ullong>;                                          \
         std::vector<Var> vars;                                                                                         \
         vars.reserve(N);                                                                                               \
         for (auto v : data) vars.emplace_back(v);                                                                      \
@@ -309,7 +309,7 @@ BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
     BENCHMARK(BM_StdAny_RoundTrip_##tname);                                                                            \
     static void BM_StdVariant_RoundTrip_##tname(benchmark::State& s) {                                                 \
         auto data = mk_##tname(N);                                                                                     \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, double, ldouble, float, ullong>;                                          \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto v : data) {                                                                                      \

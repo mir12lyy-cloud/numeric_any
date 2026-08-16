@@ -8,7 +8,7 @@
 import casyyy.maths.numeric_any;
 
 using namespace casyyy::maths;
-static const size_t N = 1000000;
+static constexpr size_t N = 1000000;
 
 using llong   = long long;
 using ullong  = unsigned long long;
@@ -18,49 +18,56 @@ static std::vector<int> mk_int(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<int> d(-10000, 10000);
     std::vector<int> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<llong> mk_ll(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<llong> d(-10000000000LL, 10000000000LL);
     std::vector<llong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<ullong> mk_ull(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<ullong> d(0, 18000000000000000000ULL);
     std::vector<ullong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<float> mk_flt(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<float> d(-100.f, 100.f);
     std::vector<float> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<double> mk_dbl(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<double> d(-100., 100.);
     std::vector<double> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<ldouble> mk_ldbl(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<ldouble> d(-100.L, 100.L);
     std::vector<ldouble> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<unsigned int> mk_uint(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<unsigned int> d(0, 20000);
     std::vector<unsigned int> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 
@@ -127,7 +134,8 @@ BENCH_MIXED_ADD(double, dbl, ldouble, ldbl, 0.0)
         auto d2 = mk_##n2(N);                                                                                          \
         std::vector<numeric_any> na;                                                                                   \
         na.reserve(N);                                                                                                 \
-        for (auto v : d1) na.emplace_back(v);                                                                          \
+        for (auto v : d1)                                                                                              \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
             int lt = 0, gt = 0;                                                                                        \
             for (size_t i = 0; i < N; ++i) {                                                                           \
@@ -179,7 +187,7 @@ BENCH_MIXED_CMP(ldouble, ldbl, int, int)
     static void BM_StdVariant_Both_Compare_##n1##_##n2(benchmark::State& s) {                                          \
         auto d1   = mk_##n1(N);                                                                                        \
         auto d2   = mk_##n2(N);                                                                                        \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, double, ldouble, ullong, float>;                                          \
         std::vector<Var> v1, v2;                                                                                       \
         v1.reserve(N);                                                                                                 \
         v2.reserve(N);                                                                                                 \
@@ -216,7 +224,8 @@ static void BM_Native_Mul_Int_Double(benchmark::State& s) {
     auto dbls = mk_dbl(N);
     for (auto _ : s) {
         double acc = 1.0;
-        for (size_t i = 0; i < N; ++i) acc *= ints[i] * dbls[i];
+        for (size_t i = 0; i < N; ++i)
+            acc *= ints[i] * dbls[i];
         benchmark::DoNotOptimize(acc);
     }
     s.SetItemsProcessed(s.iterations() * N);
