@@ -32,8 +32,6 @@ var classcasyyy_1_1maths_1_1numeric__any =
     [ "type_name", "classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5", null ],
     [ "type_size", "classcasyyy_1_1maths_1_1numeric__any.html#a93c1571e7e1165a5682660aacea9650a", null ],
     [ "view_bytes", "classcasyyy_1_1maths_1_1numeric__any.html#a8c9ee07795e9ead39b1c6d953a056554", null ],
-    [ "abs", "classcasyyy_1_1maths_1_1numeric__any.html#ac4617fdc058949b457d2d5dc318bfdfb", null ],
-    [ "bpow", "classcasyyy_1_1maths_1_1numeric__any.html#a188a20bc537dacf885089424cfac642e", null ],
-    [ "numeric_cast", "classcasyyy_1_1maths_1_1numeric__any.html#a9d3bee02fd4a6a2162c0f189ca56f119", null ],
-    [ "unchecked_numeric_cast", "classcasyyy_1_1maths_1_1numeric__any.html#ab91c22155daa9436a7fadff4934d6e97", null ]
+    [ "unchecked_numeric_cast", "classcasyyy_1_1maths_1_1numeric__any.html#ab91c22155daa9436a7fadff4934d6e97", null ],
+    [ "visit", "classcasyyy_1_1maths_1_1numeric__any.html#a1d1aa630acbf6a36399704414a8a8d89", null ]
 ];

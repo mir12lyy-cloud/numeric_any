@@ -369,20 +369,23 @@ private:
     }
     /// @endcond
 };
-
+/// @cond
 #define FUNCTIONS_TO_VISIT(type_name, type_enum_name, enum_value)                                                      \
     case numeric_types::type_enum_name: {                                                                              \
         auto restore = unchecked_numeric_cast<type_name>(x);                                                           \
         return f(restore);                                                                                             \
     }
+/// @endcond
 
-/// @brief Visit the inner value of a numeric_any and apply a function to it.
-/// @tparam Any Only numeric_any.
-/// @param x The numeric_any to be visited.
-/// @param f The function to be applied to the inner value.
-/// @param fwe The function to be applied when the numeric_any is empty.
-/// @return The result of applying the function to the inner value or the result of fwe() if the numeric_any is empty.
-/// @note The function f should accept a single argument of the type of the inner value and return a value.
+/** @brief Visit the inner value of a numeric_any and apply a function to it.
+  * @tparam Any Only numeric_any.
+  * @param x The numeric_any to be visited.
+  * @param f The function to be applied to the inner value.
+  * @param fwe The function to be applied when the numeric_any is empty.
+  * @return The result of applying the function to the inner value or the result when it is empty.
+  * @note 'f' should accept a single argument of the type of the inner value and 'fwe' should accept no arguments.
+          The return type of 'f' and 'fwe' should be the same or convertible to a common type.
+ */
 export template <typename Any, typename Func, typename FuncWhenEmpty>
 constexpr decltype(auto) visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
     requires ::std::is_same_v<::std::remove_cvref_t<Any>, numeric_any>

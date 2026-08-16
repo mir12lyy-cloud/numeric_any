@@ -4,12 +4,16 @@
 \begin{DoxyCompactItemize}
 \item 
 concept \doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}{casyyy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic}}
-\begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explict sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explicit sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 class \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{casyyy::\+maths::\+numeric\+\_\+any}}
-\begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4}{std::\+hash$<$::\+casyyy::\+maths::\+numeric\+\_\+any $>$}}
+\begin{DoxyCompactList}\small\item\em Provide hash support. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4}{std::\+formatter$<$::\+casyyy::\+maths::\+numeric\+\_\+any, Char\+T $>$}}
+\begin{DoxyCompactList}\small\item\em Provide formatted support. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -21,14 +25,17 @@ enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{casyyy::\+maths::\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a4c705e90a22b3660d4d9488c33f5a665}{casyyy::\+maths::\+bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n)
+{\footnotesize template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
+requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{casyyy::\+maths::\+visit}} (Any \&\&x, Func \&\&f, Func\+When\+Empty \&\&fwe)
+\begin{DoxyCompactList}\small\item\em Visit the inner value of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ab17a23d5c7033b9ad6549d9dc8b8d6bd}{casyyy::\+maths::\+bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n) noexcept
 \begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a943a8c5665bef184e50ef4bf5d980329}{casyyy::\+maths::\+abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a788630ad2a68de5c15708bfd8ffc4c09}{casyyy::\+maths::\+abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
 \begin{DoxyCompactList}\small\item\em Compute abs. \end{DoxyCompactList}\item 
 {\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr T \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{casyyy::\+maths::\+unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
 \begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a8a28888f58697ea96d19571d54dbb602}{casyyy::\+maths::\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
 {\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aba943ffd942078bb615e72dccc81d1d1}{casyyy::\+maths::\+operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
 \begin{DoxyCompactList}\small\item\em Output \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ac7320982f9e926a61ea8e065d57fc3ef}{casyyy::\+maths::\+make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept

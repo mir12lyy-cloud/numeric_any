@@ -43,7 +43,7 @@
 - `<cstring>` – Type punning
 - `<functional>` – Hash specialization
 - `<optional>` – For returning whether a numeric conversion succeeded
-- `<ostream>` – Stream output support
+- `<iosfwd>` – Stream output support
 - `<span>` – For returning the byte representation of internal values
 - `<string_view>` – For providing type name strings
 - `<type_traits>` – Type traits
@@ -109,6 +109,7 @@ target_sources(YourProject
 ```
 
 ### Quick Start
+**Note: If you think `casyyy::maths` is long, you can use `cym` instead.**
 ```C++
 #include <print>
 
@@ -161,7 +162,9 @@ auto process(auto&&... args) {
 
 int main() {
     auto result = process(12, 33U, false, 3.14);
-    std::println("{}", result);
+    for (const auto& item : result) {
+        std::println("{}", item);
+    }
     return 0;
 }
 ```
@@ -320,6 +323,19 @@ std::println("{:{}.{}f}", 32342.123, 8, 2);
 32342.12
 ```
 
+### Visit
+**Code:** [Example Code](/examples/visit.cpp)
+```C++
+numeric_any a = 32, b{};
+visit(a, [&a](auto i){ a = ::sin(i); }, []{});
+visit(b, [&b](auto i){ b = ::cos(i); }, []{});
+std::println("{} {}", a, b);
+```
+**Output:**
+```text
+0.55 empty
+```
+
 - [Overall example files](/examples/) - Sample code is provided here for you to try and verify on your own.
 
 ## API
@@ -340,7 +356,6 @@ For the online API documentation, please visit：[https://mir12lyy-cloud.github.
 ## Roadmap
 
 - [x] Support parsing format string in `std::formatter`.
-- [ ] Support math functions.
 - [ ] More casting policy.
 
 ## Contributions

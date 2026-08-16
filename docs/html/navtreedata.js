@@ -42,14 +42,15 @@ var NAVTREE =
       [ "Type Lookup:", "index.html#autotoc_md14", null ],
       [ "Bytes view:", "index.html#autotoc_md15", null ],
       [ "Casting:", "index.html#autotoc_md16", null ],
-      [ "Output", "index.html#autotoc_md17", null ]
+      [ "Output", "index.html#autotoc_md17", null ],
+      [ "Visit", "index.html#autotoc_md18", null ]
     ] ],
-    [ "API", "index.html#autotoc_md18", null ],
-    [ "Tests (Using Agent to generate)", "index.html#autotoc_md19", null ],
-    [ "Roadmap", "index.html#autotoc_md20", null ],
-    [ "Contributions", "index.html#autotoc_md21", null ],
-    [ "Contact to Me", "index.html#autotoc_md22", null ],
-    [ "License", "index.html#autotoc_md23", null ],
+    [ "API", "index.html#autotoc_md19", null ],
+    [ "Tests (Using Agent to generate)", "index.html#autotoc_md20", null ],
+    [ "Roadmap", "index.html#autotoc_md21", null ],
+    [ "Contributions", "index.html#autotoc_md22", null ],
+    [ "Contact to Me", "index.html#autotoc_md23", null ],
+    [ "License", "index.html#autotoc_md24", null ],
     [ "Modules", "modules.html", [
       [ "Modules List", "modules.html", "modules_dup" ],
       [ "Module Members", "modulemembers.html", [

@@ -38,7 +38,7 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \item {\ttfamily \texorpdfstring{$<$}{<}cstring\texorpdfstring{$>$}{>}} – Type punning
 \item {\ttfamily \texorpdfstring{$<$}{<}functional\texorpdfstring{$>$}{>}} – Hash specialization
 \item {\ttfamily \texorpdfstring{$<$}{<}optional\texorpdfstring{$>$}{>}} – For returning whether a numeric conversion succeeded
-\item {\ttfamily \texorpdfstring{$<$}{<}ostream\texorpdfstring{$>$}{>}} – Stream output support
+\item {\ttfamily \texorpdfstring{$<$}{<}iosfwd\texorpdfstring{$>$}{>}} – Stream output support
 \item {\ttfamily \texorpdfstring{$<$}{<}span\texorpdfstring{$>$}{>}} – For returning the byte representation of internal values
 \item {\ttfamily \texorpdfstring{$<$}{<}string\+\_\+view\texorpdfstring{$>$}{>}} – For providing type name strings
 \item {\ttfamily \texorpdfstring{$<$}{<}type\+\_\+traits\texorpdfstring{$>$}{>}} – Type traits
@@ -109,7 +109,7 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 
 \end{DoxyCode}
 \hypertarget{index_autotoc_md7}{}\doxysubsection{\texorpdfstring{Quick Start}{Quick Start}}\label{index_autotoc_md7}
-
+{\bfseries{Note:\+ If you think {\ttfamily \doxylink{namespacecasyyy_1_1maths}{casyyy::\+maths}} is long, you can use {\ttfamily cym} instead.}} 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{preprocessor}{\#include\ <print>}}
 \DoxyCodeLine{}
@@ -161,7 +161,9 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ process(12,\ 33U,\ \textcolor{keyword}{false},\ 3.14);}
-\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ result);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ item\ :\ result)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ item);}
+\DoxyCodeLine{\ \ \ \ \}}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{\}}
 
@@ -268,7 +270,7 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ casting\_policy\ Policy\ =\ casting\_policy::strict>}
 \DoxyCodeLine{\textcolor{keywordtype}{void}\ check\_casting(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ x)\ \{}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a564aac34a8c2493d66adc983d3d05514}{numeric\_cast<T,\ Policy>}}(x);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a8a28888f58697ea96d19571d54dbb602}{numeric\_cast<T,\ Policy>}}(x);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (result.has\_value())\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ result.value());}
 \DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
@@ -332,33 +334,44 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \DoxyCodeLine{32342.12}
 
 \end{DoxyCode}
+\hypertarget{index_autotoc_md18}{}\doxysubsection{\texorpdfstring{Visit}{Visit}}\label{index_autotoc_md18}
+{\bfseries{Code:\+}} \href{/examples/visit.cpp}{\texttt{Example Code}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 32,\ b\{\};}
+\DoxyCodeLine{\doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{visit}}(a,\ [\&a](\textcolor{keyword}{auto}\ i)\{\ a\ =\ ::sin(i);\ \},\ []\{\});}
+\DoxyCodeLine{\doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{visit}}(b,\ [\&b](\textcolor{keyword}{auto}\ i)\{\ b\ =\ ::cos(i);\ \},\ []\{\});}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
+
+\end{DoxyCode}
+ {\bfseries{Output:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{0.55\ empty}
+
+\end{DoxyCode}
 
 
 
 \begin{DoxyItemize}
 \item \href{/examples/}{\texttt{Overall example files}} -\/ Sample code is provided here for you to try and verify on your own.
-\end{DoxyItemize}\hypertarget{index_autotoc_md18}{}\doxysection{\texorpdfstring{API}{API}}\label{index_autotoc_md18}
-For the online API documentation, please visit：\href{https://mir12lyy-cloud.github.io/numeric_any/html/index.html}{\texttt{https:\+/\+/\+mir12lyy-\/cloud.\+github.\+io/\+numeric\+\_\+any/\+html/\+index.\+html}}\hypertarget{index_autotoc_md19}{}\doxysection{\texorpdfstring{Tests (Using Agent to generate)}{Tests (Using Agent to generate)}}\label{index_autotoc_md19}
+\end{DoxyItemize}\hypertarget{index_autotoc_md19}{}\doxysection{\texorpdfstring{API}{API}}\label{index_autotoc_md19}
+For the online API documentation, please visit：\href{https://mir12lyy-cloud.github.io/numeric_any/html/index.html}{\texttt{https:\+/\+/\+mir12lyy-\/cloud.\+github.\+io/\+numeric\+\_\+any/\+html/\+index.\+html}}\hypertarget{index_autotoc_md20}{}\doxysection{\texorpdfstring{Tests (Using Agent to generate)}{Tests (Using Agent to generate)}}\label{index_autotoc_md20}
 
 \begin{DoxyItemize}
 \item \href{/tests/units/}{\texttt{Unit test files}} -\/ You can use or modify these test files to check if there are any issues with the library.
 \item Benchmark result -\/ Overview of the result of benchmarks.
 \item \href{/tests/benchmarks/charts/}{\texttt{Benchmark charts}} -\/ Charts of the result of benchmarks.
 \item \href{/tests/benchmarks/}{\texttt{Benchmark test files}} -\/ You can use or modify these test files to do basic benchmarks with the library.
-\end{DoxyItemize}\hypertarget{index_autotoc_md20}{}\doxysection{\texorpdfstring{Roadmap}{Roadmap}}\label{index_autotoc_md20}
+\end{DoxyItemize}\hypertarget{index_autotoc_md21}{}\doxysection{\texorpdfstring{Roadmap}{Roadmap}}\label{index_autotoc_md21}
 
 \begin{DoxyItemize}
 \item[\DoxyChecked] Support parsing format string in {\ttfamily std::\+formatter}.
-\item[\DoxyUnchecked] Support math functions.
-\end{DoxyItemize}
-\begin{DoxyItemize}
 \item[\DoxyUnchecked] More casting policy.
-\end{DoxyItemize}\hypertarget{index_autotoc_md21}{}\doxysection{\texorpdfstring{Contributions}{Contributions}}\label{index_autotoc_md21}
-Welcome contributions of any kind. Whether it\textquotesingle{}s submitting an issue to report a bug or forking the project to send a PR. If you find this project helpful, please click the star in the top right to support. Thanks!\hypertarget{index_autotoc_md22}{}\doxysection{\texorpdfstring{Contact to Me}{Contact to Me}}\label{index_autotoc_md22}
+\end{DoxyItemize}\hypertarget{index_autotoc_md22}{}\doxysection{\texorpdfstring{Contributions}{Contributions}}\label{index_autotoc_md22}
+Welcome contributions of any kind. Whether it\textquotesingle{}s submitting an issue to report a bug or forking the project to send a PR. If you find this project helpful, please click the star in the top right to support. Thanks!\hypertarget{index_autotoc_md23}{}\doxysection{\texorpdfstring{Contact to Me}{Contact to Me}}\label{index_autotoc_md23}
 
 \begin{DoxyItemize}
 \item Email:\+ \href{mailto:huangjinyangyang@hotmail.com}{\texttt{huangjinyangyang@hotmail.\+com}}
-\end{DoxyItemize}\hypertarget{index_autotoc_md23}{}\doxysection{\texorpdfstring{License}{License}}\label{index_autotoc_md23}
+\end{DoxyItemize}\hypertarget{index_autotoc_md24}{}\doxysection{\texorpdfstring{License}{License}}\label{index_autotoc_md24}
 This project is licensed under the MIT License -\/ see the \+[LICENSE]\+(LICENSE) file for details.
 
 {\bfseries{Built with curiosity and caffeine.}} 
