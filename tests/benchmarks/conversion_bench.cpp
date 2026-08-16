@@ -6,8 +6,9 @@
 #include <random>
 #include <variant>
 #include <vector>
+
 using namespace casyyy::maths;
-static const size_t N = 1000000;
+static constexpr size_t N = 1000000;
 
 using llong   = long long;
 using ullong  = unsigned long long;
@@ -17,42 +18,48 @@ static std::vector<int> mk_int(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<int> d(-100000, 100000);
     std::vector<int> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<llong> mk_ll(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<llong> d(-10000000000LL, 10000000000LL);
     std::vector<llong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<ullong> mk_ull(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<ullong> d(0, 18000000000000000000ULL);
     std::vector<ullong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<float> mk_flt(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<float> d(-1000.f, 1000.f);
     std::vector<float> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<double> mk_dbl(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<double> d(-1000., 1000.);
     std::vector<double> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<ldouble> mk_ldbl(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<ldouble> d(-1000.L, 1000.L);
     std::vector<ldouble> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 
@@ -62,10 +69,12 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         auto data = mk_##tname(N);                                                                                     \
         std::vector<numeric_any> na;                                                                                   \
         na.reserve(N);                                                                                                 \
-        for (auto v : data) na.emplace_back(v);                                                                        \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
-            for (auto& a : na) sum += unchecked_numeric_cast<T>(a);                                                    \
+            for (auto& a : na)                                                                                         \
+                sum += unchecked_numeric_cast<T>(a);                                                                   \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -75,7 +84,8 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         auto data = mk_##tname(N);                                                                                     \
         std::vector<numeric_any> na;                                                                                   \
         na.reserve(N);                                                                                                 \
-        for (auto v : data) na.emplace_back(v);                                                                        \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na) {                                                                                       \
@@ -91,10 +101,12 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         auto data = mk_##tname(N);                                                                                     \
         std::vector<std::any> anys;                                                                                    \
         anys.reserve(N);                                                                                               \
-        for (auto v : data) anys.emplace_back(v);                                                                      \
+        for (auto v : data)                                                                                            \
+            anys.emplace_back(v);                                                                                      \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
-            for (auto& a : anys) sum += std::any_cast<T>(a);                                                           \
+            for (auto& a : anys)                                                                                       \
+                sum += std::any_cast<T>(a);                                                                            \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -111,13 +123,15 @@ BENCH_CAST_SAME(ldouble, ldbl)
 #define BENCH_VARGET(T, tname)                                                                                         \
     static void BM_StdVariant_Same_##tname(benchmark::State& s) {                                                      \
         auto data = mk_##tname(N);                                                                                     \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, double, ldouble, float, ullong>;                                          \
         std::vector<Var> vars;                                                                                         \
         vars.reserve(N);                                                                                               \
-        for (auto v : data) vars.emplace_back(v);                                                                      \
+        for (auto v : data)                                                                                            \
+            vars.emplace_back(v);                                                                                      \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
-            for (auto& v : vars) sum += std::get<T>(v);                                                                \
+            for (auto& v : vars)                                                                                       \
+                sum += std::get<T>(v);                                                                                 \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -134,10 +148,12 @@ static void BM_Unchecked_Promote_IntToLL(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
-        for (auto& a : na) sum += unchecked_numeric_cast<llong>(a);
+        for (auto& a : na)
+            sum += unchecked_numeric_cast<llong>(a);
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
@@ -147,7 +163,8 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
@@ -165,7 +182,8 @@ static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         int fail = 0;
         for (auto& a : na) {
@@ -181,7 +199,8 @@ static void BM_Relaxed_Narrow_IntToShort(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         int ok = 0;
         for (auto& a : na) {
@@ -199,7 +218,8 @@ static void BM_Strict_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
@@ -215,7 +235,8 @@ static void BM_Normal_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
@@ -231,7 +252,8 @@ static void BM_Relaxed_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
@@ -249,7 +271,8 @@ static void BM_Relaxed_Cross_DoubleToInt(benchmark::State& s) {
     auto data = mk_dbl(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
@@ -265,7 +288,8 @@ static void BM_Relaxed_Cross_LDoubleToInt(benchmark::State& s) {
     auto data = mk_ldbl(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
@@ -308,7 +332,7 @@ BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
     BENCHMARK(BM_StdAny_RoundTrip_##tname);                                                                            \
     static void BM_StdVariant_RoundTrip_##tname(benchmark::State& s) {                                                 \
         auto data = mk_##tname(N);                                                                                     \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, double, ldouble, float, ullong>;                                          \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto v : data) {                                                                                      \

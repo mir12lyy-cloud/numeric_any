@@ -6,6 +6,8 @@
 #include <random>
 #include <variant>
 #include <vector>
+#include <any>
+
 using namespace casyyy::maths;
 static constexpr size_t N = 1000000;
 
@@ -13,228 +15,354 @@ using llong   = long long;
 using ullong  = unsigned long long;
 using ldouble = long double;
 
-static std::vector<int> mk_int(size_t n) {
+static std::vector<int> make_ints(size_t n) {
     std::mt19937 rng(42);
-    std::uniform_int_distribution<int> d(-10000, 10000);
+    std::uniform_int_distribution<int> d(-100000, 100000);
     std::vector<int> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
-static std::vector<llong> mk_ll(size_t n) {
+static std::vector<llong> make_llongs(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<llong> d(-10000000000LL, 10000000000LL);
     std::vector<llong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
-static std::vector<ullong> mk_ull(size_t n) {
+static std::vector<ullong> make_ullongs(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<ullong> d(0, 18000000000000000000ULL);
     std::vector<ullong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
-static std::vector<float> mk_flt(size_t n) {
+static std::vector<float> make_floats(size_t n) {
     std::mt19937 rng(42);
-    std::uniform_real_distribution<float> d(-100.f, 100.f);
+    std::uniform_real_distribution<float> d(-1000.f, 1000.f);
     std::vector<float> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
-static std::vector<double> mk_dbl(size_t n) {
+static std::vector<double> make_doubles(size_t n) {
     std::mt19937 rng(42);
-    std::uniform_real_distribution<double> d(-100., 100.);
+    std::uniform_real_distribution<double> d(-1000., 1000.);
     std::vector<double> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
-static std::vector<ldouble> mk_ldbl(size_t n) {
+static std::vector<ldouble> make_ldoubles(size_t n) {
     std::mt19937 rng(42);
-    std::uniform_real_distribution<ldouble> d(-100.L, 100.L);
+    std::uniform_real_distribution<ldouble> d(-1000.L, 1000.L);
     std::vector<ldouble> v(n);
-    for (auto& x : v) x = d(rng);
-    return v;
-}
-static std::vector<unsigned int> mk_uint(size_t n) {
-    std::mt19937 rng(42);
-    std::uniform_int_distribution<unsigned int> d(0, 20000);
-    std::vector<unsigned int> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 
-#define BENCH_MIXED_ADD(T1, n1, T2, n2, V1)                                                                            \
-    static void BM_Native_Add_##n1##_##n2(benchmark::State& s) {                                                       \
-        auto d1 = mk_##n1(N);                                                                                          \
-        auto d2 = mk_##n2(N);                                                                                          \
+// ── Construct (with variant for types in variant list) ──
+#define BENCH_CONSTRUCT_V(T, tname)                                                                                    \
+    static void BM_Native_Construct_##tname(benchmark::State& s) {                                                     \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(T{v});                                                                        \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_Native_Construct_##tname);                                                                            \
+    static void BM_NumericAny_Construct_##tname(benchmark::State& s) {                                                 \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(numeric_any{v});                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_NumericAny_Construct_##tname);                                                                        \
+    static void BM_StdAny_Construct_##tname(benchmark::State& s) {                                                     \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(std::any{v});                                                                 \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_StdAny_Construct_##tname);                                                                            \
+    static void BM_StdVariant_Construct_##tname(benchmark::State& s) {                                                 \
+        auto data = make_##tname##s(N);                                                                                \
+        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(Var{v});                                                                      \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_StdVariant_Construct_##tname);
+BENCH_CONSTRUCT_V(int, int)
+BENCH_CONSTRUCT_V(llong, llong)
+BENCH_CONSTRUCT_V(double, double)
+BENCH_CONSTRUCT_V(ldouble, ldouble)
+#undef BENCH_CONSTRUCT_V
+
+// ── Construct (no variant �?ullong, float not in variant) ──
+#define BENCH_CONSTRUCT_NV(T, tname)                                                                                   \
+    static void BM_Native_Construct_##tname(benchmark::State& s) {                                                     \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(T{v});                                                                        \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_Native_Construct_##tname);                                                                            \
+    static void BM_NumericAny_Construct_##tname(benchmark::State& s) {                                                 \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(numeric_any{v});                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_NumericAny_Construct_##tname);                                                                        \
+    static void BM_StdAny_Construct_##tname(benchmark::State& s) {                                                     \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s)                                                                                               \
+            for (auto v : data)                                                                                        \
+                benchmark::DoNotOptimize(std::any{v});                                                                 \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_StdAny_Construct_##tname);
+BENCH_CONSTRUCT_NV(ullong, ullong)
+BENCH_CONSTRUCT_NV(float, float)
+#undef BENCH_CONSTRUCT_NV
+
+// ── Add ──
+#define BENCH_ADD_INT(T, tname, V0)                                                                                    \
+    static void BM_Native_Add_##tname(benchmark::State& s) {                                                           \
+        auto data = make_##tname##s(N);                                                                                \
         for (auto _ : s) {                                                                                             \
-            std::common_type_t<T1, T2> acc = 0;                                                                        \
-            for (size_t i = 0; i < N; ++i) {                                                                           \
-                acc += d1[i];                                                                                          \
-                acc += d2[i];                                                                                          \
-            }                                                                                                          \
+            T sum = 0;                                                                                                 \
+            for (auto v : data)                                                                                        \
+                sum += v;                                                                                              \
+            benchmark::DoNotOptimize(sum);                                                                             \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_Native_Add_##tname);                                                                                  \
+    static void BM_NumericAny_Add_##tname(benchmark::State& s) {                                                       \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s) {                                                                                             \
+            numeric_any sum{V0};                                                                                       \
+            for (auto v : data)                                                                                        \
+                sum += v;                                                                                              \
+            benchmark::DoNotOptimize(sum);                                                                             \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_NumericAny_Add_##tname);
+BENCH_ADD_INT(int, int, 0)
+BENCH_ADD_INT(llong, llong, 0LL)
+BENCH_ADD_INT(ullong, ullong, 0ULL)
+#undef BENCH_ADD_INT
+
+// ── Mul ──
+#define BENCH_MUL_FLOAT(T, tname, V1)                                                                                  \
+    static void BM_Native_Mul_##tname(benchmark::State& s) {                                                           \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s) {                                                                                             \
+            T acc = 1;                                                                                                 \
+            for (auto v : data)                                                                                        \
+                acc *= v;                                                                                              \
             benchmark::DoNotOptimize(acc);                                                                             \
         }                                                                                                              \
-        s.SetItemsProcessed(s.iterations() * N * 2);                                                                   \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
     }                                                                                                                  \
-    BENCHMARK(BM_Native_Add_##n1##_##n2);                                                                              \
-    static void BM_NumericAny_Add_##n1##_##n2(benchmark::State& s) {                                                   \
-        auto d1 = mk_##n1(N);                                                                                          \
-        auto d2 = mk_##n2(N);                                                                                          \
+    BENCHMARK(BM_Native_Mul_##tname);                                                                                  \
+    static void BM_NumericAny_Mul_##tname(benchmark::State& s) {                                                       \
+        auto data = make_##tname##s(N);                                                                                \
         for (auto _ : s) {                                                                                             \
             numeric_any acc{V1};                                                                                       \
-            for (size_t i = 0; i < N; ++i) {                                                                           \
-                acc += d1[i];                                                                                          \
-                acc += d2[i];                                                                                          \
-            }                                                                                                          \
+            for (auto v : data)                                                                                        \
+                acc *= v;                                                                                              \
             benchmark::DoNotOptimize(acc);                                                                             \
         }                                                                                                              \
-        s.SetItemsProcessed(s.iterations() * N * 2);                                                                   \
-    }                                                                                                                  \
-    BENCHMARK(BM_NumericAny_Add_##n1##_##n2);
-BENCH_MIXED_ADD(int, int, double, dbl, 0)
-BENCH_MIXED_ADD(int, int, unsigned int, uint, 0)
-BENCH_MIXED_ADD(int, int, ldouble, ldbl, 0)
-BENCH_MIXED_ADD(float, flt, double, dbl, 0.0f)
-BENCH_MIXED_ADD(float, flt, ldouble, ldbl, 0.0f)
-BENCH_MIXED_ADD(llong, ll, double, dbl, 0LL)
-BENCH_MIXED_ADD(llong, ll, ullong, ull, 0LL)
-BENCH_MIXED_ADD(double, dbl, ldouble, ldbl, 0.0)
-#undef BENCH_MIXED_ADD
-
-#define BENCH_MIXED_CMP(T1, n1, T2, n2)                                                                                \
-    static void BM_Native_Compare_##n1##_##n2(benchmark::State& s) {                                                   \
-        auto d1 = mk_##n1(N);                                                                                          \
-        auto d2 = mk_##n2(N);                                                                                          \
-        for (auto _ : s) {                                                                                             \
-            int lt = 0, gt = 0;                                                                                        \
-            for (size_t i = 0; i < N; ++i) {                                                                           \
-                auto r =                                                                                               \
-                    static_cast<std::common_type_t<T1, T2>>(d1[i]) <=> static_cast<std::common_type_t<T1, T2>>(d2[i]); \
-                if (r < 0)                                                                                             \
-                    ++lt;                                                                                              \
-                else if (r > 0)                                                                                        \
-                    ++gt;                                                                                              \
-            }                                                                                                          \
-            benchmark::DoNotOptimize(lt + gt);                                                                         \
-        }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
     }                                                                                                                  \
-    BENCHMARK(BM_Native_Compare_##n1##_##n2);                                                                          \
-    static void BM_NumericAny_Compare_##n1##_##n2(benchmark::State& s) {                                               \
-        auto d1 = mk_##n1(N);                                                                                          \
-        auto d2 = mk_##n2(N);                                                                                          \
+    BENCHMARK(BM_NumericAny_Mul_##tname);
+BENCH_MUL_FLOAT(float, float, 1.0f)
+BENCH_MUL_FLOAT(double, double, 1.0)
+BENCH_MUL_FLOAT(ldouble, ldouble, 1.0L)
+#undef BENCH_MUL_FLOAT
+
+// ── Compare ──
+#define BENCH_COMPARE(T, tname)                                                                                        \
+    static void BM_Native_Compare_##tname(benchmark::State& s) {                                                       \
+        auto data = make_##tname##s(N);                                                                                \
+        for (auto _ : s) {                                                                                             \
+            int lt = 0, eq = 0, gt = 0;                                                                                \
+            for (size_t i = 0; i + 1 < N; i += 2) {                                                                    \
+                auto r = data[i] <=> data[i + 1];                                                                      \
+                if (r < 0)                                                                                             \
+                    ++lt;                                                                                              \
+                else if (r == 0)                                                                                       \
+                    ++eq;                                                                                              \
+                else                                                                                                   \
+                    ++gt;                                                                                              \
+            }                                                                                                          \
+            benchmark::DoNotOptimize(lt + eq + gt);                                                                    \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * (N / 2));                                                                 \
+    }                                                                                                                  \
+    BENCHMARK(BM_Native_Compare_##tname);                                                                              \
+    static void BM_NumericAny_Compare_##tname(benchmark::State& s) {                                                   \
+        auto data = make_##tname##s(N);                                                                                \
         std::vector<numeric_any> na;                                                                                   \
         na.reserve(N);                                                                                                 \
-        for (auto v : d1) na.emplace_back(v);                                                                          \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
-            int lt = 0, gt = 0;                                                                                        \
-            for (size_t i = 0; i < N; ++i) {                                                                           \
-                auto r = na[i] <=> d2[i];                                                                              \
+            int lt = 0, eq = 0, gt = 0;                                                                                \
+            for (size_t i = 0; i + 1 < N; i += 2) {                                                                    \
+                auto r = na[i] <=> na[i + 1];                                                                          \
                 if (r < 0)                                                                                             \
                     ++lt;                                                                                              \
-                else if (r > 0)                                                                                        \
+                else if (r == 0)                                                                                       \
+                    ++eq;                                                                                              \
+                else                                                                                                   \
                     ++gt;                                                                                              \
             }                                                                                                          \
-            benchmark::DoNotOptimize(lt + gt);                                                                         \
+            benchmark::DoNotOptimize(lt + eq + gt);                                                                    \
         }                                                                                                              \
-        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+        s.SetItemsProcessed(s.iterations() * (N / 2));                                                                 \
     }                                                                                                                  \
-    BENCHMARK(BM_NumericAny_Compare_##n1##_##n2);
-BENCH_MIXED_CMP(int, int, double, dbl)
-BENCH_MIXED_CMP(int, int, ldouble, ldbl)
-BENCH_MIXED_CMP(int, int, unsigned int, uint)
-BENCH_MIXED_CMP(double, dbl, int, int)
-BENCH_MIXED_CMP(double, dbl, ldouble, ldbl)
-BENCH_MIXED_CMP(llong, ll, double, dbl)
-BENCH_MIXED_CMP(ldouble, ldbl, int, int)
-#undef BENCH_MIXED_CMP
+    BENCHMARK(BM_NumericAny_Compare_##tname);                                                                          \
+    static void BM_StdVariant_Compare_##tname(benchmark::State& s) {                                                   \
+        auto data = make_##tname##s(N);                                                                                \
+        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        std::vector<Var> vars;                                                                                         \
+        vars.reserve(N);                                                                                               \
+        for (auto v : data)                                                                                            \
+            vars.emplace_back(v);                                                                                      \
+        for (auto _ : s) {                                                                                             \
+            int lt = 0, eq = 0, gt = 0;                                                                                \
+            for (size_t i = 0; i + 1 < N; i += 2) {                                                                    \
+                auto r =                                                                                               \
+                    std::visit([](auto a, auto b) -> std::partial_ordering { return a <=> b; }, vars[i], vars[i + 1]); \
+                if (r < 0)                                                                                             \
+                    ++lt;                                                                                              \
+                else if (r == 0)                                                                                       \
+                    ++eq;                                                                                              \
+                else                                                                                                   \
+                    ++gt;                                                                                              \
+            }                                                                                                          \
+            benchmark::DoNotOptimize(lt + eq + gt);                                                                    \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * (N / 2));                                                                 \
+    }                                                                                                                  \
+    BENCHMARK(BM_StdVariant_Compare_##tname);
+BENCH_COMPARE(int, int)
+BENCH_COMPARE(llong, llong)
+BENCH_COMPARE(double, double)
+BENCH_COMPARE(ldouble, ldouble)
+#undef BENCH_COMPARE
 
-#define BENCH_BOTH_ERASED_CMP(T1, n1, T2, n2)                                                                          \
-    static void BM_NumericAny_Both_Compare_##n1##_##n2(benchmark::State& s) {                                          \
-        auto d1 = mk_##n1(N);                                                                                          \
-        auto d2 = mk_##n2(N);                                                                                          \
-        std::vector<numeric_any> na1, na2;                                                                             \
-        na1.reserve(N);                                                                                                \
-        na2.reserve(N);                                                                                                \
-        for (size_t i = 0; i < N; ++i) {                                                                               \
-            na1.emplace_back(d1[i]);                                                                                   \
-            na2.emplace_back(d2[i]);                                                                                   \
-        }                                                                                                              \
+// ── Get ──
+#define BENCH_GET(T, tname)                                                                                            \
+    static void BM_NumericAny_Get_##tname(benchmark::State& s) {                                                       \
+        auto data = make_##tname##s(N);                                                                                \
+        std::vector<numeric_any> na;                                                                                   \
+        na.reserve(N);                                                                                                 \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
-            int lt = 0, gt = 0;                                                                                        \
-            for (size_t i = 0; i < N; ++i) {                                                                           \
-                auto r = na1[i] <=> na2[i];                                                                            \
-                if (r < 0)                                                                                             \
-                    ++lt;                                                                                              \
-                else if (r > 0)                                                                                        \
-                    ++gt;                                                                                              \
-            }                                                                                                          \
-            benchmark::DoNotOptimize(lt + gt);                                                                         \
+            ldouble sum = 0;                                                                                           \
+            for (auto& a : na)                                                                                         \
+                sum += unchecked_numeric_cast<T>(a);                                                                   \
+            benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
     }                                                                                                                  \
-    BENCHMARK(BM_NumericAny_Both_Compare_##n1##_##n2);                                                                 \
-    static void BM_StdVariant_Both_Compare_##n1##_##n2(benchmark::State& s) {                                          \
-        auto d1   = mk_##n1(N);                                                                                        \
-        auto d2   = mk_##n2(N);                                                                                        \
-        using Var = std::variant<int, llong, ullong, float, double, ldouble>;                                          \
-        std::vector<Var> v1, v2;                                                                                       \
-        v1.reserve(N);                                                                                                 \
-        v2.reserve(N);                                                                                                 \
-        for (size_t i = 0; i < N; ++i) {                                                                               \
-            v1.emplace_back(d1[i]);                                                                                    \
-            v2.emplace_back(d2[i]);                                                                                    \
-        }                                                                                                              \
+    BENCHMARK(BM_NumericAny_Get_##tname);                                                                              \
+    static void BM_StdAny_Get_##tname(benchmark::State& s) {                                                           \
+        auto data = make_##tname##s(N);                                                                                \
+        std::vector<std::any> anys;                                                                                    \
+        anys.reserve(N);                                                                                               \
+        for (auto v : data)                                                                                            \
+            anys.emplace_back(v);                                                                                      \
         for (auto _ : s) {                                                                                             \
-            int lt = 0, gt = 0;                                                                                        \
-            for (size_t i = 0; i < N; ++i) {                                                                           \
-                auto r = std::visit(                                                                                   \
-                    [](auto a, auto b) -> std::partial_ordering {                                                      \
-                        using CT = std::common_type_t<decltype(a), decltype(b)>;                                       \
-                        return static_cast<CT>(a) <=> static_cast<CT>(b);                                              \
-                    },                                                                                                 \
-                    v1[i], v2[i]);                                                                                     \
-                if (r < 0)                                                                                             \
-                    ++lt;                                                                                              \
-                else if (r > 0)                                                                                        \
-                    ++gt;                                                                                              \
-            }                                                                                                          \
-            benchmark::DoNotOptimize(lt + gt);                                                                         \
+            ldouble sum = 0;                                                                                           \
+            for (auto& a : anys)                                                                                       \
+                sum += std::any_cast<T>(a);                                                                            \
+            benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
     }                                                                                                                  \
-    BENCHMARK(BM_StdVariant_Both_Compare_##n1##_##n2);
-BENCH_BOTH_ERASED_CMP(int, int, double, dbl)
-BENCH_BOTH_ERASED_CMP(int, int, ldouble, ldbl)
-BENCH_BOTH_ERASED_CMP(float, flt, ldouble, ldbl)
-BENCH_BOTH_ERASED_CMP(double, dbl, ldouble, ldbl)
-#undef BENCH_BOTH_ERASED_CMP
+    BENCHMARK(BM_StdAny_Get_##tname);                                                                                  \
+    static void BM_StdVariant_Get_##tname(benchmark::State& s) {                                                       \
+        auto data = make_##tname##s(N);                                                                                \
+        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        std::vector<Var> vars;                                                                                         \
+        vars.reserve(N);                                                                                               \
+        for (auto v : data)                                                                                            \
+            vars.emplace_back(v);                                                                                      \
+        for (auto _ : s) {                                                                                             \
+            ldouble sum = 0;                                                                                           \
+            for (auto& v : vars)                                                                                       \
+                sum += std::get<T>(v);                                                                                 \
+            benchmark::DoNotOptimize(sum);                                                                             \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_StdVariant_Get_##tname);
+BENCH_GET(int, int)
+BENCH_GET(llong, llong)
+BENCH_GET(double, double)
+BENCH_GET(ldouble, ldouble)
+#undef BENCH_GET
 
-static void BM_Native_Mul_Int_Double(benchmark::State& s) {
-    auto ints = mk_int(N);
-    auto dbls = mk_dbl(N);
+// ── Sub / Div ──
+static void BM_Native_Sub_Int(benchmark::State& s) {
+    auto data = make_ints(N);
     for (auto _ : s) {
-        double acc = 1.0;
-        for (size_t i = 0; i < N; ++i) acc *= ints[i] * dbls[i];
+        int acc = 0;
+        for (auto v : data)
+            acc -= v;
         benchmark::DoNotOptimize(acc);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Native_Mul_Int_Double);
-static void BM_NumericAny_Mul_Int_Double(benchmark::State& s) {
-    auto ints = mk_int(N);
-    auto dbls = mk_dbl(N);
+BENCHMARK(BM_Native_Sub_Int);
+static void BM_NumericAny_Sub_Int(benchmark::State& s) {
+    auto data = make_ints(N);
     for (auto _ : s) {
-        numeric_any acc{1.0};
-        for (size_t i = 0; i < N; ++i) {
-            acc *= ints[i];
-            acc *= dbls[i];
-        }
+        numeric_any acc{0};
+        for (auto v : data)
+            acc -= v;
         benchmark::DoNotOptimize(acc);
     }
-    s.SetItemsProcessed(s.iterations() * N * 2);
+    s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_NumericAny_Mul_Int_Double);
+BENCHMARK(BM_NumericAny_Sub_Int);
+static void BM_Native_Div_Double(benchmark::State& s) {
+    auto data = make_doubles(N);
+    for (auto _ : s) {
+        double acc = 1e6;
+        for (auto v : data)
+            acc /= (v == 0.0 ? 1.0 : v);
+        benchmark::DoNotOptimize(acc);
+    }
+    s.SetItemsProcessed(s.iterations() * N);
+}
+BENCHMARK(BM_Native_Div_Double);
+static void BM_NumericAny_Div_Double(benchmark::State& s) {
+    auto data = make_doubles(N);
+    for (auto _ : s) {
+        numeric_any acc{1e6};
+        for (auto v : data)
+            acc /= (v == 0.0 ? 1.0 : v);
+        benchmark::DoNotOptimize(acc);
+    }
+    s.SetItemsProcessed(s.iterations() * N);
+}
+BENCHMARK(BM_NumericAny_Div_Double);
 
 BENCHMARK_MAIN();

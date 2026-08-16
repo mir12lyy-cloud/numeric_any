@@ -12,6 +12,8 @@ auto process(auto&&... args) {
 
 int main() {
     auto result = process(12, 33U, false, 3.14);
-    std::println("{}", result);
+    for (const auto& item : result) {
+        std::print("{} ", item);
+    }
     return 0;
 }
