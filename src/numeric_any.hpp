@@ -387,7 +387,7 @@ private:
  * @param fwe The function to be applied when the numeric_any is empty.
  * @return The result of applying the function to the inner value or the result when it is empty.
  * @note 'f' should accept a single argument of the type of the inner value and 'fwe' should accept no arguments.
- *        The return type of 'f' and 'fwe' should be the same or convertible to a common type.
+ *        The return type of 'f' and 'fwe' should be the same.
  */
 template <typename Any, typename Func, typename FuncWhenEmpty>
 constexpr decltype(auto) visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
