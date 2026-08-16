@@ -77,19 +77,16 @@ constexpr ::\+std::\+span$<$ const unsigned char $>$ \doxymbox{\hyperlink{classc
 \item 
 {\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr T \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ab91c22155daa9436a7fadff4934d6e97}{unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&x)
 \begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. \end{DoxyCompactList}\item 
-{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}}$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a9d3bee02fd4a6a2162c0f189ca56f119}{numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&x)
-\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a188a20bc537dacf885089424cfac642e}{bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&a, unsigned n)
-\begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac4617fdc058949b457d2d5dc318bfdfb}{abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&x)
-\begin{DoxyCompactList}\small\item\em Compute abs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+{\footnotesize template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
+requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a1d1aa630acbf6a36399704414a8a8d89}{visit}} (Any \&\&x, Func \&\&f, Func\+When\+Empty \&\&fwe)
+\begin{DoxyCompactList}\small\item\em Visit the inner value of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
 A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. 
 
 \begin{DoxyNote}{Note}
-Only support the basic arithmetic types in C++, except char without explict sign. 
+Only support the basic arithmetic types in C++, except char without explicit sign. 
 \end{DoxyNote}
 
 
@@ -121,7 +118,7 @@ Construct a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} wh
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -145,7 +142,7 @@ Check the inner value is able to convert to another type safely.
 
 
 \begin{DoxyTemplParams}{Template Parameters}
-{\em T} & The basic arithmetic types in C++, except char without explict sign which is used to check. \\
+{\em T} & The basic arithmetic types in C++, except char without explicit sign which is used to check. \\
 \hline
 \end{DoxyTemplParams}
 \begin{DoxyReturn}{Returns}
@@ -209,7 +206,7 @@ Check if the given type is the type of value stored internally.
 
 
 \begin{DoxyTemplParams}{Template Parameters}
-{\em T} & The basic arithmetic types in C++, except char without explict sign which is used to check. \\
+{\em T} & The basic arithmetic types in C++, except char without explicit sign which is used to check. \\
 \hline
 \end{DoxyTemplParams}
 \begin{DoxyReturn}{Returns}
@@ -280,7 +277,7 @@ Do a multiplication assignment with a normal value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -305,9 +302,6 @@ Return the \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} its
 \begin{DoxyReturn}{Returns}
 The \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} itself. 
 \end{DoxyReturn}
-\begin{DoxyNote}{Note}
-Follow C++ rules. 
-\end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a0f5b666869b14a768cf2c7d02ad156ca}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!operator++@{operator++}}
 \index{operator++@{operator++}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
 \doxysubsubsection{\texorpdfstring{operator++()}{operator++()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -322,9 +316,7 @@ Pre-\/increment operator.
 Reference to the incremented object. 
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-Follows built-\/in semantics, except bool. 
-
-For boolean value, as if setting the value to static\+\_\+cast$<$bool$>$(inner + 1). 
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner + 1). 
 \end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a7a17b60496760e294f0c5aff91065094}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!operator++@{operator++}}
 \index{operator++@{operator++}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
@@ -340,9 +332,7 @@ Post-\/increment operator.
 The value before increment. 
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-Follows built-\/in semantics, except bool. 
-
-For boolean value, as if setting the value to static\+\_\+cast$<$bool$>$(inner + 1). 
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner + 1). 
 \end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a08fb3ec06790503bbab16481f2de1bfb}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!operator+=@{operator+=}}
 \index{operator+=@{operator+=}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
@@ -377,7 +367,7 @@ Do an addition assignment with a normal value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -419,9 +409,7 @@ Pre-\/decrement operator.
 Reference to the decreed object. 
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-Follows built-\/in semantics, except bool. 
-
-For boolean value, as if setting the value to static\+\_\+cast$<$bool$>$(inner -\/ 1). 
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner -\/ 1). 
 \end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a0796de6769e44540b0a54087f9c428c2}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!operator-\/-\/@{operator-\/-\/}}
 \index{operator-\/-\/@{operator-\/-\/}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
@@ -437,9 +425,7 @@ Post-\/decrement operator.
 The value before decrement. 
 \end{DoxyReturn}
 \begin{DoxyNote}{Note}
-Follows built-\/in semantics, except bool. 
-
-For boolean value, as if setting the value to static\+\_\+cast$<$bool$>$(inner -\/ 1). 
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner -\/ 1). 
 \end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_ad0ab4bc297d8cc9e30ec9385b9c6d586}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!operator-\/=@{operator-\/=}}
 \index{operator-\/=@{operator-\/=}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
@@ -474,7 +460,7 @@ Do a substraction assignment with a normal value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -519,7 +505,7 @@ Do a division assignment with a normal value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -564,7 +550,7 @@ Three-\/way comparison between \doxylink{classcasyyy_1_1maths_1_1numeric__any}{n
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -588,7 +574,7 @@ Reset the inner value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -630,7 +616,7 @@ Compare a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is e
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -654,7 +640,7 @@ Reset the inner value.
 
 
 \begin{DoxyParams}{Parameters}
-{\em x} & Input value, must be the basic arithmetic types in C++, except char without explict sign. \\
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
@@ -709,81 +695,6 @@ The span is read-\/only. And its size is based on the number of bytes used by in
 \label{classcasyyy_1_1maths_1_1numeric__any_doc-related-members}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_doc-related-members}
 \doxysubsection{Friends And Related Symbol Documentation}
-\Hypertarget{classcasyyy_1_1maths_1_1numeric__any_ac4617fdc058949b457d2d5dc318bfdfb}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!abs@{abs}}
-\index{abs@{abs}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
-\doxysubsubsection{\texorpdfstring{abs}{abs}}
-{\footnotesize\ttfamily \label{classcasyyy_1_1maths_1_1numeric__any_ac4617fdc058949b457d2d5dc318bfdfb} 
-\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} abs (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
-
-
-
-Compute abs. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em x} & Input \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} which store the abs of the value stored in formal \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
-\end{DoxyReturn}
-\begin{DoxyNote}{Note}
-When the \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty, return itself. 
-\end{DoxyNote}
-\Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a188a20bc537dacf885089424cfac642e}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!bpow@{bpow}}
-\index{bpow@{bpow}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
-\doxysubsubsection{\texorpdfstring{bpow}{bpow}}
-{\footnotesize\ttfamily \label{classcasyyy_1_1maths_1_1numeric__any_a188a20bc537dacf885089424cfac642e} 
-\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} bpow (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&}]{a}{, }\item[{unsigned}]{n}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
-
-
-
-Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em a} & A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
-\hline
-{\em n} & Computed exponent. It\textquotesingle{}s an unsigned number. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-The result of the exponentiation. 
-\end{DoxyReturn}
-\begin{DoxyNote}{Note}
-If the internal type is narrower than int, the final type is converted to int. 
-\end{DoxyNote}
-\Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a9d3bee02fd4a6a2162c0f189ca56f119}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!numeric\_cast@{numeric\_cast}}
-\index{numeric\_cast@{numeric\_cast}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
-\doxysubsubsection{\texorpdfstring{numeric\_cast}{numeric\_cast}}
-{\footnotesize\ttfamily \label{classcasyyy_1_1maths_1_1numeric__any_a9d3bee02fd4a6a2162c0f189ca56f119} 
-template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}}$>$ \\
-::\+std::\+optional$<$ T $>$ numeric\+\_\+cast (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
-
-
-
-Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. 
-
-
-\begin{DoxyTemplParams}{Template Parameters}
-{\em T} & The basic arithmetic types in C++, except char without explict sign which is used to check. \\
-\hline
-{\em Policy} & The casting policy which will be based on. \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}{Parameters}
-{\em x} & A \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-A normal value represents the value stored in a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after casting to given type or null. 
-\end{DoxyReturn}
-\begin{DoxyNote}{Note}
-char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
-
-Always return std::\+nullopt when a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty. 
-\end{DoxyNote}
 \Hypertarget{classcasyyy_1_1maths_1_1numeric__any_ab91c22155daa9436a7fadff4934d6e97}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!unchecked\_numeric\_cast@{unchecked\_numeric\_cast}}
 \index{unchecked\_numeric\_cast@{unchecked\_numeric\_cast}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
 \doxysubsubsection{\texorpdfstring{unchecked\_numeric\_cast}{unchecked\_numeric\_cast}}
@@ -797,7 +708,7 @@ Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a
 
 
 \begin{DoxyTemplParams}{Template Parameters}
-{\em T} & The basic arithmetic types in C++, except char without explict sign which is used to check. \\
+{\em T} & The basic arithmetic types in C++, except char without explicit sign which is used to check. \\
 \hline
 \end{DoxyTemplParams}
 
@@ -812,6 +723,38 @@ A normal value represents the value stored in a \doxylink{classcasyyy_1_1maths_1
 char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
 
 Always return T\{\} when a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty. 
+\end{DoxyNote}
+\Hypertarget{classcasyyy_1_1maths_1_1numeric__any_a1d1aa630acbf6a36399704414a8a8d89}\index{casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}!visit@{visit}}
+\index{visit@{visit}!casyyy::maths::numeric\_any@{casyyy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{visit}{visit}}
+{\footnotesize\ttfamily \label{classcasyyy_1_1maths_1_1numeric__any_a1d1aa630acbf6a36399704414a8a8d89} 
+template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
+requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a48b4c4604a632a57be75835f73a3fec4}{numeric\+\_\+any}}$>$\\
+decltype(auto) visit (\begin{DoxyParamCaption}\item[{Any \&\&}]{x}{, }\item[{Func \&\&}]{f}{, }\item[{Func\+When\+Empty \&\&}]{fwe}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Visit the inner value of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Any} & Only \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to be visited. \\
+\hline
+{\em f} & The function to be applied to the inner value. \\
+\hline
+{\em fwe} & The function to be applied when the \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is empty. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of applying the function to the inner value or the result when it is empty. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\textquotesingle{}f\textquotesingle{} should accept a single argument of the type of the inner value and \textquotesingle{}fwe\textquotesingle{} should accept no arguments. The return type of \textquotesingle{}f\textquotesingle{} and \textquotesingle{}fwe\textquotesingle{} should be the same or convertible to a common type. 
 \end{DoxyNote}
 
 
