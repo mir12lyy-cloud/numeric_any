@@ -732,7 +732,7 @@ export constexpr numeric_any make_numeric_any(sign_unambiguous_arithmetic auto x
 }
 } // namespace casyyy::maths
 
-export namespace cyc = casyyy::maths;
+export namespace cym = casyyy::maths;
 
 namespace std {
 /// @brief Provide hash support.

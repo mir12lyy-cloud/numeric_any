@@ -738,7 +738,7 @@ constexpr numeric_any make_numeric_any(sign_unambiguous_arithmetic auto x) noexc
 }
 } // namespace casyyy::maths
 
-namespace cyc = casyyy::maths; // NOLINT
+namespace cym = casyyy::maths; // NOLINT
 
 namespace std {
 /// @brief Provide hash support.
