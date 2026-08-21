@@ -9,8 +9,10 @@ var searchData=
   ['casyyy_3a_3amaths_6',['maths',['../namespacecasyyy_1_1maths.html',1,'casyyy']]],
   ['casyyy_3a_3autils_7',['utils',['../namespacecasyyy_1_1utils.html',1,'casyyy']]],
   ['clone_20the_20depository_8',['Clone The depository',['../index.html#autotoc_md5',1,'']]],
-  ['construction_9',['Construction',['../index.html#autotoc_md10',1,'']]],
-  ['contact_20to_20me_10',['Contact to Me',['../index.html#autotoc_md23',1,'']]],
-  ['container_11',['Heterogeneous Container',['../index.html#autotoc_md11',1,'']]],
-  ['contributions_12',['Contributions',['../index.html#autotoc_md22',1,'']]]
+  ['common_5ftype_3c_20t_2c_20_3a_3acasyyy_3a_3amaths_3a_3anumeric_5fany_20_3e_9',['common_type&lt; T, ::casyyy::maths::numeric_any &gt;',['../structstd_1_1common__type_3_01_t_00_01_1_1casyyy_1_1maths_1_1numeric__any_01_4.html',1,'std']]],
+  ['common_5ftype_3c_3a_3acasyyy_3a_3amaths_3a_3anumeric_5fany_2c_20t_20_3e_10',['common_type&lt;::casyyy::maths::numeric_any, T &gt;',['../structstd_1_1common__type_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_t_01_4.html',1,'std']]],
+  ['construction_11',['Construction',['../index.html#autotoc_md10',1,'']]],
+  ['contact_20to_20me_12',['Contact to Me',['../index.html#autotoc_md23',1,'']]],
+  ['container_13',['Heterogeneous Container',['../index.html#autotoc_md11',1,'']]],
+  ['contributions_14',['Contributions',['../index.html#autotoc_md22',1,'']]]
 ];

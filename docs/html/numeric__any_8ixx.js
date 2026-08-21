@@ -1,6 +1,8 @@
 var numeric__any_8ixx =
 [
     [ "casyyy::maths::numeric_any", "classcasyyy_1_1maths_1_1numeric__any.html", "classcasyyy_1_1maths_1_1numeric__any" ],
+    [ "std::common_type&lt; T, ::casyyy::maths::numeric_any &gt;", "structstd_1_1common__type_3_01_t_00_01_1_1casyyy_1_1maths_1_1numeric__any_01_4.html", "structstd_1_1common__type_3_01_t_00_01_1_1casyyy_1_1maths_1_1numeric__any_01_4" ],
+    [ "std::common_type&lt;::casyyy::maths::numeric_any, T &gt;", "structstd_1_1common__type_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_t_01_4.html", "structstd_1_1common__type_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_t_01_4" ],
     [ "std::hash&lt;::casyyy::maths::numeric_any &gt;", "structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4.html", null ],
     [ "std::formatter&lt;::casyyy::maths::numeric_any, CharT &gt;", "structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html", null ],
     [ "casyyy::maths::sign_unambiguous_arithmetic", "conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic.html", null ],
@@ -16,5 +18,6 @@ var numeric__any_8ixx =
     [ "casyyy::maths::numeric_cast", "namespacecasyyy_1_1maths.html#a8a28888f58697ea96d19571d54dbb602", null ],
     [ "casyyy::maths::operator<<", "namespacecasyyy_1_1maths.html#aba943ffd942078bb615e72dccc81d1d1", null ],
     [ "casyyy::maths::unchecked_numeric_cast", "namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c", null ],
-    [ "casyyy::maths::visit", "namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7", null ]
+    [ "casyyy::maths::visit", "namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7", null ],
+    [ "casyyy::maths::visit", "namespacecasyyy_1_1maths.html#a6db62aed1d9e0223971099a749a8046b", null ]
 ];

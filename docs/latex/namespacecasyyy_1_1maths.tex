@@ -24,6 +24,9 @@ enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da
 {\footnotesize template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
 requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{visit}} (Any \&\&x, Func \&\&f, Func\+When\+Empty \&\&fwe)
 \begin{DoxyCompactList}\small\item\em Visit the inner value of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Func, typename Func\+When\+Empty, typename Any$>$ \newline
+requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6db62aed1d9e0223971099a749a8046b}{visit}} (Func \&\&f, Func\+When\+Empty \&\&fwe, Any \&\&any)
+\begin{DoxyCompactList}\small\item\em Make the visit look like the std::\+visit. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ab17a23d5c7033b9ad6549d9dc8b8d6bd}{bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n) noexcept
 \begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a788630ad2a68de5c15708bfd8ffc4c09}{abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
@@ -240,7 +243,7 @@ Always return T\{\} when a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numer
 \end{DoxyNote}
 \Hypertarget{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}\index{casyyy::maths@{casyyy::maths}!visit@{visit}}
 \index{visit@{visit}!casyyy::maths@{casyyy::maths}}
-\doxysubsubsection{\texorpdfstring{visit()}{visit()}}
+\doxysubsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
 {\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7} 
 template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
 requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$\\
@@ -270,3 +273,18 @@ The result of applying the function to the inner value or the result when it is 
 \begin{DoxyNote}{Note}
 \textquotesingle{}f\textquotesingle{} should accept a single argument of the type of the inner value and \textquotesingle{}fwe\textquotesingle{} should accept no arguments. The return type of \textquotesingle{}f\textquotesingle{} and \textquotesingle{}fwe\textquotesingle{} should be the same. 
 \end{DoxyNote}
+\Hypertarget{namespacecasyyy_1_1maths_a6db62aed1d9e0223971099a749a8046b}\index{casyyy::maths@{casyyy::maths}!visit@{visit}}
+\index{visit@{visit}!casyyy::maths@{casyyy::maths}}
+\doxysubsubsection{\texorpdfstring{visit()}{visit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{namespacecasyyy_1_1maths_a6db62aed1d9e0223971099a749a8046b} 
+template$<$typename Func, typename Func\+When\+Empty, typename Any$>$ \newline
+requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$\\
+decltype(auto) casyyy::\+maths::\+visit (\begin{DoxyParamCaption}\item[{Func \&\&}]{f}{, }\item[{Func\+When\+Empty \&\&}]{fwe}{, }\item[{Any \&\&}]{any}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Make the visit look like the std::\+visit. 
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{visit(\+Any\&\& x, Func\&\& f, Func\+When\+Empty\&\& fwe)} 
+\end{DoxySeeAlso}

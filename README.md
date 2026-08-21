@@ -355,8 +355,7 @@ For the online API documentation, please visit：[https://mir12lyy-cloud.github.
 
 ## Roadmap
 
-- [x] Support parsing format string in `std::formatter`.
-- [ ] More casting policy.
+**The `numeric_any` enter a feature freeze temporary. No new APIs or major features will be added until further notice.**
 
 ## Contributions
 Welcome contributions of any kind. Whether it's submitting an issue to report a bug or forking the project to send a PR. If you find this project helpful, please click the star in the top right to support. Thanks!
