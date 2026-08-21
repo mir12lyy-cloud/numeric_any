@@ -13,5 +13,6 @@ var namespacecasyyy_1_1maths =
     [ "numeric_cast", "namespacecasyyy_1_1maths.html#a8a28888f58697ea96d19571d54dbb602", null ],
     [ "operator<<", "namespacecasyyy_1_1maths.html#aba943ffd942078bb615e72dccc81d1d1", null ],
     [ "unchecked_numeric_cast", "namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c", null ],
-    [ "visit", "namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7", null ]
+    [ "visit", "namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7", null ],
+    [ "visit", "namespacecasyyy_1_1maths.html#a6db62aed1d9e0223971099a749a8046b", null ]
 ];

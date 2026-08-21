@@ -18,6 +18,10 @@
 \item 
 class \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{casyyy::\+maths::\+numeric\+\_\+any}}
 \begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{structstd_1_1common__type_3_01_t_00_01_1_1casyyy_1_1maths_1_1numeric__any_01_4}{std::\+common\+\_\+type$<$ T, ::\+casyyy::\+maths::\+numeric\+\_\+any $>$}}
+\item 
+struct \doxymbox{\hyperlink{structstd_1_1common__type_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_t_01_4}{std::\+common\+\_\+type$<$::\+casyyy::\+maths::\+numeric\+\_\+any, T $>$}}
+\item 
 struct \doxymbox{\hyperlink{structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4}{std::\+hash$<$::\+casyyy::\+maths::\+numeric\+\_\+any $>$}}
 \begin{DoxyCompactList}\small\item\em Provide hash support. \end{DoxyCompactList}\item 
 struct \doxymbox{\hyperlink{structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4}{std::\+formatter$<$::\+casyyy::\+maths::\+numeric\+\_\+any, Char\+T $>$}}
@@ -55,6 +59,9 @@ enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da
 {\footnotesize template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
 requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{casyyy::\+maths::\+visit}} (Any \&\&x, Func \&\&f, Func\+When\+Empty \&\&fwe)
 \begin{DoxyCompactList}\small\item\em Visit the inner value of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Func, typename Func\+When\+Empty, typename Any$>$ \newline
+requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6db62aed1d9e0223971099a749a8046b}{casyyy::\+maths::\+visit}} (Func \&\&f, Func\+When\+Empty \&\&fwe, Any \&\&any)
+\begin{DoxyCompactList}\small\item\em Make the visit look like the std::\+visit. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ab17a23d5c7033b9ad6549d9dc8b8d6bd}{casyyy::\+maths::\+bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n) noexcept
 \begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
 constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a788630ad2a68de5c15708bfd8ffc4c09}{casyyy::\+maths::\+abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept

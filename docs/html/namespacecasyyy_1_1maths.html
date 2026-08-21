@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.4.1</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.5.0</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -144,6 +144,10 @@ Functions</h2></td></tr>
 requires ::std::is_same_v&lt;::std::remove_cvref_t&lt;Any&gt;, <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&gt;</td></tr>
 <tr class="memitem:a31af20d3052c671a95c5965c4ad3fdd7 template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a31af20d3052c671a95c5965c4ad3fdd7">visit</a> (Any &amp;&amp;x, Func &amp;&amp;f, FuncWhenEmpty &amp;&amp;fwe)</td></tr>
 <tr class="memdesc:a31af20d3052c671a95c5965c4ad3fdd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Visit the inner value of a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> and apply a function to it.  <br /></td></tr>
+<tr class="memitem:a6db62aed1d9e0223971099a749a8046b" id="r_a6db62aed1d9e0223971099a749a8046b"><td class="memTemplParams" colspan="2">template&lt;typename Func, typename FuncWhenEmpty, typename Any&gt; <br />
+requires ::std::is_same_v&lt;::std::remove_cvref_t&lt;Any&gt;, <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&gt;</td></tr>
+<tr class="memitem:a6db62aed1d9e0223971099a749a8046b template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a6db62aed1d9e0223971099a749a8046b">visit</a> (Func &amp;&amp;f, FuncWhenEmpty &amp;&amp;fwe, Any &amp;&amp;any)</td></tr>
+<tr class="memdesc:a6db62aed1d9e0223971099a749a8046b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the visit look like the std::visit.  <br /></td></tr>
 <tr class="memitem:ab17a23d5c7033b9ad6549d9dc8b8d6bd" id="r_ab17a23d5c7033b9ad6549d9dc8b8d6bd"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab17a23d5c7033b9ad6549d9dc8b8d6bd">bpow</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;a, unsigned n) noexcept</td></tr>
 <tr class="memdesc:ab17a23d5c7033b9ad6549d9dc8b8d6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the integer power of a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
 <tr class="memitem:a788630ad2a68de5c15708bfd8ffc4c09" id="r_a788630ad2a68de5c15708bfd8ffc4c09"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="#a788630ad2a68de5c15708bfd8ffc4c09">abs</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x) noexcept</td></tr>
@@ -448,7 +452,7 @@ Always return T{} when a <a class="el" href="classcasyyy_1_1maths_1_1numeric__an
 </div>
 </div>
 <a id="a31af20d3052c671a95c5965c4ad3fdd7" name="a31af20d3052c671a95c5965c4ad3fdd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31af20d3052c671a95c5965c4ad3fdd7">&#9670;&#160;</a></span>visit()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a31af20d3052c671a95c5965c4ad3fdd7">&#9670;&#160;</a></span>visit() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -499,6 +503,46 @@ requires ::std::is_same_v&lt;::std::remove_cvref_t&lt;Any&gt;, <a class="el" hre
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The result of applying the function to the inner value or the result when it is empty. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>'f' should accept a single argument of the type of the inner value and 'fwe' should accept no arguments. The return type of 'f' and 'fwe' should be the same. </dd></dl>
+
+</div>
+</div>
+<a id="a6db62aed1d9e0223971099a749a8046b" name="a6db62aed1d9e0223971099a749a8046b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6db62aed1d9e0223971099a749a8046b">&#9670;&#160;</a></span>visit() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Func, typename FuncWhenEmpty, typename Any&gt; <br />
+requires ::std::is_same_v&lt;::std::remove_cvref_t&lt;Any&gt;, <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">decltype(auto) casyyy::maths::visit </td>
+          <td>(</td>
+          <td class="paramtype">Func &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FuncWhenEmpty &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>fwe</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Any &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>any</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Make the visit look like the std::visit. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a31af20d3052c671a95c5965c4ad3fdd7" title="Visit the inner value of a numeric_any and apply a function to it.">visit(Any&amp;&amp; x, Func&amp;&amp; f, FuncWhenEmpty&amp;&amp; fwe)</a> </dd></dl>
 
 </div>
 </div>
