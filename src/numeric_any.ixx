@@ -99,18 +99,16 @@ constexpr decltype(auto) inner_abs(auto x) noexcept {
     } else {
         using T = ::std::decay_t<decltype(x)>;
         using U = decltype(T{} + 1);
-        if constexpr (::std::is_signed_v<T> && ::std::is_integral_v<T>) {
-            auto mask = x >> ::std::numeric_limits<T>::digits;
+        if constexpr (::std::is_integral_v<T>) {
+            auto mask = x >> (::std::numeric_limits<T>::digits - ::std::is_unsigned_v<T>);
             return (mask + x) ^ mask;
-        } else if constexpr (::std::is_unsigned_v<T>) {
-            return x * 1;
         }
         auto bytes = ::std::bit_cast<::std::array<unsigned char, sizeof(U)>, U>(x);
         if constexpr (::std::endian::native == ::std::endian::little) {
             bytes.back() &= 0x7f;
         } else if constexpr (::std::endian::native == ::std::endian::big) {
             bytes.front() &= 0x7f;
-        } else {
+        } else if constexpr (::std::is_floating_point_v<T>) {
             static_assert(false, // NOLINT
                           "In C++20, Compile-time processing of mixed-endian floating-point data is not supported.");
         }
@@ -395,6 +393,14 @@ constexpr decltype(auto) visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
     default:
         return fwe();
     }
+}
+/// @brief Make the visit look like the std::visit.
+/// @see visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
+template <typename Func, typename FuncWhenEmpty, typename Any>
+constexpr decltype(auto) visit(Func&& f, FuncWhenEmpty&& fwe, Any&& any)
+    requires ::std::is_same_v<::std::remove_cvref_t<Any>, numeric_any>
+{
+    return visit(::std::forward<Any>(any), ::std::forward<Func>(f), ::std::forward<FuncWhenEmpty>(fwe));
 }
 #undef FUNCTIONS_TO_VISIT
 
@@ -735,6 +741,17 @@ export constexpr numeric_any make_numeric_any(sign_unambiguous_arithmetic auto x
 export namespace cym = casyyy::maths;
 
 namespace std {
+
+template <::casyyy::maths::sign_unambiguous_arithmetic T>
+struct common_type<T, ::casyyy::maths::numeric_any> {
+    using type = ::casyyy::maths::numeric_any;
+};
+
+template <::casyyy::maths::sign_unambiguous_arithmetic T>
+struct common_type<::casyyy::maths::numeric_any, T> {
+    using type = ::casyyy::maths::numeric_any;
+};
+
 /// @brief Provide hash support.
 template <>
 struct hash<::casyyy::maths::numeric_any> {
