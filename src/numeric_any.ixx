@@ -99,18 +99,16 @@ constexpr decltype(auto) inner_abs(auto x) noexcept {
     } else {
         using T = ::std::decay_t<decltype(x)>;
         using U = decltype(T{} + 1);
-        if constexpr (::std::is_signed_v<T> && ::std::is_integral_v<T>) {
-            auto mask = x >> ::std::numeric_limits<T>::digits;
+        if constexpr (::std::is_integral_v<T>) {
+            auto mask = x >> (::std::numeric_limits<T>::digits - ::std::is_unsigned_v<T>);
             return (mask + x) ^ mask;
-        } else if constexpr (::std::is_unsigned_v<T>) {
-            return x * 1;
         }
         auto bytes = ::std::bit_cast<::std::array<unsigned char, sizeof(U)>, U>(x);
         if constexpr (::std::endian::native == ::std::endian::little) {
             bytes.back() &= 0x7f;
         } else if constexpr (::std::endian::native == ::std::endian::big) {
             bytes.front() &= 0x7f;
-        } else {
+        } else if constexpr (::std::is_floating_point_v<T>) {
             static_assert(false, // NOLINT
                           "In C++20, Compile-time processing of mixed-endian floating-point data is not supported.");
         }
@@ -490,7 +488,6 @@ export template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_
         }
     }
     return visit(
-        x,
         [](auto i) {
             auto res = static_cast<T>(i);
             if constexpr (::std::is_floating_point_v<decltype(i)>)
@@ -499,7 +496,7 @@ export template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_
                 if (!is_normal_number(res)) return ::std::optional<T>{::std::nullopt};
             return ::std::optional<T>{res};
         },
-        [] { return ::std::optional<T>{::std::nullopt}; });
+        [] { return ::std::optional<T>{::std::nullopt}; }, x);
 }
 #undef FUNCTION_TO_RESTORE_VALUE
 
@@ -735,6 +732,17 @@ export constexpr numeric_any make_numeric_any(sign_unambiguous_arithmetic auto x
 export namespace cym = casyyy::maths;
 
 namespace std {
+
+template <::casyyy::maths::sign_unambiguous_arithmetic T>
+struct common_type<T, ::casyyy::maths::numeric_any> {
+    using type = ::casyyy::maths::numeric_any;
+};
+
+template <::casyyy::maths::sign_unambiguous_arithmetic T>
+struct common_type<::casyyy::maths::numeric_any, T> {
+    using type = ::casyyy::maths::numeric_any;
+};
+
 /// @brief Provide hash support.
 template <>
 struct hash<::casyyy::maths::numeric_any> {
