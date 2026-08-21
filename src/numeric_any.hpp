@@ -398,7 +398,8 @@ constexpr decltype(auto) visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
         return fwe();
     }
 }
-
+/// @brief Make the visit look like the std::visit.
+/// @see visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
 template <typename Func, typename FuncWhenEmpty, typename Any>
 constexpr decltype(auto) visit(Func&& f, FuncWhenEmpty&& fwe, Any&& any)
     requires ::std::is_same_v<::std::remove_cvref_t<Any>, numeric_any>
@@ -498,7 +499,8 @@ template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_policy:
             if (x.is_floating_point() || (x.is_unsigned_number() && x.type_size() >= sizeof(T))) return ::std::nullopt;
         }
     }
-    return visit(x,
+    return visit(
+        x,
         [](auto i) {
             auto res = static_cast<T>(i);
             if constexpr (::std::is_floating_point_v<decltype(i)>)

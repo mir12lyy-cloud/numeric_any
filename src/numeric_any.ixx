@@ -394,7 +394,8 @@ constexpr decltype(auto) visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
         return fwe();
     }
 }
-
+/// @brief Make the visit look like the std::visit.
+/// @see visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
 template <typename Func, typename FuncWhenEmpty, typename Any>
 constexpr decltype(auto) visit(Func&& f, FuncWhenEmpty&& fwe, Any&& any)
     requires ::std::is_same_v<::std::remove_cvref_t<Any>, numeric_any>
