@@ -400,7 +400,9 @@ constexpr decltype(auto) visit(Any&& x, Func&& f, FuncWhenEmpty&& fwe)
 }
 
 template <typename Func, typename FuncWhenEmpty, typename Any>
-constexpr decltype(auto) visit(Func&& f, FuncWhenEmpty&& fwe, Any&& any) {
+constexpr decltype(auto) visit(Func&& f, FuncWhenEmpty&& fwe, Any&& any)
+    requires ::std::is_same_v<::std::remove_cvref_t<Any>, numeric_any>
+{
     return visit(::std::forward<Any>(any), ::std::forward<Func>(f), ::std::forward<FuncWhenEmpty>(fwe));
 }
 #undef FUNCTIONS_TO_VISIT
@@ -496,7 +498,7 @@ template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_policy:
             if (x.is_floating_point() || (x.is_unsigned_number() && x.type_size() >= sizeof(T))) return ::std::nullopt;
         }
     }
-    return visit(
+    return visit(x,
         [](auto i) {
             auto res = static_cast<T>(i);
             if constexpr (::std::is_floating_point_v<decltype(i)>)
@@ -505,7 +507,7 @@ template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_policy:
                 if (!details::is_normal_number(res)) return ::std::optional<T>{::std::nullopt};
             return ::std::optional<T>{res};
         },
-        [] { return ::std::optional<T>{::std::nullopt}; }, x);
+        [] { return ::std::optional<T>{::std::nullopt}; });
 }
 #undef FUNCTION_TO_RESTORE_VALUE
 
