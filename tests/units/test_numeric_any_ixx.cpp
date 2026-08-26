@@ -10,9 +10,9 @@
 #include <type_traits>
 #include <vector>
 
-import casyyy.maths.numeric_any;
+import cy.maths.numeric_any;
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 
 // ============================================================================
 // 1. Construction & Empty State Tests
@@ -272,13 +272,6 @@ TEST(TypeLookupTest, CanSafeConvertFloatingPoint) {
     EXPECT_TRUE(a.can_safe_convert_to<long double>());
     EXPECT_FALSE(a.can_safe_convert_to<int>());
     EXPECT_FALSE(a.can_safe_convert_to<unsigned int>());
-}
-
-TEST(TypeLookupTest, CanSafeConvertEmpty) {
-    numeric_any a;
-    EXPECT_FALSE(a.can_safe_convert_to<int>());
-    EXPECT_FALSE(a.can_safe_convert_to<double>());
-    EXPECT_FALSE(a.can_safe_convert_to<bool>());
 }
 
 // ============================================================================

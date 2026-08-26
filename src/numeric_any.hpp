@@ -1,5 +1,5 @@
-#ifndef CASYYY_MATH_NUMERIC_ANY_HPP_
-#define CASYYY_MATH_NUMERIC_ANY_HPP_
+#ifndef CY_MATH_NUMERIC_ANY_HPP_
+#define cY_MATH_NUMERIC_ANY_HPP_
 
 #include "numeric_any_parser.hpp"
 #include <array>
@@ -21,11 +21,6 @@
 #pragma warning(disable : 4002 4061 4702 4804 4146 4244)
 #endif
 /// @cond
-#if __cplusplus < 202106L
-#define NOT_IN_CONSTANT_EVALUATION (!::std::is_constant_evaluated())
-#else
-#define NOT_IN_CONSTANT_EVALUATION !consteval
-#endif
 
 // To generate types.
 #define FOR_EACH_TYPES_TO(x)                                                                                           \
@@ -36,7 +31,7 @@
                     x(long double, LONG_DOUBLE, 13)
 /// @endcond
 
-namespace casyyy::maths::details {
+namespace cy::maths::details {
 /// @cond
 // Type tags.
 enum class numeric_types : unsigned char {
@@ -67,7 +62,7 @@ FOR_EACH_TYPES_TO(FUNCTION)
 // Check for a floating number isn't a NaN or inf.
 constexpr bool is_normal_number(auto x) noexcept { // NOLINT
 #ifndef __cpp_lib_constexpr_cmath
-    if NOT_IN_CONSTANT_EVALUATION {
+    if (!std::is_constant_evaluated()) {
         return ::std::isnormal(x) || x == 0;
     } else {
         if (x != x) return false; // Check NaN. //NOLINT
@@ -79,9 +74,9 @@ constexpr bool is_normal_number(auto x) noexcept { // NOLINT
 #endif
 }
 /// @endcond
-} // namespace casyyy::maths::details
+} // namespace cy::maths::details
 
-namespace casyyy::maths {
+namespace cy::maths {
 /// @brief Only for arithmetic types, except the char without explicit sign.
 template <typename T>
 concept sign_unambiguous_arithmetic =
@@ -118,8 +113,29 @@ public:
     // The former declarations.
     template <sign_unambiguous_arithmetic T>
     friend constexpr T unchecked_numeric_cast(const numeric_any&) noexcept;
+
+#define FUNCTIONS_TO_VISIT(type_name, type_enum_name, enum_value)                                                      \
+    case details::numeric_types::type_enum_name: {                                                                     \
+        auto restore = unchecked_numeric_cast<type_name>(x);                                                           \
+        return f(restore);                                                                                             \
+    }
+
+    /** @brief Visit the inner value of a numeric_any and apply a function to it.
+     * @param x The numeric_any to be visited.
+     * @param f The function to be applied to the inner value.
+     * @return The result of applying the function to the inner value.
+     * @note 'f' should accept a single argument of the type of the inner values.
+     */
     template <typename Func, typename Any>
-    friend constexpr decltype(auto) visit(Func&&, Any&&);
+    friend constexpr decltype(auto) visit(Func&& f, Any&& x) noexcept {
+        switch (x.type_) { FOR_EACH_TYPES_TO(FUNCTIONS_TO_VISIT) }
+#ifdef _MSC_VER
+        __assume(false);
+#else
+        __builtin_unreachable();
+#endif
+    }
+#undef FUNCTIONS_TO_VISIT
 
     constexpr numeric_any() noexcept = default;
 
@@ -131,7 +147,9 @@ public:
     /// @brief Return the negative of the number inside.
     /// @return The negative of the number inside.
     /// @note Follow C++ rules for negation of fundamental types.
-    constexpr numeric_any operator-() const noexcept;
+    constexpr numeric_any operator-() const noexcept {
+        return visit([](auto i) { return numeric_any{-i}; }, *this);
+    }
 
     /// @brief Return the numeric_any itself.
     /// @return The numeric_any itself.
@@ -142,22 +160,36 @@ public:
     /// @brief Pre-increment operator.
     /// @return Reference to the incremented object.
     /// @note Follows built-in semantics, excpet bool, which is setting the value to (bool)(inner + 1).
-    constexpr numeric_any& operator++() noexcept;
+    constexpr numeric_any& operator++() noexcept {
+        visit([this](auto i) { this->reset(decltype(i)(i + 1)); }, *this);
+        return *this;
+    }
 
     /// @brief Post-increment operator.
     /// @return The value before increment.
     /// @note Follows built-in semantics, excpet bool, which is setting the value to (bool)(inner + 1).
-    constexpr numeric_any operator++(int) noexcept;
+    constexpr numeric_any operator++(int) noexcept {
+        auto repeat = *this;
+        ++*this;
+        return repeat;
+    }
 
     /// @brief Pre-decrement operator.
     /// @return Reference to the decreed object.
     /// @note Follows built-in semantics, excpet bool, which is setting the value to (bool)(inner - 1).
-    constexpr numeric_any& operator--() noexcept;
+    constexpr numeric_any& operator--() noexcept {
+        visit([this](auto i) { this->reset(decltype(i)(i - 1)); }, *this);
+        return *this;
+    }
 
     /// @brief Post-decrement operator.
     /// @return The value before decrement.
     /// @note Follows built-in semantics, excpet bool, which is setting the value to (bool)(inner - 1).
-    constexpr numeric_any operator--(int) noexcept;
+    constexpr numeric_any operator--(int) noexcept {
+        auto repeat = *this;
+        --*this;
+        return repeat;
+    }
 
     /// @brief Do an addition assignment with a normal value.
     /// @param x Input value, must be the basic arithmetic types in C++, except char without explicit sign.
@@ -377,25 +409,6 @@ private:
     }
     /// @endcond
 };
-/// @cond
-#define FUNCTIONS_TO_VISIT(type_name, type_enum_name, enum_value)                                                      \
-    case details::numeric_types::type_enum_name: {                                                                     \
-        auto restore = unchecked_numeric_cast<type_name>(x);                                                           \
-        return f(restore);                                                                                             \
-    }
-/// @endcond
-
-/** @brief Visit the inner value of a numeric_any and apply a function to it.
- * @param x The numeric_any to be visited.
- * @param f The function to be applied to the inner value.
- * @return The result of applying the function to the inner value.
- * @note 'f' should accept a single argument of the type of the inner values.
- */
-template <typename Func, typename Any>
-constexpr decltype(auto) visit(Func&& f, Any&& x) {
-    switch (x.type_) { FOR_EACH_TYPES_TO(FUNCTIONS_TO_VISIT) }
-}
-#undef FUNCTIONS_TO_VISIT
 
 constexpr numeric_any operator+(numeric_any x, auto&& y) noexcept {
     return x += y;
@@ -413,7 +426,7 @@ constexpr numeric_any operator/(numeric_any x, auto&& y) noexcept {
 // Based on the std::bit_cast.
 #define FUNCTION_TO_CAST(type_name, type_enum_name, enum_value)                                                        \
     case details::numeric_types::type_enum_name: {                                                                     \
-        if NOT_IN_CONSTANT_EVALUATION {                                                                                \
+        if (!std::is_constant_evaluated()) {                                                                           \
             type_name restore_value = 0;                                                                               \
             ::std::memcpy(&restore_value, x.storage_.data(), sizeof(type_name));                                       \
             return static_cast<T>(restore_value);                                                                      \
@@ -433,6 +446,11 @@ constexpr numeric_any operator/(numeric_any x, auto&& y) noexcept {
 template <sign_unambiguous_arithmetic T>
 constexpr T unchecked_numeric_cast(const numeric_any& x) noexcept {
     switch (x.type_) { FOR_EACH_TYPES_TO(FUNCTION_TO_CAST) }
+#ifdef _MSC_VER
+    __assume(false);
+#else
+    __builtin_unreachable();
+#endif
 }
 #undef FUNCTION_TO_CAST
 
@@ -473,7 +491,7 @@ constexpr numeric_any::numeric_any(sign_unambiguous_arithmetic auto x) noexcept
       float_point_{::std::is_floating_point_v<decltype(x)>}, is_unsigned_{::std::is_unsigned_v<decltype(x)>},
       positive_{x >= decltype(x){}} {
     // Base on the std::bit_cast;
-    if NOT_IN_CONSTANT_EVALUATION {
+    if (!std::is_constant_evaluated()) {
         ::std::memcpy(storage_.data(), &x, sizeof(decltype(x)));
     } else {
         ::std::array<unsigned char, sizeof(decltype(x))> temp{};
@@ -489,7 +507,7 @@ constexpr void numeric_any::reset(sign_unambiguous_arithmetic auto x) noexcept {
     width_       = sizeof(decltype(x));
     is_unsigned_ = ::std::is_unsigned_v<decltype(x)>;
     positive_    = x >= decltype(x){};
-    if NOT_IN_CONSTANT_EVALUATION {
+    if (!std::is_constant_evaluated()) {
         ::std::memcpy(storage_.data(), &x, sizeof(decltype(x)));
     } else {
         ::std::array<unsigned char, sizeof(decltype(x))> temp{};
@@ -499,46 +517,20 @@ constexpr void numeric_any::reset(sign_unambiguous_arithmetic auto x) noexcept {
     }
 }
 
-constexpr numeric_any numeric_any::operator-() const noexcept {
-    return visit([](auto i) { return numeric_any{-i}; }, *this);
-}
-
-constexpr numeric_any& numeric_any::operator++() noexcept {
-    visit([this](auto i) { this->reset(decltype(i)(i + 1)); }, *this);
-    return *this;
-}
-constexpr numeric_any numeric_any::operator++(int) noexcept {
-    auto repeat = *this;
-    ++*this;
-    return repeat;
-}
-constexpr numeric_any& numeric_any::operator--() noexcept {
-    visit([this](auto i) { this->reset(decltype(i)(i - 1)); }, *this);
-    return *this;
-}
-constexpr numeric_any numeric_any::operator--(int) noexcept {
-    auto repeat = *this;
-    --*this;
-    return repeat;
-}
-
 template <sign_unambiguous_arithmetic T>
 constexpr bool numeric_any::can_safe_convert_to() const noexcept {
     if (is_same_type<T>()) return true;                     // Safe when the tag of the "T" is same as inner tag.
     if (type_ == details::numeric_types::BOOL) return true; // Bool is safe to cast to all types.
     if constexpr (::std::is_floating_point_v<T>) {
-        return float_point_ && width_ <= sizeof(T); // Only support promotions in floating numbers.
+        return float_point_ && width_ <= sizeof(T);
     } else if constexpr (::std::is_unsigned_v<T>) {
-        if (is_unsigned_) return width_ <= sizeof(T); // Promotions between two unsigned numbers are safe.
         if (!float_point_) {
-            if (positive_) return width_ <= sizeof(T); // Promotions from non-negative numbers are safe.
+            if (positive_) return width_ <= sizeof(T);
             return false;
         }
         return false;
     } else {
-        // Support to promotions to a wider signed integral type.
         if (is_unsigned_) return width_ < sizeof(T);
-        // Allowing equal width converting when both signed integral numbers.
         if (!float_point_) return width_ <= sizeof(T);
         return false;
     }
@@ -609,27 +601,25 @@ template <typename CharT, typename Traits = ::std::char_traits<CharT>>
 constexpr numeric_any make_numeric_any(sign_unambiguous_arithmetic auto x) noexcept {
     return numeric_any{x};
 }
-} // namespace casyyy::maths
-
-namespace cym = casyyy::maths; // NOLINT
+} // namespace cy::maths
 
 namespace std {
 
-template <::casyyy::maths::sign_unambiguous_arithmetic T>
-struct common_type<T, ::casyyy::maths::numeric_any> {
-    using type = ::casyyy::maths::numeric_any;
+template <::cy::maths::sign_unambiguous_arithmetic T>
+struct common_type<T, ::cy::maths::numeric_any> {
+    using type = ::cy::maths::numeric_any;
 };
 
-template <::casyyy::maths::sign_unambiguous_arithmetic T>
-struct common_type<::casyyy::maths::numeric_any, T> {
-    using type = ::casyyy::maths::numeric_any;
+template <::cy::maths::sign_unambiguous_arithmetic T>
+struct common_type<::cy::maths::numeric_any, T> {
+    using type = ::cy::maths::numeric_any;
 };
 
 /// @brief Provide hash support.
 template <>
-struct hash<::casyyy::maths::numeric_any> {
+struct hash<::cy::maths::numeric_any> {
     /// @cond
-    size_t operator()(const ::casyyy::maths::numeric_any& x) const noexcept {
+    size_t operator()(const ::cy::maths::numeric_any& x) const noexcept {
         return visit([](auto i) { return hash<decltype(i)>()(i); }, x);
     }
     ///@endcond
@@ -639,7 +629,7 @@ struct hash<::casyyy::maths::numeric_any> {
  *   @throw std::format_error When the correct format string is used for the given argument types.
  *                            Or the parser can't find your dynamic parameters.  */
 template <typename CharT>
-struct formatter<::casyyy::maths::numeric_any, CharT> {
+struct formatter<::cy::maths::numeric_any, CharT> {
     /// @cond
     // To store format string for value, based on std::numeric_limits<unsigned long long>::digits10, 60 is enough.
     static constexpr unsigned FORMAT_STRING_BUFFER_SIZE = 60;
@@ -648,7 +638,7 @@ struct formatter<::casyyy::maths::numeric_any, CharT> {
         return parser_.parse(ctx);
     }
 
-    auto format(const ::casyyy::maths::numeric_any& x, auto& ctx) const {
+    auto format(const ::cy::maths::numeric_any& x, auto& ctx) const {
         CharT format_buffer[FORMAT_STRING_BUFFER_SIZE]{};
         if (x.is_floating_point() && parser_.is_for_integer())
             throw format_error{"Cannot use integer format specifier with a float."};
@@ -663,13 +653,12 @@ struct formatter<::casyyy::maths::numeric_any, CharT> {
             return visit([&ctx, &fmt](auto i) { return vformat_to(ctx.out(), fmt, make_format_args(i)); }, x);
         }
     }
-    ::casyyy::utils::numeric_any_parser<CharT> parser_;
+    ::cy::utils::numeric_any_parser<CharT> parser_;
     /// @endcond
 };
 } // namespace std
 #undef FOR_EACH_OPERATOR
 #undef FOR_EACH_TYPES_TO
-#undef NOT_IN_CONSTANT_EVALUATION
 
 #ifdef _MSC_VER
 #pragma warning(pop)

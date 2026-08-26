@@ -1,7 +1,7 @@
 #include <print>
 
-import casyyy.maths.numeric_any;
-using namespace casyyy::maths;
+import cy.maths.numeric_any;
+using namespace cy::maths;
 
 int main() {
     numeric_any a = 13;

@@ -7,7 +7,7 @@
 #include <variant>
 #include <vector>
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 static constexpr size_t N = 1000000;
 
 using llong   = long long;

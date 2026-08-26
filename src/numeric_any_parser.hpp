@@ -1,12 +1,12 @@
-#ifndef CASYYY_NUMERIC_ANY_PARSER_HPP
-#define CASYYY_NUMERIC_ANY_PARSER_HPP
+#ifndef CY_NUMERIC_ANY_PARSER_HPP
+#define CY_NUMERIC_ANY_PARSER_HPP
 
 #include <charconv>
 #include <format>
 #include <string_view>
 #include <type_traits>
 
-namespace casyyy::utils {
+namespace cy::utils {
 /// @brief The parser for numeric_any in formatting.
 template <typename CharT>
 class numeric_any_parser {
@@ -131,7 +131,7 @@ private:
             has_set_align = true;
         } else if (*begin == static_cast<CharT>('^') || *begin == static_cast<CharT>('>') ||
                    *begin == static_cast<CharT>('<')) {
-            align_patten = *begin++;
+            align_patten  = *begin++;
             has_set_align = true;
         }
         return has_set_align;
@@ -247,6 +247,6 @@ private:
     /// @endcond
 };
 
-} // namespace casyyy::utils
+} // namespace cy::utils
 
 #endif

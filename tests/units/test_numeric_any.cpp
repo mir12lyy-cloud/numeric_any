@@ -12,7 +12,7 @@
 #include <type_traits>
 #include <vector>
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 
 // ============================================================================
 // 1. Construction & Empty State Tests

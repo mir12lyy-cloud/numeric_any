@@ -6,9 +6,9 @@
 #include <variant>
 #include <vector>
 
-import casyyy.maths.numeric_any;
+import cy.maths.numeric_any;
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 static constexpr size_t N = 1000000;
 
 using llong   = long long;

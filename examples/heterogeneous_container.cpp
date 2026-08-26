@@ -1,8 +1,8 @@
 #include <print>
 #include <vector>
 
-import casyyy.maths.numeric_any;
-using casyyy::maths::numeric_any;
+import cy.maths.numeric_any;
+using cy::maths::numeric_any;
 
 auto process(auto&&... args) {
     std::vector<numeric_any> result;

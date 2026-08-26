@@ -5,9 +5,9 @@ module;
 #include <string_view>
 #include <type_traits>
 
-export module casyyy.maths.numeric_any_parser;
+export module cy.maths.numeric_any_parser;
 
-namespace casyyy::utils {
+namespace cy::utils {
 /// @brief The parser for numeric_any in formatting.
 export template <typename CharT>
 class numeric_any_parser {
@@ -132,7 +132,7 @@ private:
             has_set_align = true;
         } else if (*begin == static_cast<CharT>('^') || *begin == static_cast<CharT>('>') ||
                    *begin == static_cast<CharT>('<')) {
-            align_patten = *begin++;
+            align_patten  = *begin++;
             has_set_align = true;
         }
         return has_set_align;
@@ -248,4 +248,4 @@ private:
     /// @endcond
 };
 
-} // namespace casyyy::utils
+} // namespace cy::utils
