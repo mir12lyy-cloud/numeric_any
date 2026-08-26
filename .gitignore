@@ -7,3 +7,4 @@ tests/units/TEST_SUMMARY.md
 tests/units/gtest_results.txt
 continue*/
 .idea/
+tests/benchmarks/v2_results

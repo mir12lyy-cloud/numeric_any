@@ -1,5 +1,5 @@
 #ifndef CY_MATH_NUMERIC_ANY_HPP_
-#define cY_MATH_NUMERIC_ANY_HPP_
+#define CY_MATH_NUMERIC_ANY_HPP_
 
 #include "numeric_any_parser.hpp"
 #include <array>
@@ -80,7 +80,8 @@ namespace cy::maths {
 /// @brief Only for arithmetic types, except the char without explicit sign.
 template <typename T>
 concept sign_unambiguous_arithmetic =
-    ::std::is_arithmetic_v<T> && !::std::is_same_v<char, T> && !::std::is_same_v<wchar_t, T>;
+    ::std::is_arithmetic_v<T> && !::std::is_same_v<char, T> && !::std::is_same_v<wchar_t, T> &&
+    !::std::is_same_v<char8_t, T> && !::std::is_same_v<char16_t, T> && !::std::is_same_v<char32_t, T>;
 
 /// @brief Numeric conversion strategy, used for handling different types of number conversions.
 /// @note The default policy is set to strict.
@@ -112,11 +113,11 @@ class numeric_any {
 public:
     // The former declarations.
     template <sign_unambiguous_arithmetic T>
-    friend constexpr T unchecked_numeric_cast(const numeric_any&) noexcept;
+    friend constexpr T as(const numeric_any&) noexcept;
 
 #define FUNCTIONS_TO_VISIT(type_name, type_enum_name, enum_value)                                                      \
     case details::numeric_types::type_enum_name: {                                                                     \
-        auto restore = unchecked_numeric_cast<type_name>(x);                                                           \
+        auto restore = as<type_name>(x);                                                                               \
         return f(restore);                                                                                             \
     }
 
@@ -271,7 +272,7 @@ public:
     /// @brief Check whether inner value isn't zero.
     /// @return Whether inner value isn't zero.
     explicit constexpr operator bool() const noexcept {
-        return unchecked_numeric_cast<bool>(*this);
+        return as<bool>(*this);
     }
 
     /// @brief Reset the inner value.
@@ -357,7 +358,7 @@ private:
     template <typename T1, typename T2, typename Func>
     constexpr numeric_any& apply(T2 x, Func&& f) noexcept {
         using common_type = ::std::common_type_t<T1, T2>;
-        reset(f(unchecked_numeric_cast<common_type>(*this), x));
+        reset(f(as<common_type>(*this), x));
         return *this;
     }
 
@@ -366,23 +367,23 @@ private:
         if constexpr (::std::is_same_v<::std::remove_cvref_t<decltype(x)>, numeric_any>) {
             switch (x.type_) {
             case details::numeric_types::UNSIGNED_INT:
-                return binary_operation(unchecked_numeric_cast<unsigned>(x), ::std::forward<Func>(f));
+                return binary_operation(as<unsigned>(x), ::std::forward<Func>(f));
             case details::numeric_types::LONG:
-                return binary_operation(unchecked_numeric_cast<long>(x), ::std::forward<Func>(f));
+                return binary_operation(as<long>(x), ::std::forward<Func>(f));
             case details::numeric_types::UNSIGNED_LONG:
-                return binary_operation(unchecked_numeric_cast<unsigned long>(x), ::std::forward<Func>(f));
+                return binary_operation(as<unsigned long>(x), ::std::forward<Func>(f));
             case details::numeric_types::LONG_LONG:
-                return binary_operation(unchecked_numeric_cast<long long>(x), ::std::forward<Func>(f));
+                return binary_operation(as<long long>(x), ::std::forward<Func>(f));
             case details::numeric_types::UNSIGNED_LONG_LONG:
-                return binary_operation(unchecked_numeric_cast<unsigned long long>(x), ::std::forward<Func>(f));
+                return binary_operation(as<unsigned long long>(x), ::std::forward<Func>(f));
             case details::numeric_types::FLOAT:
-                return binary_operation(unchecked_numeric_cast<float>(x), ::std::forward<Func>(f));
+                return binary_operation(as<float>(x), ::std::forward<Func>(f));
             case details::numeric_types::DOUBLE:
-                return binary_operation(unchecked_numeric_cast<double>(x), ::std::forward<Func>(f));
+                return binary_operation(as<double>(x), ::std::forward<Func>(f));
             case details::numeric_types::LONG_DOUBLE:
-                return binary_operation(unchecked_numeric_cast<long double>(x), ::std::forward<Func>(f));
+                return binary_operation(as<long double>(x), ::std::forward<Func>(f));
             default:
-                return binary_operation(unchecked_numeric_cast<int>(x), ::std::forward<Func>(f));
+                return binary_operation(as<int>(x), ::std::forward<Func>(f));
             }
         } else {
             switch (type_) {
@@ -424,7 +425,7 @@ constexpr numeric_any operator/(numeric_any x, auto&& y) noexcept {
 }
 /// @cond
 // Based on the std::bit_cast.
-#define FUNCTION_TO_CAST(type_name, type_enum_name, enum_value)                                                        \
+#define FUNCTION_TO_AS(type_name, type_enum_name, enum_value)                                                          \
     case details::numeric_types::type_enum_name: {                                                                     \
         if (!std::is_constant_evaluated()) {                                                                           \
             type_name restore_value = 0;                                                                               \
@@ -444,15 +445,15 @@ constexpr numeric_any operator/(numeric_any x, auto&& y) noexcept {
 /// @return A normal value represents the value stored in a numeric_any after casting to given type.
 /// @note char types must be explicitly signed-qualified in constructors to avoid ambiguity.
 template <sign_unambiguous_arithmetic T>
-constexpr T unchecked_numeric_cast(const numeric_any& x) noexcept {
-    switch (x.type_) { FOR_EACH_TYPES_TO(FUNCTION_TO_CAST) }
+constexpr T as(const numeric_any& x) noexcept {
+    switch (x.type_) { FOR_EACH_TYPES_TO(FUNCTION_TO_AS) }
 #ifdef _MSC_VER
     __assume(false);
 #else
     __builtin_unreachable();
 #endif
 }
-#undef FUNCTION_TO_CAST
+#undef FUNCTION_TO_AS
 
 /// @brief Casting a numeric_any to a normal number with check based on policy.
 /// @tparam T The basic arithmetic types in C++, except char without explicit sign which is used to check.
@@ -461,7 +462,7 @@ constexpr T unchecked_numeric_cast(const numeric_any& x) noexcept {
 /// @return A normal value represents the value stored in a numeric_any after casting to given type or null.
 /// @note char types must be explicitly signed-qualified in constructors to avoid ambiguity.
 template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_policy::strict>
-[[nodiscard]] constexpr ::std::optional<T> numeric_cast(const numeric_any& x) noexcept {
+[[nodiscard]] constexpr ::std::optional<T> from(const numeric_any& x) noexcept {
     if constexpr (Policy == casting_policy::strict) {
         if (!x.can_safe_convert_to<T>()) return ::std::nullopt;
     } else if constexpr (Policy == casting_policy::normal) {
@@ -543,26 +544,26 @@ numeric_any::operator<=>(sign_unambiguous_arithmetic auto x) const noexcept {
     if constexpr (::std::is_floating_point_v<decltype(x)>) {
         if (x != x) return ::std::partial_ordering::unordered; // NOLINT
         if constexpr (::std::is_same_v<decltype(x), float>) {
-            if (type_ == details::numeric_types::FLOAT) return unchecked_numeric_cast<float>(*this) <=> x;
-            if (type_ == details::numeric_types::DOUBLE) return unchecked_numeric_cast<double>(*this) <=> x;
+            if (type_ == details::numeric_types::FLOAT) return as<float>(*this) <=> x;
+            if (type_ == details::numeric_types::DOUBLE) return as<double>(*this) <=> x;
         } else if constexpr (::std::is_same_v<decltype(x), double>) {
-            if (type_ != details::numeric_types::LONG_DOUBLE) return unchecked_numeric_cast<double>(*this) <=> x;
+            if (type_ != details::numeric_types::LONG_DOUBLE) return as<double>(*this) <=> x;
         }
-        return unchecked_numeric_cast<long double>(*this) <=> x;
+        return as<long double>(*this) <=> x;
     } else {
         if (positive_ != x >= decltype(x){})
             return static_cast<int>(positive_) <=> static_cast<int>(x >= decltype(x){});
         switch (type_) {
         case details::numeric_types::UNSIGNED_LONG_LONG:
-            return unchecked_numeric_cast<unsigned long long>(*this) <=> static_cast<unsigned long long>(x);
+            return as<unsigned long long>(*this) <=> static_cast<unsigned long long>(x);
         case details::numeric_types::FLOAT:
-            return unchecked_numeric_cast<float>(*this) <=> x;
+            return as<float>(*this) <=> x;
         case details::numeric_types::DOUBLE:
-            return unchecked_numeric_cast<double>(*this) <=> x;
+            return as<double>(*this) <=> x;
         case details::numeric_types::LONG_DOUBLE:
-            return unchecked_numeric_cast<long double>(*this) <=> x;
+            return as<long double>(*this) <=> x;
         default:
-            return unchecked_numeric_cast<long long>(*this) <=> x;
+            return as<long long>(*this) <=> x;
         }
     }
 }
@@ -570,16 +571,16 @@ numeric_any::operator<=>(sign_unambiguous_arithmetic auto x) const noexcept {
    No need to check all tags, since it won't change value. Just restore the value and do comparison。 */
 [[nodiscard]] constexpr ::std::partial_ordering numeric_any::operator<=>(const numeric_any& x) const noexcept {
     if (type_ == details::numeric_types::LONG_DOUBLE || x.type_ == details::numeric_types::LONG_DOUBLE)
-        return unchecked_numeric_cast<long double>(*this) <=> unchecked_numeric_cast<long double>(x);
+        return as<long double>(*this) <=> as<long double>(x);
     if (type_ == details::numeric_types::DOUBLE || x.type_ == details::numeric_types::DOUBLE)
-        return unchecked_numeric_cast<double>(*this) <=> unchecked_numeric_cast<double>(x);
+        return as<double>(*this) <=> as<double>(x);
     if (type_ == details::numeric_types::FLOAT || x.type_ == details::numeric_types::FLOAT)
-        return unchecked_numeric_cast<float>(*this) <=> unchecked_numeric_cast<float>(x);
+        return as<float>(*this) <=> as<float>(x);
     // The signed will be checked first, so 12U < -1 will be false.
     if (positive_ != x.positive_) return static_cast<int>(positive_) <=> static_cast<int>(x.positive_);
     if (type_ == details::numeric_types::UNSIGNED_LONG_LONG || x.type_ == details::numeric_types::UNSIGNED_LONG_LONG)
-        return unchecked_numeric_cast<unsigned long long>(*this) <=> unchecked_numeric_cast<unsigned long long>(x);
-    return unchecked_numeric_cast<long long>(*this) <=> unchecked_numeric_cast<long long>(x);
+        return as<unsigned long long>(*this) <=> as<unsigned long long>(x);
+    return as<long long>(*this) <=> as<long long>(x);
 }
 
 /// @brief Output numeric_any to the stream.

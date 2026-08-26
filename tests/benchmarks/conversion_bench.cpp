@@ -74,7 +74,7 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na)                                                                                         \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -89,7 +89,7 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na) {                                                                                       \
-                auto r = numeric_cast<T>(a);                                                                           \
+                auto r = from<T>(a);                                                                                   \
                 if (r) sum += *r;                                                                                      \
             }                                                                                                          \
             benchmark::DoNotOptimize(sum);                                                                             \
@@ -153,7 +153,7 @@ static void BM_Unchecked_Promote_IntToLL(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na)
-            sum += unchecked_numeric_cast<llong>(a);
+            sum += as<llong>(a);
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
@@ -168,7 +168,7 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<llong>(a);
+            auto r = from<llong>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -187,7 +187,7 @@ static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     for (auto _ : s) {
         int fail = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<short>(a);
+            auto r = from<short>(a);
             if (!r) ++fail;
         }
         benchmark::DoNotOptimize(fail);
@@ -204,7 +204,7 @@ static void BM_Relaxed_Narrow_IntToShort(benchmark::State& s) {
     for (auto _ : s) {
         int ok = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<short, casting_policy::relaxed>(a);
+            auto r = from<short, casting_policy::relaxed>(a);
             if (r) ++ok;
         }
         benchmark::DoNotOptimize(ok);
@@ -223,7 +223,7 @@ static void BM_Strict_Policy_IntToLong(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::strict>(a);
+            auto r = from<long, casting_policy::strict>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -240,7 +240,7 @@ static void BM_Normal_Policy_IntToLong(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::normal>(a);
+            auto r = from<long, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -257,7 +257,7 @@ static void BM_Relaxed_Policy_IntToLong(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::relaxed>(a);
+            auto r = from<long, casting_policy::relaxed>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -276,7 +276,7 @@ static void BM_Relaxed_Cross_DoubleToInt(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<int, casting_policy::relaxed>(a);
+            auto r = from<int, casting_policy::relaxed>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -293,7 +293,7 @@ static void BM_Relaxed_Cross_LDoubleToInt(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<int, casting_policy::relaxed>(a);
+            auto r = from<int, casting_policy::relaxed>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -310,7 +310,7 @@ BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
             ldouble sum = 0;                                                                                           \
             for (auto v : data) {                                                                                      \
                 numeric_any a{v};                                                                                      \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             }                                                                                                          \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \

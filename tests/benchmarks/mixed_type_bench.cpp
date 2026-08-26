@@ -3,10 +3,11 @@
 #include <benchmark/benchmark.h>
 #define DISABLE_FORMAT_IN_NUMERIC_ANY
 #include "../../src/numeric_any.hpp"
+#include <any>
 #include <random>
 #include <variant>
 #include <vector>
-#include <any>
+
 
 using namespace cy::maths;
 static constexpr size_t N = 1000000;
@@ -276,7 +277,7 @@ BENCH_COMPARE(ldouble, ldouble)
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na)                                                                                         \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
