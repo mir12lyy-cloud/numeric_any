@@ -92,7 +92,7 @@ static std::vector<ldouble> make_ldoubles(size_t n) {
     BENCHMARK(BM_StdAny_Construct_##tname);                                                                            \
     static void BM_StdVariant_Construct_##tname(benchmark::State& s) {                                                 \
         auto data = make_##tname##s(N);                                                                                \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, ullong, float, double, ldouble>;                                          \
         for (auto _ : s)                                                                                               \
             for (auto v : data)                                                                                        \
                 benchmark::DoNotOptimize(Var{v});                                                                      \
@@ -237,7 +237,7 @@ BENCH_MUL_FLOAT(ldouble, ldouble, 1.0L)
     BENCHMARK(BM_NumericAny_Compare_##tname);                                                                          \
     static void BM_StdVariant_Compare_##tname(benchmark::State& s) {                                                   \
         auto data = make_##tname##s(N);                                                                                \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, float, double, ldouble>;                                                  \
         std::vector<Var> vars;                                                                                         \
         vars.reserve(N);                                                                                               \
         for (auto v : data)                                                                                            \

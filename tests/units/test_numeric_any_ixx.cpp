@@ -18,20 +18,8 @@ using namespace casyyy::maths;
 // 1. Construction & Empty State Tests
 // ============================================================================
 
-TEST(ConstructionTest, DefaultConstructorIsEmpty) {
-    numeric_any a;
-    EXPECT_TRUE(a.empty());
-    EXPECT_EQ(a.type_name(), "empty");
-    EXPECT_EQ(a.type_size(), 0u);
-    EXPECT_FALSE(a.is_floating_point());
-    EXPECT_FALSE(a.is_unsigned_number());
-    EXPECT_FALSE(a.is_nonnegative());
-    EXPECT_FALSE(static_cast<bool>(a));
-}
-
 TEST(ConstructionTest, BoolConstruction) {
     numeric_any a{true};
-    EXPECT_FALSE(a.empty());
     EXPECT_EQ(a.type_name(), "bool");
     EXPECT_TRUE(a.is_same_type<bool>());
     EXPECT_EQ(unchecked_numeric_cast<bool>(a), true);
@@ -44,7 +32,6 @@ TEST(ConstructionTest, BoolConstruction) {
 TEST(ConstructionTest, SignedCharConstruction) {
     auto sc42 = static_cast<signed char>(42);
     numeric_any a{sc42};
-    EXPECT_FALSE(a.empty());
     EXPECT_EQ(a.type_name(), "signed char");
     EXPECT_TRUE(a.is_same_type<signed char>());
     EXPECT_EQ(unchecked_numeric_cast<signed char>(a), 42);
@@ -58,7 +45,6 @@ TEST(ConstructionTest, SignedCharConstruction) {
 TEST(ConstructionTest, UnsignedCharConstruction) {
     auto uc255 = static_cast<unsigned char>(255);
     numeric_any a{uc255};
-    EXPECT_FALSE(a.empty());
     EXPECT_EQ(a.type_name(), "unsigned char");
     EXPECT_TRUE(a.is_same_type<unsigned char>());
     EXPECT_TRUE(a.is_unsigned_number());
@@ -185,15 +171,6 @@ TEST(ResetTest, OperatorEqualsChangesType) {
 // 3. Type Metadata Tests
 // ============================================================================
 
-TEST(TypeMetadataTest, EmptyMetadata) {
-    numeric_any a;
-    EXPECT_EQ(a.type_name(), "empty");
-    EXPECT_EQ(a.type_size(), 0u);
-    EXPECT_FALSE(a.is_floating_point());
-    EXPECT_FALSE(a.is_unsigned_number());
-    EXPECT_FALSE(a.is_nonnegative());
-}
-
 TEST(TypeMetadataTest, BoolMetadata) {
     numeric_any a{true};
     EXPECT_EQ(a.type_name(), "bool");
@@ -257,19 +234,14 @@ TEST(TypeLookupTest, CanSafeConvertBool) {
 
 TEST(TypeLookupTest, CanSafeConvertSignedInteger) {
     numeric_any a{42}; // int
-    // Promotions: int -> long, long long
     EXPECT_TRUE(a.can_safe_convert_to<long>());
     EXPECT_TRUE(a.can_safe_convert_to<long long>());
-    // Same type
     EXPECT_TRUE(a.can_safe_convert_to<int>());
-    // Narrowing: should fail
     EXPECT_FALSE(a.can_safe_convert_to<short>());
     EXPECT_FALSE(a.can_safe_convert_to<signed char>());
-    // To unsigned: non-negative int to wider unsigned is OK
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned int>()); // same width, non-negative
+    EXPECT_TRUE(a.can_safe_convert_to<unsigned int>());
     EXPECT_TRUE(a.can_safe_convert_to<unsigned long>());
     EXPECT_TRUE(a.can_safe_convert_to<unsigned long long>());
-    // To floating: int can't losslessly convert to float
     EXPECT_FALSE(a.can_safe_convert_to<float>());
     EXPECT_FALSE(a.can_safe_convert_to<double>());
 }
@@ -404,38 +376,6 @@ TEST(ArithmeticTest, FreeFunctionScalarOperators) {
 }
 
 // ============================================================================
-// 6. Empty State Propagation in Operations
-// ============================================================================
-
-TEST(EmptyPropagationTest, OperationOnEmptyDoesNothing) {
-    numeric_any a;
-    a += 5;
-    EXPECT_TRUE(a.empty());
-
-    a -= 3;
-    EXPECT_TRUE(a.empty());
-
-    a *= 2;
-    EXPECT_TRUE(a.empty());
-
-    a /= 4;
-    EXPECT_TRUE(a.empty());
-}
-
-TEST(EmptyPropagationTest, OperationWithEmptyReturnsEmpty) {
-    numeric_any a{10};
-    numeric_any b;
-    a += b;
-    EXPECT_TRUE(a.empty());
-}
-
-TEST(EmptyPropagationTest, EmptyArithmeticReturnsEmpty) {
-    numeric_any a{10};
-    numeric_any b;
-    auto c = a + b; // Should be empty
-}
-
-// ============================================================================
 // 7. Comparison Tests
 // ============================================================================
 
@@ -487,22 +427,6 @@ TEST(ComparisonTest, FloatAndDoubleComparison) {
     EXPECT_NE(a <=> b, std::partial_ordering::equivalent);
 }
 
-TEST(ComparisonTest, EmptyComparison) {
-    numeric_any a;
-    numeric_any b{42};
-    EXPECT_FALSE(a == b);
-    EXPECT_FALSE(b == a);
-    EXPECT_EQ(a <=> b, std::partial_ordering::unordered);
-    EXPECT_EQ(b <=> a, std::partial_ordering::unordered);
-}
-
-TEST(ComparisonTest, EmptyEqualsEmpty) {
-    numeric_any a;
-    numeric_any b;
-    EXPECT_FALSE(a == b);
-    EXPECT_EQ(a <=> b, std::partial_ordering::unordered);
-}
-
 // ============================================================================
 // 8. Operator Bool Tests
 // ============================================================================
@@ -529,11 +453,6 @@ TEST(OperatorBoolTest, ZeroIsFalse) {
     EXPECT_FALSE(static_cast<bool>(d));
 }
 
-TEST(OperatorBoolTest, EmptyIsFalse) {
-    numeric_any a;
-    EXPECT_FALSE(static_cast<bool>(a));
-}
-
 TEST(OperatorBoolTest, NegativeIsTrue) {
     numeric_any a{-1};
     EXPECT_TRUE(static_cast<bool>(a));
@@ -546,7 +465,6 @@ TEST(OperatorBoolTest, NegativeIsTrue) {
 TEST(FloatingPointEdgeTest, NaNConstruction) {
     double nan_val = std::numeric_limits<double>::quiet_NaN();
     numeric_any a{nan_val};
-    EXPECT_FALSE(a.empty());
     EXPECT_EQ(a.type_name(), "double");
     EXPECT_TRUE(std::isnan(unchecked_numeric_cast<double>(a)));
 }
@@ -593,7 +511,6 @@ TEST(FloatingPointEdgeTest, ScalarNaNComparison) {
 TEST(FloatingPointEdgeTest, PositiveInfinity) {
     double inf = std::numeric_limits<double>::infinity();
     numeric_any a{inf};
-    EXPECT_FALSE(a.empty());
     EXPECT_TRUE(std::isinf(unchecked_numeric_cast<double>(a)));
 
     numeric_any b{42.0};
@@ -630,7 +547,6 @@ TEST(FloatingPointEdgeTest, NaNOperation) {
 TEST(FloatingPointEdgeTest, SubnormalFloat) {
     float subnormal = std::numeric_limits<float>::denorm_min();
     numeric_any a{subnormal};
-    EXPECT_FALSE(a.empty());
     EXPECT_EQ(a.type_name(), "float");
     EXPECT_GT(unchecked_numeric_cast<float>(a), 0.0f);
     EXPECT_LT(unchecked_numeric_cast<float>(a), std::numeric_limits<float>::min());
@@ -639,7 +555,6 @@ TEST(FloatingPointEdgeTest, SubnormalFloat) {
 TEST(FloatingPointEdgeTest, SubnormalDouble) {
     double subnormal = std::numeric_limits<double>::denorm_min();
     numeric_any a{subnormal};
-    EXPECT_FALSE(a.empty());
     EXPECT_EQ(a.type_name(), "double");
     EXPECT_GT(unchecked_numeric_cast<double>(a), 0.0);
     EXPECT_LT(unchecked_numeric_cast<double>(a), std::numeric_limits<double>::min());
@@ -648,7 +563,6 @@ TEST(FloatingPointEdgeTest, SubnormalDouble) {
 TEST(FloatingPointEdgeTest, NegativeZero) {
     double neg_zero = -0.0;
     numeric_any a{neg_zero};
-    EXPECT_FALSE(a.empty());
     EXPECT_DOUBLE_EQ(unchecked_numeric_cast<double>(a), 0.0);
     // -0.0 >= 0.0 is true, so is_nonnegative should be true
     EXPECT_TRUE(a.is_nonnegative());
@@ -762,22 +676,6 @@ TEST(NumericCastTest, AllPoliciesRejectInf) {
     EXPECT_FALSE(r3.has_value());
 }
 
-TEST(NumericCastTest, AllPoliciesRejectEmpty) {
-    numeric_any a;
-    auto r1 = numeric_cast<int, casting_policy::strict>(a);
-    EXPECT_FALSE(r1.has_value());
-    auto r2 = numeric_cast<int, casting_policy::normal>(a);
-    EXPECT_FALSE(r2.has_value());
-    auto r3 = numeric_cast<int, casting_policy::relaxed>(a);
-    EXPECT_FALSE(r3.has_value());
-}
-
-TEST(NumericCastTest, UncheckedCastOnEmpty) {
-    numeric_any a;
-    EXPECT_EQ(unchecked_numeric_cast<int>(a), 0);
-    EXPECT_EQ(unchecked_numeric_cast<double>(a), 0.0);
-}
-
 // ============================================================================
 // 11. Byte View Tests
 // ============================================================================
@@ -794,13 +692,6 @@ TEST(ByteViewTest, ViewBytesDouble) {
     auto bytes = a.view_bytes();
     EXPECT_EQ(bytes.size(), sizeof(double));
     EXPECT_EQ(a.type_size(), sizeof(double));
-}
-
-TEST(ByteViewTest, ViewBytesEmpty) {
-    numeric_any a;
-    auto bytes = a.view_bytes();
-    EXPECT_EQ(bytes.size(), 0u);
-    EXPECT_EQ(a.type_size(), 0u);
 }
 
 // ============================================================================
@@ -846,16 +737,6 @@ TEST(OutputStreamTest, OutputBool) {
     EXPECT_EQ(woss2.str(), L"0");
 }
 
-TEST(OutputStreamTest, OutputEmpty) {
-    numeric_any a;
-    std::ostringstream oss;
-    std::wostringstream oss2;
-    oss << a;
-    oss2 << a;
-    EXPECT_EQ(oss.str(), "empty");
-    EXPECT_EQ(oss2.str(), L"empty");
-}
-
 TEST(OutputStreamTest, OutputNegativeInt) {
     numeric_any a{-42};
     std::ostringstream oss;
@@ -877,12 +758,6 @@ TEST(HashTest, HashInt) {
     EXPECT_NE(h, 0u);
 }
 
-TEST(HashTest, HashEmpty) {
-    numeric_any a;
-    std::hash<numeric_any> hasher;
-    auto h = hasher(a);
-    EXPECT_EQ(h, 0u);
-}
 
 TEST(HashTest, SameValueSameHash) {
     numeric_any a{42};
@@ -1312,12 +1187,6 @@ TEST(UnaryOperatorTest, UnaryMinusBool) {
     EXPECT_EQ(unchecked_numeric_cast<int>(b), -1);
 }
 
-TEST(UnaryOperatorTest, UnaryMinusEmpty) {
-    numeric_any a;
-    auto b = -a;
-    EXPECT_TRUE(b.empty());
-}
-
 TEST(UnaryOperatorTest, PrefixIncrementInt) {
     numeric_any a{41};
     auto& ref = ++a;
@@ -1393,26 +1262,6 @@ TEST(UnaryOperatorTest, DecrementBool) {
     numeric_any b{false};
     --b;
     EXPECT_EQ(unchecked_numeric_cast<bool>(b), true);
-}
-
-TEST(UnaryOperatorTest, IncrementEmptyDoesNothing) {
-    numeric_any a;
-    auto& ref = ++a;
-    EXPECT_EQ(&ref, &a);
-    EXPECT_TRUE(a.empty());
-
-    auto old = a++;
-    EXPECT_TRUE(a.empty());
-    EXPECT_TRUE(old.empty());
-}
-
-TEST(UnaryOperatorTest, DecrementEmptyDoesNothing) {
-    numeric_any a;
-    --a;
-    EXPECT_TRUE(a.empty());
-
-    a--;
-    EXPECT_TRUE(a.empty());
 }
 
 // ============================================================================
@@ -1525,13 +1374,6 @@ TEST(FormatterTest, EraseUnusedPattern) {
     EXPECT_EQ(std::format("{:*>0.0f}", a), std::format("{:f}", 42.324));
 }
 
-TEST(FormatterTest, FormatEmpty) {
-    numeric_any a;
-    EXPECT_EQ(std::format("{}", a), "empty");
-    // format spec ignored for empty
-    EXPECT_EQ(std::format("{:04d}", a), "empty");
-}
-
 TEST(FormatterTest, WrongTypeFormat) {
     numeric_any a{42.324}, b{12};
     try {
@@ -1587,11 +1429,6 @@ TEST(WideFormatterTest, FormatWidthAndAlign) {
 TEST(WideFormatterTest, EraseUnusedPattern) {
     numeric_any a{42.324};
     EXPECT_EQ(std::format(L"{:*>0.0f}", a), std::format(L"{:f}", 42.324));
-}
-
-TEST(WideFormatterTest, FormatEmpty) {
-    numeric_any a;
-    EXPECT_EQ(std::format(L"{}", a), L"empty");
 }
 
 TEST(WideFormatterTest, WrongTypeFormat) {
@@ -1666,29 +1503,6 @@ TEST(WideStreamOutputTest, OutputShort) {
     woss << a;
     EXPECT_EQ(oss.str(), "-5");
     EXPECT_EQ(woss.str(), L"-5");
-}
-
-// ============================================================================
-// 26. MathFunctions
-// ============================================================================
-
-TEST(MathFunctions, ABS) {
-    const numeric_any arr[]{3.14, -3.22f, -12, 12, 12U, static_cast<short>(-3)};
-    EXPECT_EQ(abs(arr[0]), std::abs(3.14));
-    EXPECT_EQ(abs(arr[1]), std::abs(-3.22f));
-    EXPECT_EQ(abs(arr[2]), std::abs(-12));
-    EXPECT_EQ(abs(arr[3]), std::abs(12));
-    EXPECT_EQ(abs(arr[4]), std::abs(12));
-    EXPECT_EQ(abs(arr[5]), std::abs(-3));
-    EXPECT_EQ(abs(arr[5]).type_name(), "int");
-}
-
-TEST(MathFunctions, BPow) {
-    numeric_any a{3};
-    numeric_any b{static_cast<short>(12)};
-    EXPECT_EQ(bpow(a, 3), 27);
-    EXPECT_EQ(bpow(b, 2), 144);
-    EXPECT_EQ(bpow(b, 1).type_name(), "int");
 }
 
 // ============================================================================

@@ -42,11 +42,7 @@ function(setup_bench_target_ixx target_name source_name)
                 ../../src/numeric_any_parser.ixx
                 ../../src/numeric_any.ixx
     )
-    if(CMAKE_CXX_STANDARD EQUAL 23)
-        target_compile_features(${target_name} PUBLIC cxx_std_23)
-    else()
-        target_compile_features(${target_name} PUBLIC cxx_std_20)
-    endif()
+    target_compile_features(${target_name} PUBLIC cxx_std_23)
     target_link_libraries(${target_name} PRIVATE benchmark::benchmark)
     if(MSVC)
         target_compile_options(${target_name} PRIVATE /utf-8 /W4)
