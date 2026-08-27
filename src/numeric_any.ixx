@@ -2,7 +2,6 @@ module;
 
 #include <array>
 #include <bit>
-#include <cmath>
 #include <compare>
 #include <cstring>
 #include <format>
@@ -64,42 +63,11 @@ constexpr numeric_types types() noexcept {
 
 FOR_EACH_TYPES_TO(FUNCTION)
 #undef FUNCTION
-// Check for a floating number isn't a NaN or inf.
-constexpr bool is_normal_number(auto x) noexcept { // NOLINT
-#ifndef __cpp_lib_constexpr_cmath
-    if (!::std::is_constant_evaluated()) {
-        return ::std::isnormal(x) || x == 0;
-    } else {
-        if (x != x) return false; // Check NaN. //NOLINT
-        constexpr auto inf = ::std::numeric_limits<decltype(x)>::infinity();
-        return x != inf && x != -inf;
-    }
-#else
-    return ::std::isnormal(x) || x == 0;
-#endif
-}
 /// @endcond
 
 /// @brief Numeric conversion strategy, used for handling different types of number conversions.
 /// @note The default policy is set to strict.
-export enum class casting_policy : unsigned char {
-    strict, /**<
-             * @brief Require lossless conversion of values.
-             * @details Allow promotions between signed integers, floating point numbers and unsigned numbers.
-             *          Allow non-negative integers promoting to unsigned integers.
-             * @note Convert integers to floating point numbers isn't allowed.
-             */
-    normal, /**<
-             * @brief Conversion that allows some data loss.
-             * @details Allow integers convert to a floating numbers.
-             *          Allow narrow casting from a non-negative integer to an unsigned number.
-             * @note Positive integers are only allowed to be truncated into unsigned numbers.
-             */
-    relaxed /**<
-             * @brief The output should be a plain numeric value.
-             * @details Allow all casting except NaN, Inf.
-             */
-};
+export enum class casting_policy : unsigned char { equal, strict, normal };
 
 /**
  * @brief A type-erasure-based utility class for arithmetic types.
@@ -327,13 +295,6 @@ public:
         return types<T>() == type_;
     }
 
-    /// @brief Check the inner value is able to convert to another type safely.
-    /// @tparam T The basic arithmetic types in C++, except char without explicit sign which is used to check.
-    /// @return Whether the given type parameter can be safely converted based on metadata.
-    /// @note char types must be explicitly signed-qualified in constructors to avoid ambiguity.
-    template <sign_unambiguous_arithmetic T>
-    [[nodiscard]] constexpr bool can_safe_convert_to() const noexcept;
-
     /// @brief Get the inner view of the bytes.
     /// @return A span which represent inner view of the bytes.
     /// @note The span is read-only. And its size is based on the number of bytes used by internal storage data。
@@ -461,29 +422,39 @@ constexpr T as(const numeric_any& x) noexcept {
 /// @note char types must be explicitly signed-qualified in constructors to avoid ambiguity.
 export template <sign_unambiguous_arithmetic T, casting_policy Policy = casting_policy::strict>
 [[nodiscard]] constexpr ::std::optional<T> from(const numeric_any& x) noexcept {
-    if constexpr (Policy == casting_policy::strict) {
-        if (!x.can_safe_convert_to<T>()) return ::std::nullopt;
-    } else if constexpr (Policy == casting_policy::normal) {
-        if constexpr (::std::is_floating_point_v<T>) {
-            if (x.type_size() > sizeof(T)) return ::std::nullopt;
-        } else if constexpr (::std::is_unsigned_v<T>) {
-            if (x.is_floating_point() || !x.is_nonnegative()) return ::std::nullopt;
-        } else {
-            if (x.is_floating_point() || (x.is_unsigned_number() && x.type_size() >= sizeof(T))) return ::std::nullopt;
-        }
+    if (x.is_same_type<T>()) return as<T>(x);
+    if constexpr (Policy == casting_policy::equal) {
+        return ::std::nullopt;
+    } else if constexpr (Policy == casting_policy::strict) {
+        return visit(
+            []<typename U>(U x) -> ::std::optional<T> {
+                if constexpr (::std::is_same_v<U, bool>) {
+                    return static_cast<T>(x);
+                } else if constexpr (sizeof(U) > sizeof(T)) {
+                    return ::std::nullopt;
+                } else if constexpr (!(::std::is_integral_v<U> && ::std::is_integral_v<T>) &&
+                                     !(::std::is_floating_point_v<U> && ::std::is_floating_point_v<T>)) {
+                    return ::std::nullopt;
+                } else if constexpr (!(::std::is_signed_v<U> && ::std::is_signed_v<T>) &&
+                                     !(::std::is_unsigned_v<U> && ::std::is_unsigned_v<T>)) {
+                    return ::std::nullopt;
+                }
+                return static_cast<T>(x);
+            },
+            x);
+    } else {
+        return visit(
+            [](auto x) -> ::std::optional<T> {
+                constexpr T max = ::std::numeric_limits<T>::max();
+                constexpr T min = ::std::numeric_limits<T>::lowest();
+                if (static_cast<long double>(x) >= static_cast<long double>(min) &&
+                    static_cast<long double>(x) <= static_cast<long double>(max))
+                    return static_cast<T>(x);
+                return ::std::nullopt;
+            },
+            x);
     }
-    return visit(
-        [](auto i) {
-            auto res = static_cast<T>(i);
-            if constexpr (::std::is_floating_point_v<decltype(i)>)
-                if (!is_normal_number(i)) return ::std::optional<T>{::std::nullopt};
-            if constexpr (::std::is_floating_point_v<T>)
-                if (!is_normal_number(res)) return ::std::optional<T>{::std::nullopt};
-            return ::std::optional<T>{res};
-        },
-        x);
 }
-#undef FUNCTION_TO_RESTORE_VALUE
 
 constexpr numeric_any::numeric_any(sign_unambiguous_arithmetic auto x) noexcept
     : storage_{}, width_{sizeof(decltype(x))}, type_{types<decltype(x)>()},
@@ -513,26 +484,6 @@ constexpr void numeric_any::reset(sign_unambiguous_arithmetic auto x) noexcept {
         temp = ::std::bit_cast<decltype(temp), decltype(x)>(x);
         for (::std::size_t i = 0; i < sizeof(decltype(x)); ++i)
             storage_[i] = temp[i];
-    }
-}
-
-template <sign_unambiguous_arithmetic T>
-constexpr bool numeric_any::can_safe_convert_to() const noexcept {
-    if (is_same_type<T>()) return true;
-    if (type_ == numeric_types::BOOL) return true; // Bool is safe to cast to all types.
-    if constexpr (::std::is_floating_point_v<T>) {
-        return float_point_ && width_ <= sizeof(T);
-    } else if constexpr (::std::is_unsigned_v<T>) {
-        if (is_unsigned_) return width_ <= sizeof(T);
-        if (!float_point_) {
-            if (positive_) return width_ <= sizeof(T);
-            return false;
-        }
-        return false;
-    } else {
-        if (is_unsigned_) return width_ < sizeof(T);
-        if (!float_point_) return width_ <= sizeof(T);
-        return false;
     }
 }
 

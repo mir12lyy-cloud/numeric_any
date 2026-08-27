@@ -1,9 +1,10 @@
-// Comprehensive tests for casyyy::maths::numeric_any
+// Comprehensive tests for cy::maths::numeric_any
 // Covers all arithmetic types, edge cases, promotions, and policies.
+
+#include <gtest/gtest.h>
 
 #include <cmath>
 #include <format>
-#include <gtest/gtest.h>
 #include <limits>
 #include <sstream>
 #include <string>
@@ -209,7 +210,7 @@ TEST(TypeMetadataTest, FloatingPointMetadata) {
 }
 
 // ============================================================================
-// 4. Type Lookup Tests (is_same_type / can_safe_convert_to)
+// 4. Type Lookup Tests (is_same_type / from<T> with default strict policy)
 // ============================================================================
 
 TEST(TypeLookupTest, IsSameType) {
@@ -223,55 +224,56 @@ TEST(TypeLookupTest, IsSameType) {
     EXPECT_FALSE(b.is_same_type<float>());
 }
 
-TEST(TypeLookupTest, CanSafeConvertBool) {
+TEST(TypeLookupTest, StrictBoolConvertibility) {
     numeric_any a{true};
-    EXPECT_TRUE(a.can_safe_convert_to<bool>());
-    EXPECT_TRUE(a.can_safe_convert_to<int>());
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned int>());
-    EXPECT_TRUE(a.can_safe_convert_to<double>());
-    EXPECT_TRUE(a.can_safe_convert_to<long double>());
+    EXPECT_TRUE(from<bool>(a).has_value());
+    EXPECT_TRUE(from<unsigned int>(a).has_value());
+    EXPECT_TRUE(from<unsigned long>(a).has_value());
+    EXPECT_TRUE(from<unsigned long long>(a).has_value());
+    EXPECT_TRUE(from<int>(a).has_value());
+    EXPECT_TRUE(from<double>(a).has_value());
+    EXPECT_TRUE(from<long double>(a).has_value());
 }
 
-TEST(TypeLookupTest, CanSafeConvertSignedInteger) {
+TEST(TypeLookupTest, StrictSignedIntegerConvertibility) {
     numeric_any a{42}; // int
-    EXPECT_TRUE(a.can_safe_convert_to<long>());
-    EXPECT_TRUE(a.can_safe_convert_to<long long>());
-    EXPECT_TRUE(a.can_safe_convert_to<int>());
-    EXPECT_FALSE(a.can_safe_convert_to<short>());
-    EXPECT_FALSE(a.can_safe_convert_to<signed char>());
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned int>());
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned long>());
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned long long>());
-    EXPECT_FALSE(a.can_safe_convert_to<float>());
-    EXPECT_FALSE(a.can_safe_convert_to<double>());
+    EXPECT_TRUE(from<int>(a).has_value());
+    EXPECT_TRUE(from<long>(a).has_value());
+    EXPECT_TRUE(from<long long>(a).has_value());
+    EXPECT_FALSE(from<short>(a).has_value());
+    EXPECT_FALSE(from<signed char>(a).has_value());
+    EXPECT_FALSE(from<unsigned int>(a).has_value());
+    EXPECT_FALSE(from<unsigned long>(a).has_value());
+    EXPECT_FALSE(from<unsigned long long>(a).has_value());
+    EXPECT_FALSE(from<float>(a).has_value());
+    EXPECT_FALSE(from<double>(a).has_value());
 }
 
-TEST(TypeLookupTest, CanSafeConvertNegativeInteger) {
-    numeric_any a{-42}; // negative int
-    EXPECT_FALSE(a.can_safe_convert_to<unsigned int>());
-    EXPECT_FALSE(a.can_safe_convert_to<unsigned long>());
-    EXPECT_FALSE(a.can_safe_convert_to<unsigned long long>());
-    EXPECT_TRUE(a.can_safe_convert_to<long>());
-    EXPECT_TRUE(a.can_safe_convert_to<long long>());
+TEST(TypeLookupTest, StrictNegativeIntegerConvertibility) {
+    numeric_any a{-42};
+    EXPECT_TRUE(from<int>(a).has_value());
+    EXPECT_FALSE(from<unsigned int>(a).has_value());
+    EXPECT_FALSE(from<unsigned long>(a).has_value());
+    EXPECT_FALSE(from<unsigned long long>(a).has_value());
 }
 
-TEST(TypeLookupTest, CanSafeConvertUnsignedInteger) {
-    numeric_any a{42U}; // unsigned int
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned long>());
-    EXPECT_TRUE(a.can_safe_convert_to<unsigned long long>());
-    EXPECT_TRUE(a.can_safe_convert_to<long long>()); // signed but wider
-    EXPECT_FALSE(a.can_safe_convert_to<int>());      // same width, signed
-    EXPECT_FALSE(a.can_safe_convert_to<unsigned short>());
-    EXPECT_FALSE(a.can_safe_convert_to<float>());
+TEST(TypeLookupTest, StrictUnsignedIntegerConvertibility) {
+    numeric_any a{42U};
+    EXPECT_TRUE(from<unsigned int>(a).has_value());
+    EXPECT_TRUE(from<unsigned long>(a).has_value());
+    EXPECT_TRUE(from<unsigned long long>(a).has_value());
+    EXPECT_FALSE(from<int>(a).has_value());
+    EXPECT_FALSE(from<unsigned short>(a).has_value());
+    EXPECT_FALSE(from<float>(a).has_value());
 }
 
-TEST(TypeLookupTest, CanSafeConvertFloatingPoint) {
-    numeric_any a{3.14f}; // float
-    EXPECT_TRUE(a.can_safe_convert_to<float>());
-    EXPECT_TRUE(a.can_safe_convert_to<double>());
-    EXPECT_TRUE(a.can_safe_convert_to<long double>());
-    EXPECT_FALSE(a.can_safe_convert_to<int>());
-    EXPECT_FALSE(a.can_safe_convert_to<unsigned int>());
+TEST(TypeLookupTest, StrictFloatingPointConvertibility) {
+    numeric_any a{3.14f};
+    EXPECT_TRUE(from<float>(a).has_value());
+    EXPECT_TRUE(from<double>(a).has_value());
+    EXPECT_TRUE(from<long double>(a).has_value());
+    EXPECT_FALSE(from<int>(a).has_value());
+    EXPECT_FALSE(from<unsigned int>(a).has_value());
 }
 
 // ============================================================================
@@ -307,15 +309,15 @@ TEST(ArithmeticTest, DivWithScalar) {
 }
 
 TEST(ArithmeticTest, AddPromotesIntToDouble) {
-    numeric_any a{10}; // int
-    a += 3.5;          // double
+    numeric_any a{10};
+    a += 3.5;
     EXPECT_EQ(a.type_name(), "double");
     EXPECT_DOUBLE_EQ(as<double>(a), 13.5);
 }
 
 TEST(ArithmeticTest, AddPromotesFloatToDouble) {
-    numeric_any a{3.14f}; // float
-    a += 2.718281828;     // double
+    numeric_any a{3.14f};
+    a += 2.718281828;
     EXPECT_EQ(a.type_name(), "double");
     EXPECT_NEAR(as<double>(a), 5.858281828, 1e-6);
 }
@@ -337,7 +339,6 @@ TEST(ArithmeticTest, AddPromotesUnsignedIntToUnsignedLongLong) {
 TEST(ArithmeticTest, AddIntAndUnsignedIntPromotes) {
     numeric_any a{10};
     a += 20U;
-    // int + unsigned int -> unsigned int (per C++ standard)
     EXPECT_EQ(a.type_name(), "unsigned int");
     EXPECT_EQ(as<unsigned int>(a), 30U);
 }
@@ -557,7 +558,6 @@ TEST(FloatingPointEdgeTest, NegativeZero) {
     double neg_zero = -0.0;
     numeric_any a{neg_zero};
     EXPECT_DOUBLE_EQ(as<double>(a), 0.0);
-    // -0.0 >= 0.0 is true, so is_nonnegative should be true
     EXPECT_TRUE(a.is_nonnegative());
 }
 
@@ -581,51 +581,107 @@ TEST(FloatingPointEdgeTest, FloatMin) {
 }
 
 // ============================================================================
-// 10. From Tests (with policies)
+// 10. From (checked cast) Tests - policies: equal / strict / normal
 // ============================================================================
 
-TEST(FromTest, StrictPolicySuccess) {
-    numeric_any a{42}; // int
-    auto res = from<int>(a);
-    ASSERT_TRUE(res.has_value());
-    EXPECT_EQ(*res, 42);
-
-    auto res2 = from<long long>(a);
-    ASSERT_TRUE(res2.has_value());
-    EXPECT_EQ(*res2, 42LL);
+TEST(FromTest, SameTypeSucceedsUnderAllPolicies) {
+    numeric_any a{42};
+    EXPECT_TRUE(from<int>(a).has_value());
+    EXPECT_TRUE((from<int, casting_policy::equal>(a).has_value()));
+    EXPECT_TRUE((from<int, casting_policy::strict>(a).has_value()));
+    EXPECT_TRUE((from<int, casting_policy::normal>(a).has_value()));
+    EXPECT_EQ(*from<int>(a), 42);
 }
 
 TEST(FromTest, StrictPolicyFailureNarrowing) {
     numeric_any a{42}; // int
-    auto res = from<short>(a);
-    EXPECT_FALSE(res.has_value());
+    EXPECT_FALSE(from<short>(a).has_value());
 }
 
-TEST(FromTest, StrictPolicyFailureSignedToUnsignedNegative) {
+TEST(FromTest, StrictPolicyRejectsSignedToUnsigned) {
     numeric_any a{-42};
-    auto res = from<unsigned int>(a);
-    EXPECT_FALSE(res.has_value());
+    EXPECT_FALSE(from<unsigned int>(a).has_value());
+    numeric_any b{42};
+    EXPECT_FALSE(from<unsigned long>(b).has_value());
 }
 
-TEST(FromTest, StrictPolicySuccessSignedToUnsignedNonNegative) {
-    numeric_any a{42};
-    auto res = from<unsigned long>(a);
-    ASSERT_TRUE(res.has_value());
-    EXPECT_EQ(*res, 42UL);
+TEST(FromTest, StrictPolicyAllowsSameCategoryWidening) {
+    numeric_any i{42};
+    ASSERT_TRUE(from<long>(i).has_value());
+    EXPECT_EQ(*from<long>(i), 42L);
+    EXPECT_EQ(*from<long long>(i), 42LL);
+
+    auto sc = static_cast<signed char>(7);
+    numeric_any sca{sc};
+    EXPECT_EQ(*from<int>(sca), 7);
+    EXPECT_EQ(*from<short>(sca), 7);
+
+    numeric_any u{42U};
+    EXPECT_EQ(*from<unsigned long>(u), 42UL);
+    EXPECT_EQ(*from<unsigned long long>(u), 42ULL);
+
+    numeric_any f{3.14f};
+    ASSERT_TRUE(from<double>(f).has_value());
+    EXPECT_NEAR(*from<double>(f), 3.14, 1e-6);
+    auto ld = from<long double>(f);
+    ASSERT_TRUE(ld.has_value());
+    EXPECT_NEAR(static_cast<double>(*ld), 3.14, 1e-6);
+
+    numeric_any d{2.5};
+    EXPECT_DOUBLE_EQ(static_cast<double>(*from<long double>(d)), 2.5);
+}
+
+TEST(FromTest, StrictPolicyRejectsCategoryMismatch) {
+    numeric_any i{42};
+    EXPECT_FALSE(from<double>(i).has_value());
+    EXPECT_FALSE(from<float>(i).has_value());
+    EXPECT_FALSE(from<long double>(i).has_value());
+
+    numeric_any f{3.14f};
+    EXPECT_FALSE(from<int>(f).has_value());
+    EXPECT_FALSE(from<long long>(f).has_value());
+    EXPECT_FALSE(from<unsigned int>(f).has_value());
+}
+
+TEST(FromTest, StrictPolicyRejectsSignMismatch) {
+    numeric_any i{42};
+    EXPECT_FALSE(from<unsigned int>(i).has_value());
+    EXPECT_FALSE(from<unsigned long>(i).has_value());
+    EXPECT_FALSE(from<unsigned long long>(i).has_value());
+
+    numeric_any u{42U};
+    EXPECT_FALSE(from<int>(u).has_value());
+    EXPECT_FALSE(from<long long>(u).has_value());
+}
+
+TEST(FromTest, StrictPolicyRejectsFloatingNarrowing) {
+    numeric_any d{3.14};
+    EXPECT_FALSE(from<float>(d).has_value());
 }
 
 TEST(FromTest, StrictPolicyFailureFloatToInt) {
     numeric_any a{3.14};
-    auto res = from<int>(a);
-    EXPECT_FALSE(res.has_value());
+    EXPECT_FALSE(from<int>(a).has_value());
+}
+
+TEST(FromTest, EqualPolicyRequiresSameType) {
+    numeric_any a{42};
+    EXPECT_TRUE((from<int, casting_policy::equal>(a).has_value()));
+    EXPECT_FALSE((from<long long, casting_policy::equal>(a).has_value()));
+
+    numeric_any b{3.14};
+    EXPECT_TRUE((from<double, casting_policy::equal>(b).has_value()));
+    EXPECT_FALSE((from<float, casting_policy::equal>(b).has_value()));
 }
 
 TEST(FromTest, NormalPolicyAllowsIntToFloat) {
     numeric_any a{42};
     auto res = from<double, casting_policy::normal>(a);
-    EXPECT_TRUE(res.has_value());
+    ASSERT_TRUE(res.has_value());
+    EXPECT_DOUBLE_EQ(*res, 42.0);
     auto res2 = from<long double, casting_policy::normal>(a);
-    EXPECT_TRUE(res2.has_value());
+    ASSERT_TRUE(res2.has_value());
+    EXPECT_DOUBLE_EQ(static_cast<double>(*res2), 42.0);
 }
 
 TEST(FromTest, NormalPolicyAllowsUnsignedNarrowing) {
@@ -635,38 +691,85 @@ TEST(FromTest, NormalPolicyAllowsUnsignedNarrowing) {
     EXPECT_EQ(*res, 100U);
 }
 
-TEST(FromTest, RelaxedPolicyAllowsAlmostEverything) {
+TEST(FromTest, NormalPolicyTruncatesFloatToInt) {
     numeric_any a{3.14};
-    auto res = from<int, casting_policy::relaxed>(a);
+    auto res = from<int, casting_policy::normal>(a);
     ASSERT_TRUE(res.has_value());
-    EXPECT_EQ(*res, 3); // truncated
+    EXPECT_EQ(*res, 3);
 
-    numeric_any b{-42};
-    auto res2 = from<unsigned int, casting_policy::relaxed>(b);
+    numeric_any b{-3.14};
+    auto res2 = from<int, casting_policy::normal>(b);
     ASSERT_TRUE(res2.has_value());
-    // Implementation-dependent: negative to unsigned wraps around
+    EXPECT_EQ(*res2, -3);
 }
 
-TEST(FromTest, AllPoliciesRejectNaN) {
+TEST(FromTest, NormalPolicyRejectsOutOfRange) {
+    numeric_any a{100000};
+    EXPECT_FALSE((from<short, casting_policy::normal>(a).has_value()));
+
+    numeric_any b{1e300};
+    EXPECT_FALSE((from<int, casting_policy::normal>(b).has_value()));
+
+    numeric_any c{-42};
+    EXPECT_FALSE((from<unsigned int, casting_policy::normal>(c).has_value()));
+}
+
+TEST(FromTest, NormalPolicyAllowsSignedToUnsignedInRange) {
+    numeric_any a{42};
+    auto res = from<unsigned int, casting_policy::normal>(a);
+    ASSERT_TRUE(res.has_value());
+    EXPECT_EQ(*res, 42U);
+}
+
+TEST(FromTest, NormalPolicyFloatTargetAcceptsZeroAndNegative) {
+    numeric_any zero{0};
+    auto r1 = from<float, casting_policy::normal>(zero);
+    ASSERT_TRUE(r1.has_value());
+    EXPECT_FLOAT_EQ(*r1, 0.0f);
+    auto r2 = from<double, casting_policy::normal>(zero);
+    ASSERT_TRUE(r2.has_value());
+    EXPECT_DOUBLE_EQ(*r2, 0.0);
+
+    numeric_any neg{-5};
+    auto r3 = from<float, casting_policy::normal>(neg);
+    ASSERT_TRUE(r3.has_value());
+    EXPECT_FLOAT_EQ(*r3, -5.0f);
+    auto r4 = from<double, casting_policy::normal>(neg);
+    ASSERT_TRUE(r4.has_value());
+    EXPECT_DOUBLE_EQ(*r4, -5.0);
+}
+
+TEST(FromTest, NaNHandling) {
     double nan_val = std::numeric_limits<double>::quiet_NaN();
     numeric_any a{nan_val};
-    auto r1 = from<double, casting_policy::strict>(a);
-    EXPECT_FALSE(r1.has_value());
-    auto r2 = from<double, casting_policy::normal>(a);
-    EXPECT_FALSE(r2.has_value());
-    auto r3 = from<double, casting_policy::relaxed>(a);
-    EXPECT_FALSE(r3.has_value());
+    ASSERT_TRUE(from<double>(a).has_value());
+    EXPECT_TRUE(std::isnan(*from<double>(a)));
+    ASSERT_TRUE((from<double, casting_policy::normal>(a).has_value()));
+    EXPECT_TRUE((std::isnan(*from<double, casting_policy::normal>(a))));
+    ASSERT_TRUE(from<long double>(a).has_value());
+    EXPECT_TRUE(std::isnan(*from<long double>(a)));
+    EXPECT_FALSE(from<float>(a).has_value());
+    EXPECT_FALSE((from<float, casting_policy::normal>(a).has_value()));
+    EXPECT_FALSE((from<int, casting_policy::normal>(a).has_value()));
+    EXPECT_FALSE((from<long double, casting_policy::normal>(a).has_value()));
 }
 
-TEST(FromTest, AllPoliciesRejectInf) {
+TEST(FromTest, InfinityHandling) {
     double inf = std::numeric_limits<double>::infinity();
     numeric_any a{inf};
-    auto r1 = from<double, casting_policy::strict>(a);
-    EXPECT_FALSE(r1.has_value());
-    auto r2 = from<double, casting_policy::normal>(a);
-    EXPECT_FALSE(r2.has_value());
-    auto r3 = from<double, casting_policy::relaxed>(a);
-    EXPECT_FALSE(r3.has_value());
+    ASSERT_TRUE(from<double>(a).has_value());
+    EXPECT_TRUE(std::isinf(*from<double>(a)));
+    EXPECT_FALSE((from<float, casting_policy::normal>(a).has_value()));
+    EXPECT_FALSE((from<int, casting_policy::normal>(a).has_value()));
+    ASSERT_TRUE(from<long double>(a).has_value());
+    EXPECT_TRUE(std::isinf(*from<long double>(a)));
+}
+
+TEST(FromTest, UncheckedAsTruncates) {
+    numeric_any a{3.99};
+    EXPECT_EQ(as<int>(a), 3);
+    numeric_any b{-3.99};
+    EXPECT_EQ(as<int>(b), -3);
 }
 
 // ============================================================================
@@ -950,41 +1053,49 @@ TEST(CopyMoveTest, MoveAssignment) {
 }
 
 // ============================================================================
-// 19. Cross-Casting Policy Edge Cases
+// 19. Casting Policy Edge Cases (equal / strict / normal)
 // ============================================================================
 
-TEST(CastingPolicyEdgeTest, StrictBoolToInt) {
+TEST(CastingPolicyEdgeTest, StrictBoolToIntAllowed) {
     numeric_any a{true};
-    auto res = from<int>(a);
-    ASSERT_TRUE(res.has_value());
-    EXPECT_EQ(*res, 1);
+    EXPECT_TRUE(from<int>(a).has_value());
+    EXPECT_TRUE(from<bool>(a).has_value());
 }
 
-TEST(CastingPolicyEdgeTest, StrictBoolToDouble) {
+TEST(CastingPolicyEdgeTest, StrictBoolToDoubleAllowed) {
     numeric_any a{false};
-    auto res = from<double>(a);
-    ASSERT_TRUE(res.has_value());
-    EXPECT_DOUBLE_EQ(*res, 0.0);
+    EXPECT_TRUE(from<double>(a).has_value());
 }
 
-TEST(CastingPolicyEdgeTest, StrictUnsignedToWiderUnsigned) {
+TEST(CastingPolicyEdgeTest, StrictUnsignedToWiderUnsignedAllowed) {
     numeric_any a{255U};
     auto res = from<unsigned long long>(a);
     ASSERT_TRUE(res.has_value());
     EXPECT_EQ(*res, 255ULL);
+    // normal policy also allows it.
+    auto res2 = from<unsigned long long, casting_policy::normal>(a);
+    ASSERT_TRUE(res2.has_value());
+    EXPECT_EQ(*res2, 255ULL);
 }
 
-TEST(CastingPolicyEdgeTest, NormalPolicyFloatToIntAllowed) {
+TEST(CastingPolicyEdgeTest, NormalPolicyFloatToIntTruncates) {
     numeric_any a{3.14f};
     auto res = from<int, casting_policy::normal>(a);
-    EXPECT_FALSE(res.has_value());
+    ASSERT_TRUE(res.has_value());
+    EXPECT_EQ(*res, 3);
 }
 
-TEST(CastingPolicyEdgeTest, RelaxedPolicyIntToFloat) {
+TEST(CastingPolicyEdgeTest, NormalPolicyIntToFloat) {
     numeric_any a{42};
-    auto res = from<float, casting_policy::relaxed>(a);
+    auto res = from<float, casting_policy::normal>(a);
     ASSERT_TRUE(res.has_value());
     EXPECT_FLOAT_EQ(*res, 42.0f);
+}
+
+TEST(CastingPolicyEdgeTest, EqualPolicyRejectsCrossType) {
+    numeric_any a{42};
+    EXPECT_FALSE((from<long long, casting_policy::equal>(a).has_value()));
+    EXPECT_FALSE((from<double, casting_policy::equal>(a).has_value()));
 }
 
 // ============================================================================
@@ -995,7 +1106,6 @@ TEST(SubnormalTest, FloatSubnormalOperation) {
     float sub = std::numeric_limits<float>::denorm_min();
     numeric_any a{sub};
     a += std::numeric_limits<float>::denorm_min();
-    // Adding two subnormals may produce a normal or still subnormal
     EXPECT_GT(as<float>(a), 0.0f);
 }
 
@@ -1003,7 +1113,6 @@ TEST(SubnormalTest, DoubleSubnormalMultiply) {
     double sub = std::numeric_limits<double>::denorm_min();
     numeric_any a{sub};
     a *= 2.0;
-    // May still be subnormal or become normal
     EXPECT_GT(as<double>(a), 0.0);
 }
 
@@ -1125,7 +1234,6 @@ TEST(UnaryOperatorTest, UnaryPlusReturnsCopy) {
     EXPECT_EQ(b.type_name(), "int");
     EXPECT_EQ(as<int>(b), 42);
     EXPECT_EQ(a <=> b, std::partial_ordering::equivalent);
-    // + doesn't modify the source
     EXPECT_EQ(as<int>(a), 42);
 }
 
@@ -1138,7 +1246,6 @@ TEST(UnaryOperatorTest, UnaryMinusInt) {
     numeric_any c{-42};
     auto d = -c;
     EXPECT_EQ(as<int>(d), 42);
-    // Source unchanged
     EXPECT_EQ(as<int>(a), 42);
 }
 
@@ -1166,7 +1273,6 @@ TEST(UnaryOperatorTest, UnaryMinusLongDouble) {
 TEST(UnaryOperatorTest, UnaryMinusUnsignedWraps) {
     numeric_any a{5U};
     auto b = -a;
-    // -5U wraps around modulo 2^32
     EXPECT_EQ(b.type_name(), "unsigned int");
     EXPECT_EQ(as<unsigned int>(b), 4294967291U);
 }
@@ -1174,7 +1280,6 @@ TEST(UnaryOperatorTest, UnaryMinusUnsignedWraps) {
 TEST(UnaryOperatorTest, UnaryMinusBool) {
     numeric_any a{true};
     auto b = -a;
-    // -true promotes to int -> -1
     EXPECT_EQ(b.type_name(), "int");
     EXPECT_EQ(as<int>(b), -1);
 }
@@ -1191,8 +1296,8 @@ TEST(UnaryOperatorTest, PostfixIncrementInt) {
     numeric_any a{41};
     auto old = a++;
     EXPECT_EQ(old.type_name(), "int");
-    EXPECT_EQ(as<int>(old), 41); // old value
-    EXPECT_EQ(as<int>(a), 42);   // incremented
+    EXPECT_EQ(as<int>(old), 41);
+    EXPECT_EQ(as<int>(a), 42);
 }
 
 TEST(UnaryOperatorTest, PrefixDecrementInt) {
@@ -1235,7 +1340,6 @@ TEST(UnaryOperatorTest, DecrementPreservesType) {
 }
 
 TEST(UnaryOperatorTest, IncrementBool) {
-    // bool increment: false->true, true->true (true + 1 casts back to bool)
     numeric_any a{false};
     ++a;
     EXPECT_EQ(as<bool>(a), true);
@@ -1246,7 +1350,6 @@ TEST(UnaryOperatorTest, IncrementBool) {
 }
 
 TEST(UnaryOperatorTest, DecrementBool) {
-    // bool decrement: true->false, false->true (false - 1 = -1 casts back to true)
     numeric_any a{true};
     --a;
     EXPECT_EQ(as<bool>(a), false);
@@ -1564,8 +1667,6 @@ static_assert(std::is_same_v<std::common_type_t<numeric_any, bool>, numeric_any>
 static_assert(std::is_same_v<std::common_type_t<numeric_any, numeric_any>, numeric_any>);
 
 TEST(CommonTypeTest, CommonTypeResolvesToNumericAny) {
-    // Verified at compile time via the static_asserts above.
-    // (Extra parens are needed so gtest macros don't split on the template commas.)
     EXPECT_TRUE((std::is_same_v<std::common_type_t<int, numeric_any>, numeric_any>));
     EXPECT_TRUE((std::is_same_v<std::common_type_t<numeric_any, double>, numeric_any>));
 }
@@ -1590,6 +1691,10 @@ static_assert(sign_unambiguous_arithmetic<double>);
 static_assert(sign_unambiguous_arithmetic<long double>);
 static_assert(!sign_unambiguous_arithmetic<char>);
 static_assert(!sign_unambiguous_arithmetic<wchar_t>);
+
+static_assert(!sign_unambiguous_arithmetic<char8_t>);
+static_assert(!sign_unambiguous_arithmetic<char16_t>);
+static_assert(!sign_unambiguous_arithmetic<char32_t>);
 static_assert(!sign_unambiguous_arithmetic<std::string>);
 
 TEST(ConceptTest, ConceptAcceptsOnlySupportedArithmeticTypes) {
@@ -1597,6 +1702,9 @@ TEST(ConceptTest, ConceptAcceptsOnlySupportedArithmeticTypes) {
     EXPECT_TRUE(sign_unambiguous_arithmetic<long double>);
     EXPECT_FALSE(sign_unambiguous_arithmetic<char>);
     EXPECT_FALSE(sign_unambiguous_arithmetic<wchar_t>);
+    EXPECT_FALSE(sign_unambiguous_arithmetic<char8_t>);
+    EXPECT_FALSE(sign_unambiguous_arithmetic<char16_t>);
+    EXPECT_FALSE(sign_unambiguous_arithmetic<char32_t>);
     EXPECT_FALSE(sign_unambiguous_arithmetic<std::string>);
 }
 
