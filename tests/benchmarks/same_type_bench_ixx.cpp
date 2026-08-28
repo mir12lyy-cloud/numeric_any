@@ -6,9 +6,9 @@
 #include <variant>
 #include <vector>
 
-import casyyy.maths.numeric_any;
+import cy.maths.numeric_any;
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 static constexpr size_t N = 1000000;
 
 using llong   = long long;
@@ -276,7 +276,7 @@ BENCH_COMPARE(ldouble, ldouble)
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na)                                                                                         \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \

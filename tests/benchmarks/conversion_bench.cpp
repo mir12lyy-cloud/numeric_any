@@ -7,7 +7,7 @@
 #include <variant>
 #include <vector>
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 static constexpr size_t N = 1000000;
 
 using llong   = long long;
@@ -74,7 +74,7 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na)                                                                                         \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -89,7 +89,7 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na) {                                                                                       \
-                auto r = numeric_cast<T>(a);                                                                           \
+                auto r = from<T>(a);                                                                                   \
                 if (r) sum += *r;                                                                                      \
             }                                                                                                          \
             benchmark::DoNotOptimize(sum);                                                                             \
@@ -118,6 +118,32 @@ BENCH_CAST_SAME(float, flt)
 BENCH_CAST_SAME(double, dbl)
 BENCH_CAST_SAME(ldouble, ldbl)
 #undef BENCH_CAST_SAME
+
+// ── equal policy same-type cast (compare vs as / strict / normal) ──
+#define BENCH_EQUAL_SAME(T, tname)                                                                                     \
+    static void BM_Equal_Same_##tname(benchmark::State& s) {                                                           \
+        auto data = mk_##tname(N);                                                                                     \
+        std::vector<numeric_any> na;                                                                                   \
+        na.reserve(N);                                                                                                 \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
+        for (auto _ : s) {                                                                                             \
+            ldouble sum = 0;                                                                                           \
+            for (auto& a : na) {                                                                                       \
+                auto r = from<T, casting_policy::equal>(a);                                                            \
+                if (r) sum += *r;                                                                                      \
+            }                                                                                                          \
+            benchmark::DoNotOptimize(sum);                                                                             \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_Equal_Same_##tname);
+BENCH_EQUAL_SAME(int, int)
+BENCH_EQUAL_SAME(llong, ll)
+BENCH_EQUAL_SAME(float, flt)
+BENCH_EQUAL_SAME(double, dbl)
+BENCH_EQUAL_SAME(ldouble, ldbl)
+#undef BENCH_EQUAL_SAME
 
 // ── Variant get ──
 #define BENCH_VARGET(T, tname)                                                                                         \
@@ -153,7 +179,7 @@ static void BM_Unchecked_Promote_IntToLL(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na)
-            sum += unchecked_numeric_cast<llong>(a);
+            sum += as<llong>(a);
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
@@ -168,7 +194,7 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<llong>(a);
+            auto r = from<llong>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -176,6 +202,24 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
     s.SetItemsProcessed(s.iterations() * N);
 }
 BENCHMARK(BM_Strict_Promote_IntToLL);
+// equal policy: int -> long long always fails (same type only), counts failures.
+static void BM_Equal_Promote_IntToLL(benchmark::State& s) {
+    auto data = mk_int(N);
+    std::vector<numeric_any> na;
+    na.reserve(N);
+    for (auto v : data)
+        na.emplace_back(v);
+    for (auto _ : s) {
+        int fail = 0;
+        for (auto& a : na) {
+            auto r = from<llong, casting_policy::equal>(a);
+            if (!r) ++fail;
+        }
+        benchmark::DoNotOptimize(fail);
+    }
+    s.SetItemsProcessed(s.iterations() * N);
+}
+BENCHMARK(BM_Equal_Promote_IntToLL);
 
 // ── Narrowing: int �?short ──
 static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
@@ -187,7 +231,7 @@ static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     for (auto _ : s) {
         int fail = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<short>(a);
+            auto r = from<short>(a);
             if (!r) ++fail;
         }
         benchmark::DoNotOptimize(fail);
@@ -195,7 +239,7 @@ static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     s.SetItemsProcessed(s.iterations() * N);
 }
 BENCHMARK(BM_Strict_Narrow_IntToShort);
-static void BM_Relaxed_Narrow_IntToShort(benchmark::State& s) {
+static void BM_Normal_Narrow_IntToShort(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
@@ -204,14 +248,32 @@ static void BM_Relaxed_Narrow_IntToShort(benchmark::State& s) {
     for (auto _ : s) {
         int ok = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<short, casting_policy::relaxed>(a);
+            auto r = from<short, casting_policy::normal>(a);
             if (r) ++ok;
         }
         benchmark::DoNotOptimize(ok);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Narrow_IntToShort);
+BENCHMARK(BM_Normal_Narrow_IntToShort);
+// equal policy: int -> short always fails (same type only), counts failures.
+static void BM_Equal_Narrow_IntToShort(benchmark::State& s) {
+    auto data = mk_int(N);
+    std::vector<numeric_any> na;
+    na.reserve(N);
+    for (auto v : data)
+        na.emplace_back(v);
+    for (auto _ : s) {
+        int fail = 0;
+        for (auto& a : na) {
+            auto r = from<short, casting_policy::equal>(a);
+            if (!r) ++fail;
+        }
+        benchmark::DoNotOptimize(fail);
+    }
+    s.SetItemsProcessed(s.iterations() * N);
+}
+BENCHMARK(BM_Equal_Narrow_IntToShort);
 
 // ── Three policies: int �?long ──
 static void BM_Strict_Policy_IntToLong(benchmark::State& s) {
@@ -223,7 +285,7 @@ static void BM_Strict_Policy_IntToLong(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::strict>(a);
+            auto r = from<long, casting_policy::strict>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -240,7 +302,7 @@ static void BM_Normal_Policy_IntToLong(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::normal>(a);
+            auto r = from<long, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -248,26 +310,29 @@ static void BM_Normal_Policy_IntToLong(benchmark::State& s) {
     s.SetItemsProcessed(s.iterations() * N);
 }
 BENCHMARK(BM_Normal_Policy_IntToLong);
-static void BM_Relaxed_Policy_IntToLong(benchmark::State& s) {
+// (BM_Relaxed_Policy_IntToLong removed: identical to BM_Normal_Policy_IntToLong after
+//  the relaxed -> normal policy rename)
+// equal policy: int -> long always fails (same type only), counts failures.
+static void BM_Equal_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
     for (auto v : data)
         na.emplace_back(v);
     for (auto _ : s) {
-        ldouble sum = 0;
+        int fail = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::relaxed>(a);
-            if (r) sum += *r;
+            auto r = from<long, casting_policy::equal>(a);
+            if (!r) ++fail;
         }
-        benchmark::DoNotOptimize(sum);
+        benchmark::DoNotOptimize(fail);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Policy_IntToLong);
+BENCHMARK(BM_Equal_Policy_IntToLong);
 
-// ── Cross-type: double �?int, long double �?int (relaxed) ──
-static void BM_Relaxed_Cross_DoubleToInt(benchmark::State& s) {
+// ── Cross-type: double → int, long double → int (normal) ──
+static void BM_Normal_Cross_DoubleToInt(benchmark::State& s) {
     auto data = mk_dbl(N);
     std::vector<numeric_any> na;
     na.reserve(N);
@@ -276,15 +341,15 @@ static void BM_Relaxed_Cross_DoubleToInt(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<int, casting_policy::relaxed>(a);
+            auto r = from<int, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Cross_DoubleToInt);
-static void BM_Relaxed_Cross_LDoubleToInt(benchmark::State& s) {
+BENCHMARK(BM_Normal_Cross_DoubleToInt);
+static void BM_Normal_Cross_LDoubleToInt(benchmark::State& s) {
     auto data = mk_ldbl(N);
     std::vector<numeric_any> na;
     na.reserve(N);
@@ -293,14 +358,14 @@ static void BM_Relaxed_Cross_LDoubleToInt(benchmark::State& s) {
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<int, casting_policy::relaxed>(a);
+            auto r = from<int, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
+BENCHMARK(BM_Normal_Cross_LDoubleToInt);
 
 // ── Round-trip ──
 #define BENCH_RT(T, tname)                                                                                             \
@@ -310,7 +375,7 @@ BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
             ldouble sum = 0;                                                                                           \
             for (auto v : data) {                                                                                      \
                 numeric_any a{v};                                                                                      \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             }                                                                                                          \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \

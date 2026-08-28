@@ -5,9 +5,9 @@
 #include <variant>
 #include <vector>
 
-import casyyy.maths.numeric_any;
+import cy.maths.numeric_any;
 
-using namespace casyyy::maths;
+using namespace cy::maths;
 static constexpr size_t N = 1000000;
 
 using llong   = long long;
@@ -18,42 +18,48 @@ static std::vector<int> mk_int(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<int> d(-100000, 100000);
     std::vector<int> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<llong> mk_ll(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<llong> d(-10000000000LL, 10000000000LL);
     std::vector<llong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<ullong> mk_ull(size_t n) {
     std::mt19937 rng(42);
     std::uniform_int_distribution<ullong> d(0, 18000000000000000000ULL);
     std::vector<ullong> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<float> mk_flt(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<float> d(-1000.f, 1000.f);
     std::vector<float> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<double> mk_dbl(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<double> d(-1000., 1000.);
     std::vector<double> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 static std::vector<ldouble> mk_ldbl(size_t n) {
     std::mt19937 rng(42);
     std::uniform_real_distribution<ldouble> d(-1000.L, 1000.L);
     std::vector<ldouble> v(n);
-    for (auto& x : v) x = d(rng);
+    for (auto& x : v)
+        x = d(rng);
     return v;
 }
 
@@ -63,10 +69,12 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         auto data = mk_##tname(N);                                                                                     \
         std::vector<numeric_any> na;                                                                                   \
         na.reserve(N);                                                                                                 \
-        for (auto v : data) na.emplace_back(v);                                                                        \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
-            for (auto& a : na) sum += unchecked_numeric_cast<T>(a);                                                    \
+            for (auto& a : na)                                                                                         \
+                sum += as<T>(a);                                                                                       \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -76,11 +84,12 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         auto data = mk_##tname(N);                                                                                     \
         std::vector<numeric_any> na;                                                                                   \
         na.reserve(N);                                                                                                 \
-        for (auto v : data) na.emplace_back(v);                                                                        \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na) {                                                                                       \
-                auto r = numeric_cast<T>(a);                                                                           \
+                auto r = from<T>(a);                                                                                   \
                 if (r) sum += *r;                                                                                      \
             }                                                                                                          \
             benchmark::DoNotOptimize(sum);                                                                             \
@@ -92,10 +101,12 @@ static std::vector<ldouble> mk_ldbl(size_t n) {
         auto data = mk_##tname(N);                                                                                     \
         std::vector<std::any> anys;                                                                                    \
         anys.reserve(N);                                                                                               \
-        for (auto v : data) anys.emplace_back(v);                                                                      \
+        for (auto v : data)                                                                                            \
+            anys.emplace_back(v);                                                                                      \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
-            for (auto& a : anys) sum += std::any_cast<T>(a);                                                           \
+            for (auto& a : anys)                                                                                       \
+                sum += std::any_cast<T>(a);                                                                            \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -108,6 +119,32 @@ BENCH_CAST_SAME(double, dbl)
 BENCH_CAST_SAME(ldouble, ldbl)
 #undef BENCH_CAST_SAME
 
+// ── equal policy same-type cast (compare vs as / strict / normal) ──
+#define BENCH_EQUAL_SAME(T, tname)                                                                                     \
+    static void BM_Equal_Same_##tname(benchmark::State& s) {                                                           \
+        auto data = mk_##tname(N);                                                                                     \
+        std::vector<numeric_any> na;                                                                                   \
+        na.reserve(N);                                                                                                 \
+        for (auto v : data)                                                                                            \
+            na.emplace_back(v);                                                                                        \
+        for (auto _ : s) {                                                                                             \
+            ldouble sum = 0;                                                                                           \
+            for (auto& a : na) {                                                                                       \
+                auto r = from<T, casting_policy::equal>(a);                                                            \
+                if (r) sum += *r;                                                                                      \
+            }                                                                                                          \
+            benchmark::DoNotOptimize(sum);                                                                             \
+        }                                                                                                              \
+        s.SetItemsProcessed(s.iterations() * N);                                                                       \
+    }                                                                                                                  \
+    BENCHMARK(BM_Equal_Same_##tname);
+BENCH_EQUAL_SAME(int, int)
+BENCH_EQUAL_SAME(llong, ll)
+BENCH_EQUAL_SAME(float, flt)
+BENCH_EQUAL_SAME(double, dbl)
+BENCH_EQUAL_SAME(ldouble, ldbl)
+#undef BENCH_EQUAL_SAME
+
 // ── Variant get ──
 #define BENCH_VARGET(T, tname)                                                                                         \
     static void BM_StdVariant_Same_##tname(benchmark::State& s) {                                                      \
@@ -115,10 +152,12 @@ BENCH_CAST_SAME(ldouble, ldbl)
         using Var = std::variant<int, llong, double, ldouble, float, ullong>;                                          \
         std::vector<Var> vars;                                                                                         \
         vars.reserve(N);                                                                                               \
-        for (auto v : data) vars.emplace_back(v);                                                                      \
+        for (auto v : data)                                                                                            \
+            vars.emplace_back(v);                                                                                      \
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
-            for (auto& v : vars) sum += std::get<T>(v);                                                                \
+            for (auto& v : vars)                                                                                       \
+                sum += std::get<T>(v);                                                                                 \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
@@ -135,10 +174,12 @@ static void BM_Unchecked_Promote_IntToLL(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
-        for (auto& a : na) sum += unchecked_numeric_cast<llong>(a);
+        for (auto& a : na)
+            sum += as<llong>(a);
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
@@ -148,11 +189,12 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<llong>(a);
+            auto r = from<llong>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -160,17 +202,36 @@ static void BM_Strict_Promote_IntToLL(benchmark::State& s) {
     s.SetItemsProcessed(s.iterations() * N);
 }
 BENCHMARK(BM_Strict_Promote_IntToLL);
+// equal policy: int -> long long always fails (same type only), counts failures.
+static void BM_Equal_Promote_IntToLL(benchmark::State& s) {
+    auto data = mk_int(N);
+    std::vector<numeric_any> na;
+    na.reserve(N);
+    for (auto v : data)
+        na.emplace_back(v);
+    for (auto _ : s) {
+        int fail = 0;
+        for (auto& a : na) {
+            auto r = from<llong, casting_policy::equal>(a);
+            if (!r) ++fail;
+        }
+        benchmark::DoNotOptimize(fail);
+    }
+    s.SetItemsProcessed(s.iterations() * N);
+}
+BENCHMARK(BM_Equal_Promote_IntToLL);
 
 // ── Narrowing: int �?short ──
 static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         int fail = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<short>(a);
+            auto r = from<short>(a);
             if (!r) ++fail;
         }
         benchmark::DoNotOptimize(fail);
@@ -178,33 +239,53 @@ static void BM_Strict_Narrow_IntToShort(benchmark::State& s) {
     s.SetItemsProcessed(s.iterations() * N);
 }
 BENCHMARK(BM_Strict_Narrow_IntToShort);
-static void BM_Relaxed_Narrow_IntToShort(benchmark::State& s) {
+static void BM_Normal_Narrow_IntToShort(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         int ok = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<short, casting_policy::relaxed>(a);
+            auto r = from<short, casting_policy::normal>(a);
             if (r) ++ok;
         }
         benchmark::DoNotOptimize(ok);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Narrow_IntToShort);
+BENCHMARK(BM_Normal_Narrow_IntToShort);
+// equal policy: int -> short always fails (same type only), counts failures.
+static void BM_Equal_Narrow_IntToShort(benchmark::State& s) {
+    auto data = mk_int(N);
+    std::vector<numeric_any> na;
+    na.reserve(N);
+    for (auto v : data)
+        na.emplace_back(v);
+    for (auto _ : s) {
+        int fail = 0;
+        for (auto& a : na) {
+            auto r = from<short, casting_policy::equal>(a);
+            if (!r) ++fail;
+        }
+        benchmark::DoNotOptimize(fail);
+    }
+    s.SetItemsProcessed(s.iterations() * N);
+}
+BENCHMARK(BM_Equal_Narrow_IntToShort);
 
 // ── Three policies: int �?long ──
 static void BM_Strict_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::strict>(a);
+            auto r = from<long, casting_policy::strict>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -216,11 +297,12 @@ static void BM_Normal_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::normal>(a);
+            auto r = from<long, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
@@ -228,56 +310,62 @@ static void BM_Normal_Policy_IntToLong(benchmark::State& s) {
     s.SetItemsProcessed(s.iterations() * N);
 }
 BENCHMARK(BM_Normal_Policy_IntToLong);
-static void BM_Relaxed_Policy_IntToLong(benchmark::State& s) {
+// (BM_Relaxed_Policy_IntToLong removed: identical to BM_Normal_Policy_IntToLong after
+//  the relaxed -> normal policy rename)
+// equal policy: int -> long always fails (same type only), counts failures.
+static void BM_Equal_Policy_IntToLong(benchmark::State& s) {
     auto data = mk_int(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
-        ldouble sum = 0;
+        int fail = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<long, casting_policy::relaxed>(a);
-            if (r) sum += *r;
+            auto r = from<long, casting_policy::equal>(a);
+            if (!r) ++fail;
         }
-        benchmark::DoNotOptimize(sum);
+        benchmark::DoNotOptimize(fail);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Policy_IntToLong);
+BENCHMARK(BM_Equal_Policy_IntToLong);
 
-// ── Cross-type: double �?int, long double �?int (relaxed) ──
-static void BM_Relaxed_Cross_DoubleToInt(benchmark::State& s) {
+// ── Cross-type: double → int, long double → int (normal) ──
+static void BM_Normal_Cross_DoubleToInt(benchmark::State& s) {
     auto data = mk_dbl(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<int, casting_policy::relaxed>(a);
+            auto r = from<int, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Cross_DoubleToInt);
-static void BM_Relaxed_Cross_LDoubleToInt(benchmark::State& s) {
+BENCHMARK(BM_Normal_Cross_DoubleToInt);
+static void BM_Normal_Cross_LDoubleToInt(benchmark::State& s) {
     auto data = mk_ldbl(N);
     std::vector<numeric_any> na;
     na.reserve(N);
-    for (auto v : data) na.emplace_back(v);
+    for (auto v : data)
+        na.emplace_back(v);
     for (auto _ : s) {
         ldouble sum = 0;
         for (auto& a : na) {
-            auto r = numeric_cast<int, casting_policy::relaxed>(a);
+            auto r = from<int, casting_policy::normal>(a);
             if (r) sum += *r;
         }
         benchmark::DoNotOptimize(sum);
     }
     s.SetItemsProcessed(s.iterations() * N);
 }
-BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
+BENCHMARK(BM_Normal_Cross_LDoubleToInt);
 
 // ── Round-trip ──
 #define BENCH_RT(T, tname)                                                                                             \
@@ -287,7 +375,7 @@ BENCHMARK(BM_Relaxed_Cross_LDoubleToInt);
             ldouble sum = 0;                                                                                           \
             for (auto v : data) {                                                                                      \
                 numeric_any a{v};                                                                                      \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             }                                                                                                          \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \

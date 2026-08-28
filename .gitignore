@@ -7,3 +7,9 @@ tests/units/TEST_SUMMARY.md
 tests/units/gtest_results.txt
 continue*/
 .idea/
+tests/benchmarks/v2_results
+tests/units/probe_from.exe
+tests/benchmarks/__pycache__/parse_stats.cpython-313.pyc
+tests/benchmarks/run_wsl_bench.sh
+tests/units/gtest_results_ixx.txt
+tests/benchmarks/parse_stats.py

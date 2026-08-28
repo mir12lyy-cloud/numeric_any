@@ -3,12 +3,13 @@
 #include <benchmark/benchmark.h>
 #define DISABLE_FORMAT_IN_NUMERIC_ANY
 #include "../../src/numeric_any.hpp"
+#include <any>
 #include <random>
 #include <variant>
 #include <vector>
-#include <any>
 
-using namespace casyyy::maths;
+
+using namespace cy::maths;
 static constexpr size_t N = 1000000;
 
 using llong   = long long;
@@ -92,7 +93,7 @@ static std::vector<ldouble> make_ldoubles(size_t n) {
     BENCHMARK(BM_StdAny_Construct_##tname);                                                                            \
     static void BM_StdVariant_Construct_##tname(benchmark::State& s) {                                                 \
         auto data = make_##tname##s(N);                                                                                \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, ullong, float, double, ldouble>;                                          \
         for (auto _ : s)                                                                                               \
             for (auto v : data)                                                                                        \
                 benchmark::DoNotOptimize(Var{v});                                                                      \
@@ -237,7 +238,7 @@ BENCH_MUL_FLOAT(ldouble, ldouble, 1.0L)
     BENCHMARK(BM_NumericAny_Compare_##tname);                                                                          \
     static void BM_StdVariant_Compare_##tname(benchmark::State& s) {                                                   \
         auto data = make_##tname##s(N);                                                                                \
-        using Var = std::variant<int, llong, double, ldouble>;                                                         \
+        using Var = std::variant<int, llong, float, double, ldouble>;                                                  \
         std::vector<Var> vars;                                                                                         \
         vars.reserve(N);                                                                                               \
         for (auto v : data)                                                                                            \
@@ -276,7 +277,7 @@ BENCH_COMPARE(ldouble, ldouble)
         for (auto _ : s) {                                                                                             \
             ldouble sum = 0;                                                                                           \
             for (auto& a : na)                                                                                         \
-                sum += unchecked_numeric_cast<T>(a);                                                                   \
+                sum += as<T>(a);                                                                                       \
             benchmark::DoNotOptimize(sum);                                                                             \
         }                                                                                                              \
         s.SetItemsProcessed(s.iterations() * N);                                                                       \
