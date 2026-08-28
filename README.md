@@ -38,7 +38,6 @@
 ### Standard Library Dependencies
 - `<array>` – Static array storage
 - `<bit>` – Bit manipulation functions
-- `<cmath>` – For checking whether a floating-point number is normal
 - `<compare>` – Three-way comparison operator support
 - `<cstring>` – Type punning
 - `<functional>` – Hash specialization
@@ -109,12 +108,11 @@ target_sources(YourProject
 ```
 
 ### Quick Start
-**Note: If you think `casyyy::maths` is long, you can use `cym` instead.**
 ```C++
 #include <print>
 
-import casyyy.maths.numeric_any;
-using namespace casyyy::maths;
+import cy.maths.numeric_any;
+using namespace cy::maths;
 
 int main() {
     numeric_any a = 42;
@@ -138,16 +136,15 @@ int main() {
 ### Construction
 **Code:** [Example Code](/examples/construction.cpp)
 ```C++
-numeric_any a;
 numeric_any b = 32;
-std::println("{} {}", a, b);
+std::println("{}", b);
 a = 32;
 b.reset<unsigned char>('a');
 std::println("{} {}", a, b);
 ```
 **Output:**
 ```text
-empty 32
+32
 32 97
 ```
 
@@ -175,18 +172,15 @@ int main() {
 ### Metadatas
 **Code:** [Example Code](/examples/metadata.cpp)
 ```C++
-numeric_any a;
 numeric_any b = 32;
 numeric_any c = 12U;
 numeric_any d = -32.2;
-std::println("{} {} {} {}", a.type_name(), a.is_floating_point(), a.is_unsigned_number(), a.is_nonnegative());
 std::println("{} {} {} {}", b.type_name(), b.is_floating_point(), b.is_unsigned_number(), b.is_nonnegative());
 std::println("{} {} {} {}", c.type_name(), c.is_floating_point(), c.is_unsigned_number(), c.is_nonnegative());
 std::println("{} {} {} {}", d.type_name(), d.is_floating_point(), d.is_unsigned_number(), d.is_nonnegative());
 ```
 **Output:**
 ```text
-empty false false false
 int false false true
 unsigned int false true true
 double true false false
@@ -227,20 +221,10 @@ numeric_any v = -42;
 numeric_any u = 12;
 std::println("{}", v.is_same_type<int>());
 std::println("{}", v.is_same_type<long>());
-std::println("{}", v.can_safe_convert_to<long long>());
-std::println("{}", u.can_safe_convert_to<unsigned long long>());
-std::println("{}", v.can_safe_convert_to<unsigned>());
-std::println("{}", v.can_safe_convert_to<short>());
-std::println("{}", v.can_safe_convert_to<float>());
 ```
 **Output:** 
 ```text
 true
-false
-true
-true
-false
-false
 false
 ```
 ### Bytes view:
@@ -261,7 +245,7 @@ std::println("{::02x}", a.view_bytes());
 ```C++
 template <typename T, casting_policy Policy = casting_policy::strict>
 void check_casting(const numeric_any& x) {
-    auto result = numeric_cast<T, Policy>(x);
+    auto result = from<T, Policy>(x);
     if (result.has_value()) {
         std::println("{}", result.value());
     } else {
@@ -278,8 +262,8 @@ int main() {
     check_casting<int>(b);
     check_casting<double>(c);
     check_casting<float, casting_policy::normal>(a);
-    std::println("{}", unchecked_numeric_cast<double>(b));
-    std::println("{}", unchecked_numeric_cast<double>(c));
+    std::println("{}", as<double>(b));
+    std::println("{}", as<double>(c));
     return 0;
 }
 ```
@@ -326,14 +310,13 @@ std::println("{:{}.{}f}", 32342.123, 8, 2);
 ### Visit
 **Code:** [Example Code](/examples/visit.cpp)
 ```C++
-numeric_any a = 32, b{};
+numeric_any a = 32;
 visit(a, [&a](auto i){ a = ::sin(i); }, []{});
-visit(b, [&b](auto i){ b = ::cos(i); }, []{});
-std::println("{} {}", a, b);
+std::println("{}", a);
 ```
 **Output:**
 ```text
-0.55 empty
+0.55
 ```
 
 - [Overall example files](/examples/) - Sample code is provided here for you to try and verify on your own.
