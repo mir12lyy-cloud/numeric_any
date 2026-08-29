@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['normal_0',['normal',['../namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555',1,'casyyy::maths']]]
+  ['equal_0',['equal',['../namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f',1,'cy::maths']]]
 ];

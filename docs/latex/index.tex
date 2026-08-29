@@ -33,7 +33,6 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \begin{DoxyItemize}
 \item {\ttfamily \texorpdfstring{$<$}{<}array\texorpdfstring{$>$}{>}} – Static array storage
 \item {\ttfamily \texorpdfstring{$<$}{<}bit\texorpdfstring{$>$}{>}} – Bit manipulation functions
-\item {\ttfamily \texorpdfstring{$<$}{<}cmath\texorpdfstring{$>$}{>}} – For checking whether a floating-\/point number is normal
 \item {\ttfamily \texorpdfstring{$<$}{<}compare\texorpdfstring{$>$}{>}} – Three-\/way comparison operator support
 \item {\ttfamily \texorpdfstring{$<$}{<}cstring\texorpdfstring{$>$}{>}} – Type punning
 \item {\ttfamily \texorpdfstring{$<$}{<}functional\texorpdfstring{$>$}{>}} – Hash specialization
@@ -109,15 +108,15 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 
 \end{DoxyCode}
 \hypertarget{index_autotoc_md7}{}\doxysubsection{\texorpdfstring{Quick Start}{Quick Start}}\label{index_autotoc_md7}
-{\bfseries{Note:\+ If you think {\ttfamily \doxylink{namespacecasyyy_1_1maths}{casyyy::\+maths}} is long, you can use {\ttfamily cym} instead.}} 
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{preprocessor}{\#include\ <print>}}
 \DoxyCodeLine{}
-\DoxyCodeLine{\textcolor{keyword}{import}\ \doxymbox{\hyperlink{module__casyyy_8maths_8numeric__any}{casyyy.maths.numeric\_any}};}
-\DoxyCodeLine{\textcolor{keyword}{using\ namespace\ }\doxymbox{\hyperlink{namespacecasyyy_1_1maths}{casyyy::maths}};}
+\DoxyCodeLine{\textcolor{keyword}{import}\ \doxymbox{\hyperlink{module__cy_8maths_8numeric__any}{cy.maths.numeric\_any}};}
+\DoxyCodeLine{\textcolor{keyword}{using\ namespace\ }\doxymbox{\hyperlink{namespacecy_1_1maths}{cy::maths}};}
 \DoxyCodeLine{}
 \DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
-\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 42;}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 42;}
 \DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{:03d\}"{}},\ a);}
 \DoxyCodeLine{\ \ \ \ a\ =\ 31.1653;}
 \DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{:.2f\}"{}},\ a);}
@@ -136,17 +135,16 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 {\bfseries{Ignore basic {\ttfamily import}, {\ttfamily include} and {\ttfamily using namespace}.}}\hypertarget{index_autotoc_md10}{}\doxysubsection{\texorpdfstring{Construction}{Construction}}\label{index_autotoc_md10}
 {\bfseries{Code:\+}} \href{/examples/construction.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a;}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ b\ =\ 32;}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ b\ =\ 32;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ b);}
 \DoxyCodeLine{a\ =\ 32;}
-\DoxyCodeLine{b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af1e07bdbe0db6846f972f7d8dbb484d2}{reset}}<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}>(\textcolor{charliteral}{'a'});}
+\DoxyCodeLine{b.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a70dbbd8efdb30cf6d755ffc4183b0d52}{reset}}<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}>(\textcolor{charliteral}{'a'});}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
 
 \end{DoxyCode}
  {\bfseries{Output:\+}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{empty\ 32}
+\DoxyCodeLine{32}
 \DoxyCodeLine{32\ 97}
 
 \end{DoxyCode}
@@ -176,19 +174,16 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
  \hypertarget{index_autotoc_md12}{}\doxysubsection{\texorpdfstring{Metadatas}{Metadatas}}\label{index_autotoc_md12}
 {\bfseries{Code:\+}} \href{/examples/metadata.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a;}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ b\ =\ 32;}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ c\ =\ 12U;}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ d\ =\ -\/32.2;}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ b.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ c.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}(),\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_af4b8819c663f0a901d5031e4e3457143}{is\_floating\_point}}(),\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aa817cb5234802e49f9570c165c9a880a}{is\_unsigned\_number}}(),\ d.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_aded11d455a668adb4d8203c91acaff5c}{is\_nonnegative}}());}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ b\ =\ 32;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ c\ =\ 12U;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ d\ =\ -\/32.2;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ b.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a}{type\_name}}(),\ b.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a5f65bfe55a8286a8453e7cea03a5020d}{is\_floating\_point}}(),\ b.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a52ef8b0e5f6199d904ff9748f7503393}{is\_unsigned\_number}}(),\ b.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a2bac1c9e8371beb4fd9ab8b2019c0117}{is\_nonnegative}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ c.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a}{type\_name}}(),\ c.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a5f65bfe55a8286a8453e7cea03a5020d}{is\_floating\_point}}(),\ c.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a52ef8b0e5f6199d904ff9748f7503393}{is\_unsigned\_number}}(),\ c.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a2bac1c9e8371beb4fd9ab8b2019c0117}{is\_nonnegative}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}\ \{\}\ \{\}"{}},\ d.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a}{type\_name}}(),\ d.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a5f65bfe55a8286a8453e7cea03a5020d}{is\_floating\_point}}(),\ d.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a52ef8b0e5f6199d904ff9748f7503393}{is\_unsigned\_number}}(),\ d.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a2bac1c9e8371beb4fd9ab8b2019c0117}{is\_nonnegative}}());}
 
 \end{DoxyCode}
  {\bfseries{Output:\+}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{empty\ false\ false\ false}
 \DoxyCodeLine{int\ false\ false\ true}
 \DoxyCodeLine{unsigned\ int\ false\ true\ true}
 \DoxyCodeLine{double\ true\ false\ false}
@@ -197,13 +192,13 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
  \hypertarget{index_autotoc_md13}{}\doxysubsection{\texorpdfstring{Operations:\+}{Operations:\+}}\label{index_autotoc_md13}
 {\bfseries{Code:\+}} \href{/examples/operations.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 13;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 13;}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a);}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ ++a);}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a\ +=\ 12.3);}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ -\/a);}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a\ >\ -\/a);}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a82355203b908878c69745b42345fe2d5}{type\_name}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a}{type\_name}}());}
 \DoxyCodeLine{a\ =\ -\/3;}
 \DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a\ >\ 12U);}
 \DoxyCodeLine{a\ =\ \textcolor{keyword}{true};}
@@ -228,35 +223,25 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
  \hypertarget{index_autotoc_md14}{}\doxysubsection{\texorpdfstring{Type Lookup:\+}{Type Lookup:\+}}\label{index_autotoc_md14}
 {\bfseries{Code:\+}} \href{/examples/type_lookup.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ v\ =\ -\/42;}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ u\ =\ 12;}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a782c046baf3d06e457b873ec1cdd4971}{is\_same\_type}}<\textcolor{keywordtype}{int}>());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a782c046baf3d06e457b873ec1cdd4971}{is\_same\_type}}<\textcolor{keywordtype}{long}>());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}>());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ u.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}>());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{unsigned}>());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{short}>());}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_ac8e1d04c4d13ee4805c19fdabed386d9}{can\_safe\_convert\_to}}<\textcolor{keywordtype}{float}>());}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ v\ =\ -\/42;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ u\ =\ 12;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_abced91f78739f267b9168474bc76c357}{is\_same\_type}}<\textcolor{keywordtype}{int}>());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ v.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_abced91f78739f267b9168474bc76c357}{is\_same\_type}}<\textcolor{keywordtype}{long}>());}
 
 \end{DoxyCode}
  {\bfseries{Output:\+}} 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{true}
 \DoxyCodeLine{false}
-\DoxyCodeLine{true}
-\DoxyCodeLine{true}
-\DoxyCodeLine{false}
-\DoxyCodeLine{false}
-\DoxyCodeLine{false}
 
 \end{DoxyCode}
  \hypertarget{index_autotoc_md15}{}\doxysubsection{\texorpdfstring{Bytes view:\+}{Bytes view:\+}}\label{index_autotoc_md15}
 {\bfseries{Code:\+}} \href{/examples/bytes_view.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 123U;}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{::02x\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a8c9ee07795e9ead39b1c6d953a056554}{view\_bytes}}());}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 123U;}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{::02x\}"{}},\ a.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a3b6ed9ddb80ee142b97e1ec053c37065}{view\_bytes}}());}
 \DoxyCodeLine{\ a\ =\ 14123.223;}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{::02x\}"{}},\ a.\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any_a8c9ee07795e9ead39b1c6d953a056554}{view\_bytes}}());}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{::02x\}"{}},\ a.\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a3b6ed9ddb80ee142b97e1ec053c37065}{view\_bytes}}());}
 
 \end{DoxyCode}
  {\bfseries{Possible Output(\+Based on platform):\+}} 
@@ -269,8 +254,8 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 {\bfseries{Code:\+}} \href{/examples/casting.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ casting\_policy\ Policy\ =\ casting\_policy::strict>}
-\DoxyCodeLine{\textcolor{keywordtype}{void}\ check\_casting(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ x)\ \{}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a8a28888f58697ea96d19571d54dbb602}{numeric\_cast<T,\ Policy>}}(x);}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ check\_casting(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\&\ x)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \doxymbox{\hyperlink{namespacecy_1_1maths_a8902d1a28ad3fd117de218b72c3a7486}{from<T,\ Policy>}}(x);}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (result.has\_value())\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ result.value());}
 \DoxyCodeLine{\ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
@@ -278,17 +263,17 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \DoxyCodeLine{\ \ \ \ \}}
 \DoxyCodeLine{\}}
 \DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
-\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 12312;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ int(12312)}}
-\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Empty.}}
-\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ c\ =\ std::nan(\textcolor{stringliteral}{"{}1"{}});\ \textcolor{comment}{//\ NaN}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 12312;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ int(12312)}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Empty.}}
+\DoxyCodeLine{\ \ \ \ \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ c\ =\ std::nan(\textcolor{stringliteral}{"{}1"{}});\ \textcolor{comment}{//\ NaN}}
 \DoxyCodeLine{\ \ \ \ check\_casting<int>(a);}
 \DoxyCodeLine{\ \ \ \ check\_casting<double>(a);}
 \DoxyCodeLine{\ \ \ \ check\_casting<long\ long>(a);}
 \DoxyCodeLine{\ \ \ \ check\_casting<int>(b);}
 \DoxyCodeLine{\ \ \ \ check\_casting<double>(c);}
 \DoxyCodeLine{\ \ \ \ check\_casting<float,\ casting\_policy::normal>(a);}
-\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(b));}
-\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{unchecked\_numeric\_cast<double>}}(c));}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ as<double>(b));}
+\DoxyCodeLine{\ \ \ \ std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ as<double>(c));}
 \DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{\}}
 
@@ -308,7 +293,7 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \hypertarget{index_autotoc_md17}{}\doxysubsection{\texorpdfstring{Output}{Output}}\label{index_autotoc_md17}
 {\bfseries{Code:\+}} \href{/examples/output.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 323423,\ b\ =\ 32342.123;}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 323423,\ b\ =\ 32342.123;}
 \DoxyCodeLine{std::cout\ <<\ a\ <<\ \textcolor{charliteral}{'\ '}\ <<\ b\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
 \DoxyCodeLine{std::wcout\ <<\ a\ <<\ \textcolor{charliteral}{'\ '}\ <<\ b\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
 \DoxyCodeLine{}
@@ -337,15 +322,14 @@ A type-\/erasure-\/based utility class for arithmetic types. Support addition, s
 \hypertarget{index_autotoc_md18}{}\doxysubsection{\texorpdfstring{Visit}{Visit}}\label{index_autotoc_md18}
 {\bfseries{Code:\+}} \href{/examples/visit.cpp}{\texttt{Example Code}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 32,\ b\{\};}
-\DoxyCodeLine{\doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{visit}}(a,\ [\&a](\textcolor{keyword}{auto}\ i)\{\ a\ =\ ::sin(i);\ \},\ []\{\});}
-\DoxyCodeLine{\doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{visit}}(b,\ [\&b](\textcolor{keyword}{auto}\ i)\{\ b\ =\ ::cos(i);\ \},\ []\{\});}
-\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}\ \{\}"{}},\ a,\ b);}
+\DoxyCodeLine{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\_any}}\ a\ =\ 32;}
+\DoxyCodeLine{visit(a,\ [\&a](\textcolor{keyword}{auto}\ i)\{\ a\ =\ ::sin(i);\ \},\ []\{\});}
+\DoxyCodeLine{std::println(\textcolor{stringliteral}{"{}\{\}"{}},\ a);}
 
 \end{DoxyCode}
  {\bfseries{Output:\+}} 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{0.55\ empty}
+\DoxyCodeLine{0.55}
 
 \end{DoxyCode}
 

@@ -1,0 +1,688 @@
+\doxysection{cy::\+maths::\+numeric\+\_\+any Class Reference}
+\hypertarget{classcy_1_1maths_1_1numeric__any}{}\label{classcy_1_1maths_1_1numeric__any}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+
+
+A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} () noexcept=default
+\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aa0d0b169ea938c5cbe1fad8fef891e43}{numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Construct a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} which is assigned by a value. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a0c4f498bb8093b9e11e3e4b095d18db6}{operator-\/}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Return the negative of the number inside. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a59661712461c9e077240decf539ebe74}{operator+}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Return the \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} itself. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ac97bc5d85a22d3c50134327368fef185}{operator++}} () noexcept
+\begin{DoxyCompactList}\small\item\em Pre-\/increment operator. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a4522803baf72223a49e1f842b02b7f98}{operator++}} (int) noexcept
+\begin{DoxyCompactList}\small\item\em Post-\/increment operator. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aab923be6c3cb6ab2f00d7edc42015e1f}{operator-\/-\/}} () noexcept
+\begin{DoxyCompactList}\small\item\em Pre-\/decrement operator. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aaf38a5f3e0fd5e6976c1778e223e280d}{operator-\/-\/}} (int) noexcept
+\begin{DoxyCompactList}\small\item\em Post-\/decrement operator. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ae491c8f5c870c5d0ea7d90e81e77ed17}{operator+=}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Do an addition assignment with a normal value. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a259bf2b979f7a198da8daedbc91ff72a}{operator-\/=}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Do a substraction assignment with a normal value. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ae9c875cda8856f529e29d9f6d155edc9}{operator\texorpdfstring{$\ast$}{*}=}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Do a multiplication assignment with a normal value. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a94724b73309769a8a9e429f544a54eae}{operator/\+=}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Do a division assignment with a normal value. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a6aca5b44d2dcd2661e4f1d1e7307a2e0}{operator+=}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Do an addition assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a0cb9bd93bc12582df9d98d4940850f01}{operator-\/=}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Do a substraction assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ac470b95038970b3adf39f0dff70a0a18}{operator\texorpdfstring{$\ast$}{*}=}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Do a multiplication assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a624ca9c3c7241ebd73deec1ca0ce09f6}{operator/\+=}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Do a division assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr bool \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a81bf7f1b053a31a26234980d7b97e402}{operator==}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) const noexcept
+\begin{DoxyCompactList}\small\item\em Compare a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is equal to a normal value. \end{DoxyCompactList}\item 
+constexpr ::\+std::\+partial\+\_\+ordering \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a7cd9e18e1298b24938a1dd71fff925d2}{operator$<$=$>$}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) const noexcept
+\begin{DoxyCompactList}\small\item\em Three-\/way comparison between \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} with a normal value. \end{DoxyCompactList}\item 
+constexpr bool \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a16c3fcf28e133c638aede4a9c0fccb2b}{operator==}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) const noexcept
+\begin{DoxyCompactList}\small\item\em Compare a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is equal to another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr ::\+std::\+partial\+\_\+ordering \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ae43c1d4020489b52ccee344ae54f2bfa}{operator$<$=$>$}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) const noexcept
+\begin{DoxyCompactList}\small\item\em Three-\/way comparison between \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a61b236a36f97ecfbd41c03d936117935}{operator bool}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Check whether inner value isn\textquotesingle{}t zero. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab185d6575d7498dec092e83d14155c10}{operator=}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Reset the inner value. \end{DoxyCompactList}\item 
+constexpr ::\+std::\+string\+\_\+view \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a}{type\+\_\+name}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Get the typename of the value which \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} store. \end{DoxyCompactList}\item 
+constexpr ::\+std::\+size\+\_\+t \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_aeb4e0f6c40c7fb63f8c00541ae4fc3fe}{type\+\_\+size}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Get the number of bytes used by internal storage data。 \end{DoxyCompactList}\item 
+constexpr bool \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a5f65bfe55a8286a8453e7cea03a5020d}{is\+\_\+floating\+\_\+point}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Check if what\textquotesingle{}s stored inside is a floating point number. \end{DoxyCompactList}\item 
+constexpr bool \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a52ef8b0e5f6199d904ff9748f7503393}{is\+\_\+unsigned\+\_\+number}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Check if what\textquotesingle{}s stored inside is an unsigned number. \end{DoxyCompactList}\item 
+constexpr bool \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a2bac1c9e8371beb4fd9ab8b2019c0117}{is\+\_\+nonnegative}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Check if what\textquotesingle{}s stored inside is a nonnegative number. \end{DoxyCompactList}\item 
+constexpr void \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a70dbbd8efdb30cf6d755ffc4183b0d52}{reset}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em Reset the inner value. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr bool \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_abced91f78739f267b9168474bc76c357}{is\+\_\+same\+\_\+type}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Check if the given type is the type of value stored internally. \end{DoxyCompactList}\item 
+constexpr ::\+std::\+span$<$ const unsigned char $>$ \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a3b6ed9ddb80ee142b97e1ec053c37065}{view\+\_\+bytes}} () const noexcept
+\begin{DoxyCompactList}\small\item\em Get the inner view of the bytes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr T \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a12ba5d4fcce4e65c9093f6dbe3ffdfcc}{as}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Func, typename Any$>$ }\\constexpr decltype(auto) \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_a1bd1e547f1179abfe290cfba05f1b4c6}{visit}} (Func \&\&f, Any \&\&x) noexcept
+\begin{DoxyCompactList}\small\item\em Visit the inner value of a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. 
+
+\begin{DoxyNote}{Note}
+Only support the basic arithmetic types in C++, except char without explicit sign. 
+\end{DoxyNote}
+
+
+\label{classcy_1_1maths_1_1numeric__any_doc-constructors}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!numeric\_any@{numeric\_any}}
+\index{numeric\_any@{numeric\_any}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{numeric\_any()}{numeric\_any()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665} 
+cy::\+maths::\+numeric\+\_\+any::\+numeric\+\_\+any (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [default]}, {\ttfamily [noexcept]}}
+
+\Hypertarget{classcy_1_1maths_1_1numeric__any_aa0d0b169ea938c5cbe1fad8fef891e43}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!numeric\_any@{numeric\_any}}
+\index{numeric\_any@{numeric\_any}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{numeric\_any()}{numeric\_any()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_aa0d0b169ea938c5cbe1fad8fef891e43} 
+cy::\+maths::\+numeric\+\_\+any::\+numeric\+\_\+any (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Construct a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} which is assigned by a value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+
+
+\label{classcy_1_1maths_1_1numeric__any_doc-func-members}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a5f65bfe55a8286a8453e7cea03a5020d}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!is\_floating\_point@{is\_floating\_point}}
+\index{is\_floating\_point@{is\_floating\_point}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{is\_floating\_point()}{is\_floating\_point()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a5f65bfe55a8286a8453e7cea03a5020d} 
+bool cy::\+maths::\+numeric\+\_\+any::\+is\+\_\+floating\+\_\+point (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Check if what\textquotesingle{}s stored inside is a floating point number. 
+
+\begin{DoxyReturn}{Returns}
+A boolean represents whether it stores a floating point number or not. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a2bac1c9e8371beb4fd9ab8b2019c0117}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!is\_nonnegative@{is\_nonnegative}}
+\index{is\_nonnegative@{is\_nonnegative}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{is\_nonnegative()}{is\_nonnegative()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a2bac1c9e8371beb4fd9ab8b2019c0117} 
+bool cy::\+maths::\+numeric\+\_\+any::\+is\+\_\+nonnegative (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Check if what\textquotesingle{}s stored inside is a nonnegative number. 
+
+\begin{DoxyReturn}{Returns}
+A boolean represents whether it stores a nonnegative number or not. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If inner value is NaN, it will return false. 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_abced91f78739f267b9168474bc76c357}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!is\_same\_type@{is\_same\_type}}
+\index{is\_same\_type@{is\_same\_type}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{is\_same\_type()}{is\_same\_type()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_abced91f78739f267b9168474bc76c357} 
+template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ \\
+bool cy::\+maths::\+numeric\+\_\+any::\+is\+\_\+same\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Check if the given type is the type of value stored internally. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The basic arithmetic types in C++, except char without explicit sign which is used to check. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+Whether the given type parameter is the type of the underlying stored value。 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a52ef8b0e5f6199d904ff9748f7503393}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!is\_unsigned\_number@{is\_unsigned\_number}}
+\index{is\_unsigned\_number@{is\_unsigned\_number}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{is\_unsigned\_number()}{is\_unsigned\_number()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a52ef8b0e5f6199d904ff9748f7503393} 
+bool cy::\+maths::\+numeric\+\_\+any::\+is\+\_\+unsigned\+\_\+number (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Check if what\textquotesingle{}s stored inside is an unsigned number. 
+
+\begin{DoxyReturn}{Returns}
+A boolean represents whether it stores an unsigned number or not. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a61b236a36f97ecfbd41c03d936117935}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator bool@{operator bool}}
+\index{operator bool@{operator bool}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator bool()}{operator bool()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a61b236a36f97ecfbd41c03d936117935} 
+cy::\+maths::\+numeric\+\_\+any::\+operator bool (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Check whether inner value isn\textquotesingle{}t zero. 
+
+\begin{DoxyReturn}{Returns}
+Whether inner value isn\textquotesingle{}t zero. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ac470b95038970b3adf39f0dff70a0a18}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ac470b95038970b3adf39f0dff70a0a18} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do a multiplication assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to do operation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions.    
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ae9c875cda8856f529e29d9f6d155edc9}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ae9c875cda8856f529e29d9f6d155edc9} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do a multiplication assignment with a normal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions.    
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a59661712461c9e077240decf539ebe74}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator+@{operator+}}
+\index{operator+@{operator+}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a59661712461c9e077240decf539ebe74} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} cy::\+maths::\+numeric\+\_\+any::\+operator+ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Return the \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} itself. 
+
+\begin{DoxyReturn}{Returns}
+The \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} itself. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ac97bc5d85a22d3c50134327368fef185}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator++@{operator++}}
+\index{operator++@{operator++}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator++()}{operator++()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ac97bc5d85a22d3c50134327368fef185} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator++ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Pre-\/increment operator. 
+
+\begin{DoxyReturn}{Returns}
+Reference to the incremented object. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner + 1). 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a4522803baf72223a49e1f842b02b7f98}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator++@{operator++}}
+\index{operator++@{operator++}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator++()}{operator++()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a4522803baf72223a49e1f842b02b7f98} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} cy::\+maths::\+numeric\+\_\+any::\+operator++ (\begin{DoxyParamCaption}\item[{int}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Post-\/increment operator. 
+
+\begin{DoxyReturn}{Returns}
+The value before increment. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner + 1). 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a6aca5b44d2dcd2661e4f1d1e7307a2e0}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a6aca5b44d2dcd2661e4f1d1e7307a2e0} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator+= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do an addition assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to do operation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions. 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ae491c8f5c870c5d0ea7d90e81e77ed17}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ae491c8f5c870c5d0ea7d90e81e77ed17} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator+= (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do an addition assignment with a normal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions. 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a0c4f498bb8093b9e11e3e4b095d18db6}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a0c4f498bb8093b9e11e3e4b095d18db6} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} cy::\+maths::\+numeric\+\_\+any::\+operator-\/ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Return the negative of the number inside. 
+
+\begin{DoxyReturn}{Returns}
+The negative of the number inside. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follow C++ rules for negation of fundamental types. 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_aab923be6c3cb6ab2f00d7edc42015e1f}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator-\/-\/@{operator-\/-\/}}
+\index{operator-\/-\/@{operator-\/-\/}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator-\/-\/()}{operator--()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_aab923be6c3cb6ab2f00d7edc42015e1f} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator-\/-\/ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Pre-\/decrement operator. 
+
+\begin{DoxyReturn}{Returns}
+Reference to the decreed object. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner -\/ 1). 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_aaf38a5f3e0fd5e6976c1778e223e280d}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator-\/-\/@{operator-\/-\/}}
+\index{operator-\/-\/@{operator-\/-\/}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator-\/-\/()}{operator--()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_aaf38a5f3e0fd5e6976c1778e223e280d} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} cy::\+maths::\+numeric\+\_\+any::\+operator-\/-\/ (\begin{DoxyParamCaption}\item[{int}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Post-\/decrement operator. 
+
+\begin{DoxyReturn}{Returns}
+The value before decrement. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follows built-\/in semantics, excpet bool, which is setting the value to (bool)(inner -\/ 1). 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a0cb9bd93bc12582df9d98d4940850f01}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a0cb9bd93bc12582df9d98d4940850f01} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator-\/= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do a substraction assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to do operation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions.    
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a259bf2b979f7a198da8daedbc91ff72a}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a259bf2b979f7a198da8daedbc91ff72a} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator-\/= (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do a substraction assignment with a normal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions.    
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a624ca9c3c7241ebd73deec1ca0ce09f6}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a624ca9c3c7241ebd73deec1ca0ce09f6} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator/\+= (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do a division assignment with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to do operation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions.    
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a94724b73309769a8a9e429f544a54eae}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a94724b73309769a8a9e429f544a54eae} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator/\+= (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Do a division assignment with a normal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Reference to the current value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Internal implicit conversion may change the stored type per C++ standard rules of arithmetic conversions.    
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ae43c1d4020489b52ccee344ae54f2bfa}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator$<$=$>$@{operator$<$=$>$}}
+\index{operator$<$=$>$@{operator$<$=$>$}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator$<$=$>$()}{operator<=>()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ae43c1d4020489b52ccee344ae54f2bfa} 
+::\+std::\+partial\+\_\+ordering cy::\+maths::\+numeric\+\_\+any::\+operator$<$=$>$ (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Three-\/way comparison between \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} with another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to do comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A partial\+\_\+ordering represent the result of three-\/way comparison. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a7cd9e18e1298b24938a1dd71fff925d2}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator$<$=$>$@{operator$<$=$>$}}
+\index{operator$<$=$>$@{operator$<$=$>$}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator$<$=$>$()}{operator<=>()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a7cd9e18e1298b24938a1dd71fff925d2} 
+::\+std::\+partial\+\_\+ordering cy::\+maths::\+numeric\+\_\+any::\+operator$<$=$>$ (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Three-\/way comparison between \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} with a normal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A partial\+\_\+ordering represent the result of three-\/way comparison. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_ab185d6575d7498dec092e83d14155c10}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator=@{operator=}}
+\index{operator=@{operator=}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_ab185d6575d7498dec092e83d14155c10} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \& cy::\+maths::\+numeric\+\_\+any::\+operator= (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Reset the inner value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+self-\/referencing after reset. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a16c3fcf28e133c638aede4a9c0fccb2b}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator==@{operator==}}
+\index{operator==@{operator==}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a16c3fcf28e133c638aede4a9c0fccb2b} 
+bool cy::\+maths::\+numeric\+\_\+any::\+operator== (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Compare a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is equal to another \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to do comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Whether a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is equal to a normal value. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a81bf7f1b053a31a26234980d7b97e402}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!operator==@{operator==}}
+\index{operator==@{operator==}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a81bf7f1b053a31a26234980d7b97e402} 
+bool cy::\+maths::\+numeric\+\_\+any::\+operator== (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Compare a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is equal to a normal value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+Whether a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} is equal to a normal value. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a70dbbd8efdb30cf6d755ffc4183b0d52}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!reset@{reset}}
+\index{reset@{reset}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a70dbbd8efdb30cf6d755ffc4183b0d52} 
+void cy::\+maths::\+numeric\+\_\+any::\+reset (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Reset the inner value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Input value, must be the basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+char types must be explicitly signed-\/qualified in constructors to avoid ambiguity. 
+
+It will change the base type of the internal storage. And must offer a number. 
+\end{DoxyNote}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!type\_name@{type\_name}}
+\index{type\_name@{type\_name}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{type\_name()}{type\_name()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_aa693222c30d9a4df88e30ddf169a4e1a} 
+::\+std::\+string\+\_\+view cy::\+maths::\+numeric\+\_\+any::\+type\+\_\+name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Get the typename of the value which \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} store. 
+
+\begin{DoxyReturn}{Returns}
+A readable string view, with content representing the type stored internally. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_aeb4e0f6c40c7fb63f8c00541ae4fc3fe}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!type\_size@{type\_size}}
+\index{type\_size@{type\_size}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{type\_size()}{type\_size()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_aeb4e0f6c40c7fb63f8c00541ae4fc3fe} 
+::\+std::\+size\+\_\+t cy::\+maths::\+numeric\+\_\+any::\+type\+\_\+size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Get the number of bytes used by internal storage data。 
+
+\begin{DoxyReturn}{Returns}
+The number of bytes used by internal storage data。 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a3b6ed9ddb80ee142b97e1ec053c37065}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!view\_bytes@{view\_bytes}}
+\index{view\_bytes@{view\_bytes}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{view\_bytes()}{view\_bytes()}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a3b6ed9ddb80ee142b97e1ec053c37065} 
+::\+std::\+span$<$ const unsigned char $>$ cy::\+maths::\+numeric\+\_\+any::\+view\+\_\+bytes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Get the inner view of the bytes. 
+
+\begin{DoxyReturn}{Returns}
+A span which represent inner view of the bytes. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The span is read-\/only. And its size is based on the number of bytes used by internal storage data。 
+\end{DoxyNote}
+
+
+\label{classcy_1_1maths_1_1numeric__any_doc-related-members}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a12ba5d4fcce4e65c9093f6dbe3ffdfcc}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!as@{as}}
+\index{as@{as}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{as}{as}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a12ba5d4fcce4e65c9093f6dbe3ffdfcc} 
+template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ \\
+T as (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any_ab9f9791b38c501020ab5d08c46a2c665}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Casting a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & A \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A normal value represents the value stored in a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after casting to given type. 
+\end{DoxyReturn}
+\Hypertarget{classcy_1_1maths_1_1numeric__any_a1bd1e547f1179abfe290cfba05f1b4c6}\index{cy::maths::numeric\_any@{cy::maths::numeric\_any}!visit@{visit}}
+\index{visit@{visit}!cy::maths::numeric\_any@{cy::maths::numeric\_any}}
+\doxysubsubsection{\texorpdfstring{visit}{visit}}
+{\footnotesize\ttfamily \label{classcy_1_1maths_1_1numeric__any_a1bd1e547f1179abfe290cfba05f1b4c6} 
+template$<$typename Func, typename Any$>$ \\
+decltype(auto) visit (\begin{DoxyParamCaption}\item[{Func \&\&}]{f}{, }\item[{Any \&\&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Visit the inner value of a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to be visited. \\
+\hline
+{\em f} & The function to be applied to the inner value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of applying the function to the inner value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+\textquotesingle{}f\textquotesingle{} should accept a single argument of the type of the inner values. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{numeric__any_8ixx}{numeric\+\_\+any.\+ixx}}\end{DoxyCompactItemize}

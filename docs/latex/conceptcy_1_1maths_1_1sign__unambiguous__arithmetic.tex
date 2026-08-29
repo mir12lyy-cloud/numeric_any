@@ -1,0 +1,20 @@
+\doxysection{cy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic Concept Reference}
+\hypertarget{conceptcy_1_1maths_1_1sign__unambiguous__arithmetic}{}\label{conceptcy_1_1maths_1_1sign__unambiguous__arithmetic}\index{cy::maths::sign\_unambiguous\_arithmetic@{cy::maths::sign\_unambiguous\_arithmetic}}
+
+
+Only for arithmetic types, except the char without explicit sign.  
+
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\doxymbox{\hyperlink{conceptcy_1_1maths_1_1sign__unambiguous__arithmetic}{sign\_unambiguous\_arithmetic}}\ =}
+\DoxyCodeLine{\ \ \ \ ::std::is\_arithmetic\_v<T>\ \&\&\ !::std::is\_same\_v<char,\ T>\ \&\&\ !::std::is\_same\_v<wchar\_t,\ T>\ \&\&}
+\DoxyCodeLine{\ \ \ \ !::std::is\_same\_v<char8\_t,\ T>\ \&\&\ !::std::is\_same\_v<char16\_t,\ T>\ \&\&\ !::std::is\_same\_v<char32\_t,\ T>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Only for arithmetic types, except the char without explicit sign. 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['can_5fsafe_5fconvert_5fto_0',['can_safe_convert_to',['../classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9',1,'casyyy::maths::numeric_any']]]
+  ['make_5fnumeric_5fany_0',['make_numeric_any',['../namespacecy_1_1maths.html#af78d5b60b2bff51985ed1c58e3247908',1,'cy::maths']]]
 ];

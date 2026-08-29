@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.5.0</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v2.0.0</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -116,12 +116,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('numeric__any_8
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">numeric_any.ixx File Reference<div class="ingroups">module <a class="el" href="module__casyyy_8maths_8numeric__any.html">casyyy.maths.numeric_any</a></div></div></div>
+  <div class="headertitle"><div class="title">numeric_any.ixx File Reference<div class="ingroups">module <a class="el" href="module__cy_8maths_8numeric__any.html">cy.maths.numeric_any</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;array&gt;</code><br />
 <code>#include &lt;bit&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;compare&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
 <code>#include &lt;format&gt;</code><br />
@@ -131,115 +130,133 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('numeric__any_8
 <code>#include &lt;span&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
-<code>import <a class="el" href="numeric__any__parser_8ixx.html">casyyy.maths.numeric_any_parser</a>;</code><br />
+<code>import <a class="el" href="numeric__any__parser_8ixx.html">cy.maths.numeric_any_parser</a>;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:casyyy_3A_3Amaths_3A_3Anumeric_5Fany" id="r_casyyy_3A_3Amaths_3A_3Anumeric_5Fany"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">casyyy::maths::numeric_any</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type-erasure-based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison.  <a href="classcasyyy_1_1maths_1_1numeric__any.html#details">More...</a><br /></td></tr>
-<tr class="memitem:std_3A_3Acommon_5Ftype_3C_20T_2C_20_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E" id="r_std_3A_3Acommon_5Ftype_3C_20T_2C_20_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1common__type_3_01_t_00_01_1_1casyyy_1_1maths_1_1numeric__any_01_4.html">std::common_type&lt; T, ::casyyy::maths::numeric_any &gt;</a></td></tr>
-<tr class="memitem:std_3A_3Acommon_5Ftype_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20T_20_3E" id="r_std_3A_3Acommon_5Ftype_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20T_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1common__type_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_t_01_4.html">std::common_type&lt;::casyyy::maths::numeric_any, T &gt;</a></td></tr>
-<tr class="memitem:std_3A_3Ahash_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E" id="r_std_3A_3Ahash_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4.html">std::hash&lt;::casyyy::maths::numeric_any &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide hash support.  <a href="structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4.html#details">More...</a><br /></td></tr>
-<tr class="memitem:std_3A_3Aformatter_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20CharT_20_3E" id="r_std_3A_3Aformatter_3C_3A_3Acasyyy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20CharT_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html">std::formatter&lt;::casyyy::maths::numeric_any, CharT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide formatted support.  <a href="structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:cy_3A_3Amaths_3A_3Anumeric_5Fany" id="r_cy_3A_3Amaths_3A_3Anumeric_5Fany"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classcy_1_1maths_1_1numeric__any.html">cy::maths::numeric_any</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type-erasure-based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison.  <a href="classcy_1_1maths_1_1numeric__any.html#details">More...</a><br /></td></tr>
+<tr class="memitem:std_3A_3Acommon_5Ftype_3C_20T_2C_20_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E" id="r_std_3A_3Acommon_5Ftype_3C_20T_2C_20_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1common__type_3_01_t_00_01_1_1cy_1_1maths_1_1numeric__any_01_4.html">std::common_type&lt; T, ::cy::maths::numeric_any &gt;</a></td></tr>
+<tr class="memitem:std_3A_3Acommon_5Ftype_3C_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20T_20_3E" id="r_std_3A_3Acommon_5Ftype_3C_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20T_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1common__type_3_1_1cy_1_1maths_1_1numeric__any_00_01_t_01_4.html">std::common_type&lt;::cy::maths::numeric_any, T &gt;</a></td></tr>
+<tr class="memitem:std_3A_3Ahash_3C_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E" id="r_std_3A_3Ahash_3C_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1hash_3_1_1cy_1_1maths_1_1numeric__any_01_4.html">std::hash&lt;::cy::maths::numeric_any &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide hash support.  <a href="structstd_1_1hash_3_1_1cy_1_1maths_1_1numeric__any_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:std_3A_3Aformatter_3C_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20CharT_20_3E" id="r_std_3A_3Aformatter_3C_3A_3Acy_3A_3Amaths_3A_3Anumeric_5Fany_2C_20CharT_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structstd_1_1formatter_3_1_1cy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html">std::formatter&lt;::cy::maths::numeric_any, CharT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide formatted support.  <a href="structstd_1_1formatter_3_1_1cy_1_1maths_1_1numeric__any_00_01_char_t_01_4.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:casyyy" id="r_casyyy"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy.html">casyyy</a></td></tr>
-<tr class="memitem:casyyy_3A_3Amaths" id="r_casyyy_3A_3Amaths"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html">casyyy::maths</a></td></tr>
+<tr class="memitem:cy" id="r_cy"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacecy.html">cy</a></td></tr>
+<tr class="memitem:cy_3A_3Amaths" id="r_cy_3A_3Amaths"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html">cy::maths</a></td></tr>
 <tr class="memitem:std" id="r_std"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacestd.html">std</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
-<tr class="memitem:casyyy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic" id="r_casyyy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic.html">casyyy::maths::sign_unambiguous_arithmetic</a></td></tr>
+<tr class="memitem:cy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic" id="r_cy_3A_3Amaths_3A_3Asign_5Funambiguous_5Farithmetic"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="conceptcy_1_1maths_1_1sign__unambiguous__arithmetic.html">cy::maths::sign_unambiguous_arithmetic</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Only for arithmetic types, except the char without explicit sign. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a7eac2aa0392813b2f68a19a1f241ad85" id="r_a7eac2aa0392813b2f68a19a1f241ad85"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a7eac2aa0392813b2f68a19a1f241ad85">FUNCTION_TWO_OPERATION</a>(name,  op,  op_name,  op2,  op2_name)</td></tr>
-<tr class="memdesc:a7eac2aa0392813b2f68a19a1f241ad85"><td class="mdescLeft">&#160;</td><td class="mdescRight">To generate operator between numeric_any with a value or another numeric_any. Including: +, -, *, /. And used +=, -=, *=, /= to do operations.  <br /></td></tr>
+<tr class="memitem:a3af99897b60119951af8961dbd52dd3f" id="r_a3af99897b60119951af8961dbd52dd3f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a3af99897b60119951af8961dbd52dd3f">UNREACHABLE</a>&#160;&#160;&#160;__builtin_unreachable()</td></tr>
+<tr class="memitem:af2d71ff81125f6291748b6885756f05d" id="r_af2d71ff81125f6291748b6885756f05d"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#af2d71ff81125f6291748b6885756f05d">FUNCTION_TO_AS</a>(type_name,  type_enum_name,  enum_value)</td></tr>
+<tr class="memitem:ad0ea4f8350a840238d11c4dc54a3f21d" id="r_ad0ea4f8350a840238d11c4dc54a3f21d"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ad0ea4f8350a840238d11c4dc54a3f21d">FUNCTIONS_TO_VISIT</a>(type_name,  type_enum_name,  enum_value)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ad2c5becd5c7b33e58c95da60f595ceea" id="r_ad2c5becd5c7b33e58c95da60f595ceea"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">casyyy::maths::casting_policy</a> : unsigned char { <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaa2133fd717402a7966ee88d06f9e0b792">casyyy::maths::strict</a>
-, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555">casyyy::maths::normal</a>
-, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b">casyyy::maths::relaxed</a>
+<tr class="memitem:a1358cc39844dfea00d8bf21edd634004" id="r_a1358cc39844dfea00d8bf21edd634004"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004">cy::maths::casting_policy</a> : unsigned char { <a class="el" href="namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f">cy::maths::equal</a>
+, <a class="el" href="namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004a2133fd717402a7966ee88d06f9e0b792">cy::maths::strict</a>
+, <a class="el" href="namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004afea087517c26fadd409bd4b9dc642555">cy::maths::normal</a>
  }</td></tr>
-<tr class="memdesc:ad2c5becd5c7b33e58c95da60f595ceea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric conversion strategy, used for handling different types of number conversions.  <a href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">More...</a><br /></td></tr>
+<tr class="memdesc:a1358cc39844dfea00d8bf21edd634004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric conversion strategy, used for handling different types of number conversions.  <a href="namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a31af20d3052c671a95c5965c4ad3fdd7" id="r_a31af20d3052c671a95c5965c4ad3fdd7"><td class="memTemplParams" colspan="2">template&lt;typename Any, typename Func, typename FuncWhenEmpty&gt; <br />
-requires ::std::is_same_v&lt;::std::remove_cvref_t&lt;Any&gt;, <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&gt;</td></tr>
-<tr class="memitem:a31af20d3052c671a95c5965c4ad3fdd7 template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7">casyyy::maths::visit</a> (Any &amp;&amp;x, Func &amp;&amp;f, FuncWhenEmpty &amp;&amp;fwe)</td></tr>
-<tr class="memdesc:a31af20d3052c671a95c5965c4ad3fdd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Visit the inner value of a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> and apply a function to it.  <br /></td></tr>
-<tr class="memitem:a6db62aed1d9e0223971099a749a8046b" id="r_a6db62aed1d9e0223971099a749a8046b"><td class="memTemplParams" colspan="2">template&lt;typename Func, typename FuncWhenEmpty, typename Any&gt; <br />
-requires ::std::is_same_v&lt;::std::remove_cvref_t&lt;Any&gt;, <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&gt;</td></tr>
-<tr class="memitem:a6db62aed1d9e0223971099a749a8046b template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a6db62aed1d9e0223971099a749a8046b">casyyy::maths::visit</a> (Func &amp;&amp;f, FuncWhenEmpty &amp;&amp;fwe, Any &amp;&amp;any)</td></tr>
-<tr class="memdesc:a6db62aed1d9e0223971099a749a8046b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the visit look like the std::visit.  <br /></td></tr>
-<tr class="memitem:ab17a23d5c7033b9ad6549d9dc8b8d6bd" id="r_ab17a23d5c7033b9ad6549d9dc8b8d6bd"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ab17a23d5c7033b9ad6549d9dc8b8d6bd">casyyy::maths::bpow</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;a, unsigned n) noexcept</td></tr>
-<tr class="memdesc:ab17a23d5c7033b9ad6549d9dc8b8d6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the integer power of a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
-<tr class="memitem:a788630ad2a68de5c15708bfd8ffc4c09" id="r_a788630ad2a68de5c15708bfd8ffc4c09"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a788630ad2a68de5c15708bfd8ffc4c09">casyyy::maths::abs</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x) noexcept</td></tr>
-<tr class="memdesc:a788630ad2a68de5c15708bfd8ffc4c09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute abs.  <br /></td></tr>
-<tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c" id="r_ae92937bd2c2736954266ffdf85a13b3c"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T&gt; </td></tr>
-<tr class="memitem:ae92937bd2c2736954266ffdf85a13b3c template"><td class="memItemLeft">constexpr T&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c">casyyy::maths::unchecked_numeric_cast</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memdesc:ae92937bd2c2736954266ffdf85a13b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number without check.  <br /></td></tr>
-<tr class="memitem:a8a28888f58697ea96d19571d54dbb602" id="r_a8a28888f58697ea96d19571d54dbb602"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T, <a class="el" href="namespacecasyyy_1_1maths.html#ad2c5becd5c7b33e58c95da60f595ceea">casting_policy</a> Policy = casting_policy::strict&gt; </td></tr>
-<tr class="memitem:a8a28888f58697ea96d19571d54dbb602 template"><td class="memItemLeft">constexpr ::std::optional&lt; T &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#a8a28888f58697ea96d19571d54dbb602">casyyy::maths::numeric_cast</a> (const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x) noexcept</td></tr>
-<tr class="memdesc:a8a28888f58697ea96d19571d54dbb602"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number with check based on policy.  <br /></td></tr>
-<tr class="memitem:aba943ffd942078bb615e72dccc81d1d1" id="r_aba943ffd942078bb615e72dccc81d1d1"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits = ::std::char_traits&lt;CharT&gt;&gt; </td></tr>
-<tr class="memitem:aba943ffd942078bb615e72dccc81d1d1 template"><td class="memItemLeft">::std::basic_ostream&lt; CharT, Traits &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#aba943ffd942078bb615e72dccc81d1d1">casyyy::maths::operator&lt;&lt;</a> (::std::basic_ostream&lt; CharT, Traits &gt; &amp;os, const <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
-<tr class="memdesc:aba943ffd942078bb615e72dccc81d1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to the stream.  <br /></td></tr>
-<tr class="memitem:ac7320982f9e926a61ea8e065d57fc3ef" id="r_ac7320982f9e926a61ea8e065d57fc3ef"><td class="memItemLeft">constexpr <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecasyyy_1_1maths.html#ac7320982f9e926a61ea8e065d57fc3ef">casyyy::maths::make_numeric_any</a> (sign_unambiguous_arithmetic auto x) noexcept</td></tr>
-<tr class="memdesc:ac7320982f9e926a61ea8e065d57fc3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tool function to build <a class="el" href="classcasyyy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:aa8cb7251f01ecc97ab3bfeae9b4c1729" id="r_aa8cb7251f01ecc97ab3bfeae9b4c1729"><td class="memItemLeft">constexpr <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#aa8cb7251f01ecc97ab3bfeae9b4c1729">cy::maths::operator+</a> (<a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> x, auto &amp;&amp;y) noexcept</td></tr>
+<tr class="memdesc:aa8cb7251f01ecc97ab3bfeae9b4c1729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do addition between a <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> and another number or <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:a5f143924da2bcff4738dc07bb535d988" id="r_a5f143924da2bcff4738dc07bb535d988"><td class="memItemLeft">constexpr <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#a5f143924da2bcff4738dc07bb535d988">cy::maths::operator-</a> (<a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> x, auto &amp;&amp;y) noexcept</td></tr>
+<tr class="memdesc:a5f143924da2bcff4738dc07bb535d988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do substraction between a <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> and another number or <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:a5cbe8baaa87e89a44f3d8c19207a137e" id="r_a5cbe8baaa87e89a44f3d8c19207a137e"><td class="memItemLeft">constexpr <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#a5cbe8baaa87e89a44f3d8c19207a137e">cy::maths::operator*</a> (<a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> x, auto &amp;&amp;y) noexcept</td></tr>
+<tr class="memdesc:a5cbe8baaa87e89a44f3d8c19207a137e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do multiplication between a <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> and another number or <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:a7458726e26438981c68bdf5dcd8d3152" id="r_a7458726e26438981c68bdf5dcd8d3152"><td class="memItemLeft">constexpr <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#a7458726e26438981c68bdf5dcd8d3152">cy::maths::operator/</a> (<a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> x, auto &amp;&amp;y) noexcept</td></tr>
+<tr class="memdesc:a7458726e26438981c68bdf5dcd8d3152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do division between a <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> and another number or <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
+<tr class="memitem:a8902d1a28ad3fd117de218b72c3a7486" id="r_a8902d1a28ad3fd117de218b72c3a7486"><td class="memTemplParams" colspan="2">template&lt;sign_unambiguous_arithmetic T, <a class="el" href="namespacecy_1_1maths.html#a1358cc39844dfea00d8bf21edd634004">casting_policy</a> Policy = casting_policy::strict&gt; </td></tr>
+<tr class="memitem:a8902d1a28ad3fd117de218b72c3a7486 template"><td class="memItemLeft">constexpr ::std::optional&lt; T &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#a8902d1a28ad3fd117de218b72c3a7486">cy::maths::from</a> (const <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x) noexcept</td></tr>
+<tr class="memdesc:a8902d1a28ad3fd117de218b72c3a7486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting a <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to a normal number with check based on policy.  <br /></td></tr>
+<tr class="memitem:a4a8f0f5ec416de7feb5c2dcb8da4ff40" id="r_a4a8f0f5ec416de7feb5c2dcb8da4ff40"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits = ::std::char_traits&lt;CharT&gt;&gt; </td></tr>
+<tr class="memitem:a4a8f0f5ec416de7feb5c2dcb8da4ff40 template"><td class="memItemLeft">::std::basic_ostream&lt; CharT, Traits &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#a4a8f0f5ec416de7feb5c2dcb8da4ff40">cy::maths::operator&lt;&lt;</a> (::std::basic_ostream&lt; CharT, Traits &gt; &amp;os, const <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> &amp;x)</td></tr>
+<tr class="memdesc:a4a8f0f5ec416de7feb5c2dcb8da4ff40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a> to the stream.  <br /></td></tr>
+<tr class="memitem:af78d5b60b2bff51985ed1c58e3247908" id="r_af78d5b60b2bff51985ed1c58e3247908"><td class="memItemLeft">constexpr <a class="el" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacecy_1_1maths.html#af78d5b60b2bff51985ed1c58e3247908">cy::maths::make_numeric_any</a> (sign_unambiguous_arithmetic auto x) noexcept</td></tr>
+<tr class="memdesc:af78d5b60b2bff51985ed1c58e3247908"><td class="mdescLeft">&#160;</td><td class="mdescRight">A tool function to build <a class="el" href="classcy_1_1maths_1_1numeric__any.html" title="A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...">numeric_any</a>.  <br /></td></tr>
 </table>
 <a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
-<a id="a7eac2aa0392813b2f68a19a1f241ad85" name="a7eac2aa0392813b2f68a19a1f241ad85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7eac2aa0392813b2f68a19a1f241ad85">&#9670;&#160;</a></span>FUNCTION_TWO_OPERATION</h2>
+<a id="af2d71ff81125f6291748b6885756f05d" name="af2d71ff81125f6291748b6885756f05d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2d71ff81125f6291748b6885756f05d">&#9670;&#160;</a></span>FUNCTION_TO_AS</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FUNCTION_TWO_OPERATION</td>
+          <td class="memname">#define FUNCTION_TO_AS</td>
           <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op</em></span>, </td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>op2_name</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(numeric_any x, sign_unambiguous_arithmetic <span class="keyword">auto</span> y) <span class="keyword">noexcept</span> {                 \</div>
-<div class="line">    <span class="keywordflow">return</span> x op2 y;                                                                                                \</div>
-<div class="line">}                                                                                                                  \</div>
-<div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(sign_unambiguous_arithmetic <span class="keyword">auto</span> x, numeric_any y) <span class="keyword">noexcept</span> {                 \</div>
-<div class="line">    <span class="keywordflow">return</span> numeric_any{x} op2 y;                                                                                   \</div>
-<div class="line">}                                                                                                                  \</div>
-<div class="line"><span class="keyword">export</span> <span class="keyword">constexpr</span> numeric_any op_name(numeric_any x, numeric_any y) <span class="keyword">noexcept</span> {                                      \</div>
-<div class="line">    <span class="keywordflow">return</span> x op2 y;                                                                                                \</div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name: {                                                                              \</div>
+<div class="line">    <span class="keyword">auto</span> res = x.restore_value&lt;type_name&gt;();                                                                       \</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(res);                                                                                    \</div>
 <div class="line">}</div>
 </div><!-- fragment -->
-<p>To generate operator between numeric_any with a value or another numeric_any. Including: +, -, *, /. And used +=, -=, *=, /= to do operations. </p>
-<dl class="section return"><dt>Returns</dt><dd>A new numeric_any after operations. </dd></dl>
+</div>
+</div>
+<a id="ad0ea4f8350a840238d11c4dc54a3f21d" name="ad0ea4f8350a840238d11c4dc54a3f21d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0ea4f8350a840238d11c4dc54a3f21d">&#9670;&#160;</a></span>FUNCTIONS_TO_VISIT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FUNCTIONS_TO_VISIT</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type_enum_name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>enum_value</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> numeric_types::type_enum_name:                                                                                \</div>
+<div class="line">    <span class="keywordflow">return</span> f(x.template restore_value&lt;type_name&gt;());</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3af99897b60119951af8961dbd52dd3f" name="a3af99897b60119951af8961dbd52dd3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3af99897b60119951af8961dbd52dd3f">&#9670;&#160;</a></span>UNREACHABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UNREACHABLE&#160;&#160;&#160;__builtin_unreachable()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

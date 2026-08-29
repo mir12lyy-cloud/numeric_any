@@ -73,7 +73,11 @@ concept sign_unambiguous_arithmetic =
 
 /// @brief Numeric conversion strategy, used for handling different types of number conversions.
 /// @note The default policy is set to strict.
-enum class casting_policy : unsigned char { equal, strict, normal };
+enum class casting_policy : unsigned char {
+    equal,  ///< Require that declared type matches stored type.
+    strict, ///< Allow type promotion between types in the same numeric and signedness domains.
+    normal  ///< As long as no overflow occurs during conversion.
+};
 
 /**
  * @brief A type-erasure-based utility class for arithmetic types.

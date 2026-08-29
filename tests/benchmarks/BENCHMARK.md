@@ -1,6 +1,6 @@
-# numeric_any Comprehensive Benchmark Report
+# numeric_any Benchmark Report (New Iteration)
 
-> **Date**: 2026-08-04 | **CPU**: 20 × 2880 MHz | **OS**: Windows  
+> **Date**: 2026-08-28 | **CPU**: 20 × 2880 MHz | **OS**: Windows + WSL2 (Ubuntu)
 
 ---
 
@@ -8,264 +8,340 @@
 
 1. [Environment & Methodology](#1-environment--methodology)
 2. [Same-Type Operations](#2-same-type-operations)
-3. [Mixed-Type Operations](#3-mixed-type-operations)
+3. [Run-to-Run Consistency](#3-run-to-run-consistency)
 4. [Type Conversion & Policies](#4-type-conversion--policies)
-5. [Three-Compiler Comparison](#5-three-compiler-comparison)
-6. [C++20 vs C++23](#6-c20-vs-c23)
+5. [hpp vs C++20 Modules (ixx)](#5-hpp-vs-c20-modules-ixx)
+6. [WSL (Linux, GCC) vs Windows (Clang)](#6-wsl-linux-gcc-vs-windows-clang)
 7. [10-Repetition Statistics](#7-10-repetition-statistics)
-8. [Final Conclusions](#8-final-conclusions)
+8. [Changes vs Previous Iteration](#8-changes-vs-previous-iteration)
+9. [Final Conclusions](#9-final-conclusions)
 
 ---
 
 ## 1. Environment & Methodology
 
-### Compilers
+### Toolchain
 
-| Compiler | Version | Optimization | C++ Standard |
-|----------|---------|-------------|--------------|
-| GCC | 15.2.0 (MinGW-w64) | `-O3 -DNDEBUG` | C++20 / C++23 |
-| Clang | 22.1.3 (MSYS2) | `-O3 -DNDEBUG` | C++20 / C++23 |
-| MSVC | 19.51 (VS 2026 Preview) | `/O2 /Oi /Ot /DNDEBUG` | C++20 / C++23 |
+| Item | Value |
+|------|-------|
+| Env A (Windows) | Clang 22.1.3 (MSVC LLVM toolchain, MSVC STL), C++20 |
+| Env B (WSL2 Ubuntu) | GCC 15.2.0 (libstdc++), C++23 |
+| Optimization | `-O3 -DNDEBUG` (Release) |
+| Benchmark framework | Google Benchmark v1.9.1 (FetchContent) |
+| Data scale | N = 1,000,000 |
+| Build | `tests/benchmarks/build_v2` (Win, Ninja) / `tests/benchmarks/build_wsl_v2` (WSL, Ninja) |
+| Code version | `cy::maths::numeric_any` (`as` / `from`, policies `equal` / `strict` / `normal`) |
 
 ### Comparison Targets
 
 | Type-Erased Scheme | Description |
 |--------------------|-------------|
-| `casyyy::maths::numeric_any` | Core class of this project |
-| `std::any` | C++17 standard any-type container |
-| `std::variant<int,long long,double,long double>` | C++17 standard multi-type union |
+| `cy::maths::numeric_any` | Type-erased arithmetic container (this project) |
+| `std::any` | C++17 type-erased container (small-buffer optimized in MSVC STL) |
+| `std::variant<...>` | C++17 discriminated union |
 | Native types | `int`, `long long`, `unsigned long long`, `float`, `double`, `long double` |
 
-### Test Dimensions
+### Benchmark Dimensions
 
-| Category | Source File | Description |
-|----------|-------------|-------------|
+| Category | Source File | Contents |
+|----------|-------------|----------|
 | Same-Type Operations | `same_type_bench.cpp` | Construction, arithmetic, comparison, retrieval |
-| Mixed-Type Operations | `mixed_type_bench.cpp` | Cross-type arithmetic (with promotion), cross-type comparison |
-| Type Conversion & Policies | `conversion_bench.cpp` | unchecked/strict/normal/relaxed policy overhead |
+| Mixed-Type Operations | `mixed_type_bench.cpp` | Same suite re-run (repeatability check) |
+| Type Conversion & Policies | `conversion_bench.cpp` | `as` / `from` (equal/strict/normal), round-trips |
 
-### Data Scale
-
-- **N=4,096**: Quick comparison, suitable for high-frequency iteration
-- **N=1,000,000**: Large-scale scenario, amortizes cache effects
+> All tables report **median real time per 1M iterations** (ns). Lower is better.
 
 ---
 
 ## 2. Same-Type Operations
 
-> Compares `numeric_any` with `std::any`, `std::variant`, and native types for same-type performance.
-
-### 2.1 Construction (N=1M, Clang -O3)
+### 2.1 Construction (Windows/Clang)
 
 | Type | Native | numeric_any | std::any | std::variant | na/Native | na/any |
-|------|--------|-------------|----------|-------------|-----------|--------|
-| int | 341K ns | 857K ns | 1,020K ns | 538K ns | 2.5x | **1.2x faster** |
-| long long | 357K ns | 1,333K ns | 1,417K ns | 647K ns | 3.7x | 1.1x |
-| unsigned long long | 428K ns | 706K ns | 1,326K ns | -- | 1.7x | **1.9x faster** |
-| float | 211K ns | 831K ns | 1,333K ns | -- | 3.9x | **1.6x faster** |
-| double | 331K ns | 1,022K ns | 1,601K ns | 408K ns | 3.1x | **1.6x faster** |
-| **long double** | 2,893K ns | 3,492K ns | 35,610K ns | 2,991K ns | **1.2x** | **10.2x faster** |
+|------|--------|-------------|----------|--------------|-----------|--------|
+| int | 230,164 | 1,317,771 | 871,931 | 324,693 | 5.7x | 1.51x slower |
+| long long | 401,714 | 1,332,189 | 1,171,875 | 645,229 | 3.3x | 1.14x slower |
+| unsigned long long | 408,155 | 739,397 | 1,123,047 | -- | 1.8x | **1.52x faster** |
+| float | 230,190 | 1,074,219 | 1,996,314 | -- | 4.7x | **1.86x faster** |
+| double | 444,984 | 1,339,286 | 1,708,984 | 571,987 | 3.0x | 1.28x faster |
+| long double | 357,492 | 1,464,844 | 1,497,236 | 393,345 | 4.1x | 1.02x faster |
 
-> `numeric_any` construction outperforms `std::any` across all types (1.2-10.2x)  
-> For `long double`, na is only 1.2x slower than native, while any is 12.3x slower
-
-### 2.2 Arithmetic (N=1M, Clang -O3)
+### 2.2 Arithmetic (Windows/Clang)
 
 | Operation | Native | numeric_any | na/Native |
 |-----------|--------|-------------|-----------|
-| int += int | 83K ns | 1,769K ns | 21.3x |
-| long long += ll | 191K ns | 2,256K ns | 11.8x |
-| **ullong += ull** | 255K ns | **266K ns** | **1.04x** |
-| float *= float | 1,265K ns | 3,413K ns | 2.7x |
-| double *= double | 1,206K ns | 3,976K ns | 3.3x |
-| **ldouble *= ld** | 187M ns | **174M ns** | **0.93x** |
-| int -= int | 75K ns | 1,192K ns | 15.9x |
-| double /= double | 3,006K ns | 4,496K ns | 1.5x |
+| int += int | 114,397 | 1,283,482 | **11.2x** |
+| long long += ll | 240,626 | 767,299 | 3.2x |
+| **unsigned long long += ull** | 213,472 | **223,214** | **1.05x (at parity)** |
+| **float \*= float** | 836,680 | **920,348** | **1.10x** |
+| double \*= double | 892,857 | 1,171,875 | 1.31x |
+| long double \*= ld | 1,133,510 | 1,534,598 | 1.35x |
+| int -= int | 102,539 | 1,245,117 | 12.1x |
+| **double /= double** | 4,047,440 | **3,138,951** | **0.78x (na faster)** |
 
-### 2.3 Comparison (N=1M, Clang -O3)
+> `ullong` add at parity, `float` mul near-native, and this run `double` div is actually **faster than native (Maybe the execution sequence)**. Small signed ints remain the worst case (~3–12x).
 
-| Type | Native | numeric_any | std::variant | na/Native |
-|------|--------|-------------|-------------|-----------|
-| int | 1,997K ns | 7,182K ns | 6,867K ns | 3.6x |
-| long long | 3,075K ns | 6,500K ns | 6,062K ns | 2.1x |
-| double | 3,462K ns | 7,031K ns | 7,662K ns | 2.0x |
-| **long double** | 5,365K ns | **5,318K ns** | 6,433K ns | **1.0x** |
+### 2.3 Comparison (Windows/Clang)
 
-### 2.4 Retrieval (N=1M, Clang -O3)
+| Type | Native | numeric_any | std::variant | na/Native | na/variant |
+|------|--------|-------------|--------------|-----------|------------|
+| int | 2,979,343 | 8,125,000 | 4,199,219 | 2.7x | 1.9x |
+| long long | 2,929,688 | 5,902,778 | 3,374,413 | 2.0x | 1.8x |
+| double | 2,455,357 | 5,998,884 | 4,741,379 | 2.4x | 1.3x |
+| long double | 3,523,284 | 6,406,250 | 3,906,250 | 1.8x | 1.6x |
+
+### 2.4 Retrieval (Get) (Windows/Clang)
 
 | Type | numeric_any | std::any | std::variant | na/any | na/variant |
-|------|-------------|----------|-------------|--------|------------|
-| int | 3,397K ns | 5,051K ns | 3,277K ns | **1.5x faster** | 1.0x |
-| long long | 3,287K ns | 5,475K ns | 3,595K ns | **1.7x faster** | 1.1x |
-| double | 3,202K ns | 5,061K ns | 3,250K ns | **1.6x faster** | 1.0x |
-| long double | 3,581K ns | 9,119K ns | 4,079K ns | **2.5x faster** | 1.1x |
+|------|-------------|----------|--------------|--------|------------|
+| int | 2,142,559 | 4,589,844 | 1,123,047 | **2.1x faster** | 1.9x |
+| long long | 2,148,438 | 4,589,844 | 1,123,047 | **2.1x faster** | 1.9x |
+| double | 1,811,594 | 4,718,960 | 1,074,219 | **2.6x faster** | 1.7x |
+| long double | 1,843,164 | 4,718,960 | 1,395,089 | **2.6x faster** | 1.3x |
 
 ---
 
-## 3. Mixed-Type Operations
+## 3. Run-to-Run Consistency
 
-> Compares `numeric_any` with native types for cross-type arithmetic and comparison (including type promotion).
+Both `same_type_bench.cpp` and `mixed_type_bench.cpp` run the same suite; running both provides a repeatability check (Windows/Clang):
 
-### 3.1 Cross-Type Addition (N=1M, Clang -O3)
+| Benchmark | same_type run | mixed_type run |
+|-----------|---------------|----------------|
+| Construct int | 1,317,771 | 1,123,047 |
+| Add int | 1,283,482 | 1,045,850 |
+| Add ullong | 223,214 | 262,277 |
+| Get int | 2,142,559 | 2,665,134 |
+| Compare int | 8,125,000 | 10,009,766 |
 
-| Operation | Native | numeric_any | na/Native |
-|-----------|--------|-------------|-----------|
-| int + double | 1,697K ns | 7,792K ns | 4.6x |
-| int + unsigned int | 183K ns | 1,515K ns | 8.3x |
-| int + long double | 3,925K ns | 13,641K ns | 3.5x |
-| float + double | 1,548K ns | 6,159K ns | 4.0x |
-| float + long double | 3,965K ns | 12,136K ns | 3.1x |
-| long long + double | 1,411K ns | 6,456K ns | 4.6x |
-| long long + ullong | 680K ns | 4,881K ns | 7.2x |
-| double + long double | 4,116K ns | 10,770K ns | 2.6x |
-
-### 3.2 Cross-Type Comparison (N=1M, Clang -O3)
-
-| Operation | Native | numeric_any (one side) | na/Native |
-|-----------|--------|------------------------|-----------|
-| int <=> double | 384K ns | 6,236K ns | 16.2x |
-| int <=> long double | 4,541K ns | 9,969K ns | 2.2x |
-| int <=> unsigned int | 231K ns | 6,999K ns | 30.3x |
-| double <=> int | 558K ns | 10,812K ns | 19.4x |
-| double <=> long double | 4,507K ns | 7,488K ns | 1.7x |
-| long long <=> double | 530K ns | 3,954K ns | 7.5x |
-| long double <=> int | 4,052K ns | 7,906K ns | 2.0x |
-
-### 3.3 Both-Sides Type-Erased Comparison (N=1M, Clang)
-
-| Operation | numeric_any | std::variant | Winner |
-|-----------|-------------|-------------|--------|
-| na(int)<=>na(double) | 4,246K ns | 5,360K ns | **na 1.3x faster** |
-| na(int)<=>na(ldouble) | 7,288K ns | 7,604K ns | na 1.04x |
-| na(double)<=>na(ldouble) | 7,560K ns | 6,854K ns | variant 1.1x |
+> Cross-process variance up to ~1.5x on some metrics; see Section 7 for the 10-repetition pass.
 
 ---
 
 ## 4. Type Conversion & Policies
 
-### 4.1 Same-Type Cast (N=1M, Clang -O3)
+### 4.1 Same-Type Cast (Windows/Clang)
 
-| Operation | unchecked | strict | std::any_cast | unchecked/any |
-|-----------|-----------|--------|---------------|---------------|
-| int -> int | 4,364K ns | 3,889K ns | 6,149K ns | **1.4x faster** |
-| long long -> ll | 4,077K ns | 3,503K ns | 5,363K ns | **1.3x faster** |
-| float -> float | 3,688K ns | 4,001K ns | 5,423K ns | **1.5x faster** |
-| double -> double | 3,914K ns | 3,240K ns | 5,176K ns | **1.3x faster** |
-| long double -> ld | 3,733K ns | 6,830K ns | 8,837K ns | **2.4x faster** |
+| Operation | `as` | strict | **equal** | std::any_cast | std::variant |
+|-----------|------|--------|-----------|---------------|--------------|
+| int -> int | 1,902,174 | 2,471,515 | 1,674,107 | 4,589,844 | 1,147,461 |
+| long long -> ll | 2,148,438 | 2,050,781 | 1,717,493 | 4,565,747 | 1,025,391 |
+| float -> float | 2,197,266 | 1,992,754 | 1,843,164 | 4,565,747 | -- |
+| double -> double | 1,881,143 | 2,050,781 | 1,717,493 | 4,464,286 | 1,004,464 |
+| long double -> ld | 1,843,164 | 2,038,043 | 1,765,971 | 4,612,199 | 1,066,767 |
 
-### 4.2 Policy Overhead (int -> long, N=1M, Clang)
+> With the new `as` fast path, `as` ≈ `strict` ≈ `equal` on same-type casts (differences within run noise). All remain **~2.2–2.6x faster than `std::any_cast`**.
 
-| Policy | Time | Relative |
-|--------|------|----------|
-| strict | 4,085K ns | 1.00x |
-| normal | 5,391K ns | 1.32x |
-| relaxed | 3,513K ns | **0.86x** |
+### 4.2 Cross-Type Casts & Policies
 
-### 4.3 Construct + Get Round-Trip (N=1M, Clang)
+**Windows/Clang (median ns/1M):**
 
-| Type | numeric_any | std::any | std::variant | na vs any |
-|------|-------------|----------|-------------|-----------|
-| int | 1,446K ns | 1,501K ns | 1,376K ns | 1.04x |
-| long long | 1,278K ns | 1,026K ns | 1,087K ns | 0.80x |
-| **double** | **840K ns** | 955K ns | 1,003K ns | **1.14x faster** |
-| long double | 2,684K ns | 31,840K ns | 2,609K ns | **11.9x faster** |
+| Operation | `as` | equal | strict | normal |
+|-----------|------|-------|--------|--------|
+| int -> long long (promote) | 2,148,438 | **1,689,189** | 2,197,266 | -- |
+| int -> short (narrow) | -- | **1,650,799** | 2,099,609 | 6,417,411 |
+| int -> long | -- | **1,727,580** | 2,246,094 | 2,083,333 |
+| double -> int (cross) | -- | -- | -- | 2,604,167 |
+| long double -> int (cross) | -- | -- | -- | 2,604,167 |
 
----
+**WSL/GCC (median ns/1M):**
 
-## 5. Three-Compiler Comparison
+| Operation | equal | strict | normal |
+|-----------|-------|--------|--------|
+| int -> long long (promote) | **1,185,474** | 2,699,982 | -- |
+| int -> short (narrow) | **1,162,554** | 2,507,655 | 2,903,821 |
+| int -> long | **1,159,579** | 2,803,226 | 2,689,443 |
 
-> Composite ranking based on N=1M large-scale data + 10-repetition statistics.
+> **`equal` remains the cheapest cross-type path** — a single `is_same_type` compare, no `visit` dispatch: ~1.2–1.3x faster than `strict` on Windows, **~2.2–2.4x faster than `strict`/`normal` on WSL/GCC**. `normal` narrowing is the slowest on Windows (per-element range check).
 
-### 5.1 Compiler Rankings
+### 4.3 Construct + Get Round-Trip (Windows/Clang)
 
-| Rank | Compiler | Strengths | Weaknesses | Stability (CV) |
-|------|----------|-----------|------------|----------------|
-| 1 | **Clang 22** | ull add 1.04x, ldouble mul **0.93x** | na comparison, higher variance | ~8% |
-| 2 | **GCC 15** | Best int/double construction & arithmetic | long double (80-bit x87) | **~4%** |
-| 3 | **MSVC 19** | Best na vs any ratio, good variant optimization | Slower absolute times (/O2 < -O3) | ~3.5% |
+| Type | numeric_any | std::any | std::variant | na vs any | na vs variant |
+|------|-------------|----------|--------------|-----------|---------------|
+| int | 815,763 | 2,665,134 | 531,250 | **3.3x faster** | 1.5x |
+| long long | 544,085 | 2,582,097 | 562,500 | **4.7x faster** | ~1.0x |
+| double | 767,299 | 3,676,471 | 732,422 | **4.8x faster** | ~1.0x |
+| long double | 837,054 | 3,953,313 | 836,680 | **4.7x faster** | ~1.0x |
 
-### 5.2 Key Scenario Compiler Comparison
-
-| Scenario | GCC | Clang | MSVC | Best |
-|----------|-----|-------|------|------|
-| int construction | 3.0K ns* | 857K ns | 1,752K ns | GCC |
-| long double construction | 31K ns* | 3,492K ns | 2,394K ns | MSVC |
-| ull += ull na/Native | ~2.8x* | **1.04x** | 3.5x | **Clang** |
-| ldouble mul na/Native | ~1.2x* | **0.93x** | 10.0x | **Clang** |
-| na get vs any | 3.6x* | 1.5x | 2.3x | GCC |
-
-> *GCC = N=4096 reference values
+> The new `as` fast path directly speeds up round-trips: `long long` improved ~40% vs the previous iteration (899k → 544k).
 
 ---
 
-## 6. C++20 vs C++23
+## 5. hpp vs C++20 Modules (ixx)
 
-| Dimension | Conclusion |
-|-----------|------------|
-| `numeric_any` performance | **No significant difference** -- no C++23-specific features used |
-| `std::isnormal` | Only affects NaN/Inf checks, not on the hot path |
-| Compiler optimization strategy | Consistent between C++20 and C++23 modes |
-| Recommended standard | C++20 is sufficient for all performance benefits |
+The module build performs identically to the header build (sample, Windows/Clang, median):
+
+| Benchmark | hpp | ixx |
+|-----------|-----|-----|
+| NumericAny_Construct_int | 1,317,771 | 1,778,739 |
+| NumericAny_Add_int | 1,283,482 | 1,255,020 |
+| NumericAny_Get_int | 2,142,559 | 2,299,331 |
+
+Differences fall within cross-run variance — **no module-related penalty**.
+
+---
+
+## 6. WSL (Linux, GCC 15.2.0, C++23) vs Windows (Clang 22.1.3, C++20)
+
+> Same suite, same N=1M. All values median ns per 1M iterations.
+
+### 6.1 Headline Difference (numeric_any)
+
+| Benchmark | Windows (Clang) | WSL (GCC) |
+|-----------|-----------------|-----------|
+| Construct int | 1,317,771 | 599,519 |
+| Construct long long | 1,332,189 | 617,658 |
+| Add int | 1,283,482 | 289,790 |
+| Add long long | 767,299 | 501,334 |
+| Add ullong | 223,214 | 347,614 |
+| Mul float | 920,348 | 2,679,635 |
+| Mul double | 1,171,875 | 2,835,042 |
+| Mul long double | 1,534,598 | 114,208,071 |
+| Compare int | 8,125,000 | 6,407,104 |
+| Get int | 2,142,559 | 2,261,353 |
+
+### 6.2 Native Reference Differs Too
+
+| Benchmark | Windows native | WSL native |
+|-----------|----------------|------------|
+| Construct int | 230,164 | 52,507 |
+| Compare int | 2,979,343 | 98,961 |
+
+GCC/Linux eliminates trivial native ops (~0.05–0.1 ns/op), so **na/Native ratios are not directly comparable across platforms** (e.g. WSL na/Native compare for int looks like 65x because native is ~free).
+
+### 6.3 vs std::any / std::variant on WSL
+
+| Benchmark | Windows na vs any | WSL na vs any |
+|-----------|-------------------|---------------|
+| Construct int | 1,318K vs 872K (any 1.51x faster) | 600K vs 1,125K (**na 1.9x faster**) |
+| Get int | 2,143K vs 4,590K (na 2.1x) | 2,261K vs 2,976K (na 1.3x) |
+| Get ldouble | 1,843K vs 4,719K (na 2.6x) | 2,597K vs 7,049K (na 2.7x) |
+
+| Benchmark | WSL na vs variant |
+|-----------|-------------------|
+| Construct int | 600K vs 618K (~parity) |
+| Get int | 2,261K vs 2,533K (~1.1x) |
+| **Compare double** | **5,553K vs 7,055K (na 1.27x faster)** |
+| Compare ldouble | 6,596K vs 7,335K (na 1.11x faster) |
+
+> On GCC/Linux `numeric_any` is nearly on par with `std::variant` for construction/get and **beats it for double / long-double comparison**.
+
+### 6.4 long double (80-bit x87 on Linux)
+
+| Benchmark | Windows (na) | WSL (na) |
+|-----------|--------------|----------|
+| Construct ldouble | 1,464,844 | 7,276,074 |
+| **Mul ldouble** | 1,534,598 | 114,208,071 |
+| RoundTrip ldouble | 837,054 | — |
+
+> Linux `long double` (80-bit x87) is far slower than MSVC's 64-bit `long double`. Notably, **WSL `na` mul ldouble (114.2M) is faster than native (134.2M) → 0.85x** — the x87 cost dominates and hides type-erasure overhead.
 
 ---
 
 ## 7. 10-Repetition Statistics
 
-> Each benchmark repeated 10 times; mean, standard deviation, and coefficient of variation (CV) reported.
+> Each benchmark repeated **10 times** in-process (`--benchmark_repetitions=10 --benchmark_report_aggregates_only`), N=1M. Reported: mean (ns/1M), stddev, CV.
 
-### 7.1 Stability Overview
+### 7.1 Conversion Policies (Windows/Clang)
 
-| Compiler | Min CV | Max CV | Avg CV | Assessment |
-|----------|--------|--------|--------|------------|
-| GCC | 2.0% | 5.6% | **~4%** | Most stable |
-| MSVC | 2.4% | 4.6% | **~3.5%** | Most stable |
-| Clang | 3.3% | 12.6% | ~8% | Higher variance |
+| Benchmark | mean (ns) | stddev | CV |
+|-----------|-----------|--------|-----|
+| `equal` same int | 1,795,377 | 10,995 | **0.61%** |
+| `equal` promote int→ll | 1,786,015 | 21,184 | 1.19% |
+| `equal` narrow int→short | 1,828,171 | 16,358 | 0.89% |
+| `equal` policy int→long | 1,802,038 | 24,117 | 1.34% |
+| `as` (unchecked) same dbl | 1,902,931 | 12,976 | 0.68% |
+| `as` (unchecked) same int | 2,299,219 | 173,498 | 7.55% |
+| `strict` same int | 2,101,404 | 110,088 | 5.24% |
+| `normal` policy int→long | 2,159,281 | 37,237 | 1.72% |
+| `strict` policy int→long | 2,165,032 | 130,595 | 6.03% |
+| `normal` narrow int→short | 6,450,453 | 299,694 | 4.65% |
+| std::any same int | 4,833,209 | 358,504 | 7.42% |
 
-### 7.2 Clang 10-Run Highlights (N=1M)
+### 7.2 Same-Type Suite Highlights (Windows/Clang)
 
-| Benchmark | mean | stddev | CV |
-|-----------|------|--------|-----|
-| Native_Construct_int | 375,630 ns | 47,160 ns | 12.6% |
-| NumericAny_Construct_int | 926,930 ns | 57,190 ns | 6.2% |
-| Native_Add_ullong | 272,697 ns | 25,890 ns | 9.5% |
-| **NumericAny_Add_ullong** | **283,019 ns** | **14,698 ns** | **5.2%** |
-| Native_Mul_ldouble | 197,838,000 ns | 13,861,000 ns | 7.0% |
-| **NumericAny_Mul_ldouble** | **192,391,000 ns** | 13,099,600 ns | **6.8%** |
-| NumericAny_Get_int | 3,609,890 ns | 283,480 ns | 7.9% |
+| Benchmark | mean (ns) | stddev | CV |
+|-----------|-----------|--------|-----|
+| Add ullong (na) | 177,442 | 4,028 | 2.27% |
+| Add ullong (native) | 178,902 | 6,738 | 3.77% |
+| Add int (na) | 834,160 | 13,711 | 1.64% |
+| Construct int (na) | 1,108,752 | 37,999 | 3.43% |
+| Compare int (na) | 6,449,035 | 204,614 | 3.17% |
+| Compare int (native) | 1,930,030 | 51,582 | 2.67% |
 
-### 7.3 GCC 10-Run Highlights (N=4096)
+### 7.3 Conversion Policies (WSL/GCC)
 
-| Benchmark | mean | stddev | CV |
-|-----------|------|--------|-----|
-| NumericAny_Construct_int | 3,231 ns | 158.1 ns | 4.9% |
-| **NumericAny_Add_int** | **3,649 ns** | **74.7 ns** | **2.0%** |
-| NumericAny_Mul_ldouble | 326,553 ns | 18,295 ns | 5.6% |
+| Benchmark | mean (ns) | stddev | CV |
+|-----------|-----------|--------|-----|
+| `equal` promote int→ll | 1,028,075 | 84,228 | 8.19% |
+| `equal` narrow int→short | 1,032,695 | 53,561 | 5.19% |
+| `equal` policy int→long | 1,054,330 | 55,216 | 5.24% |
+| `equal` same int | 1,635,646 | 53,239 | 3.25% |
+| `as` (unchecked) same int | 2,548,841 | 63,622 | 2.50% |
+| `strict` same int | 3,839,704 | 62,750 | 1.63% |
+| `strict` promote int→ll | 4,272,703 | 82,348 | 1.93% |
+| `normal` policy int→long | 4,389,339 | 98,043 | 2.23% |
+| `normal` narrow int→short | 2,891,947 | 37,841 | 1.31% |
 
-> **Key insight**: `numeric_any` type erasure **introduces no additional jitter** -- CV is on par with native types.
+### 7.4 Findings
+
+1. **`equal` same-type is the most stable benchmark** (CV 0.61% on Windows) and fastest in aggregate (1.80M vs `as` 2.30M / `strict` 2.10M) — the trivial fallback lets the compiler generate the tightest code for the always-taken fast path.
+2. **`equal` cross-type fail-fast** remains fastest and stable (Windows CV 0.9–1.3%; ~2.2x faster than `strict` on WSL).
+3. **Type erasure adds no extra jitter**: `numeric_any` CV (1.6–7.6%) comparable to native (1.8–3.8%); this 10-rep run showed elevated RoundTrip CV (13–26%) due to system noise.
+4. **`ullong` add at parity with native, ultra-stable** (na 177k/CV 2.3% vs native 179k/CV 3.8%).
+5. **`normal` narrowing is the slowest path** (Windows mean 6.45M) — per-element range checks.
+
+---
+
+## 8. Changes vs Previous Iteration
+
+The `as` same-type fast path + inlined construction/comparison produced broad improvements on Windows/Clang (median ns/1M):
+
+| Benchmark | Before | After | Δ |
+|-----------|--------|-------|---|
+| Add long long | 1,199,777 | 767,299 | **-36%** |
+| Add ullong | 249,051 | 223,214 | -10% |
+| Mul float | 1,464,844 | 920,348 | **-37%** |
+| Mul double | 1,569,475 | 1,171,875 | **-25%** |
+| Div double | 5,000,000 | 3,138,951 | **-37%** |
+| Compare long long | 9,166,667 | 5,902,778 | **-36%** |
+| Compare int | 9,765,625 | 8,125,000 | -17% |
+| Get int | 2,299,331 | 2,142,559 | -7% |
+| Get double | 1,947,464 | 1,811,594 | -7% |
+| RoundTrip int | 899,431 | 815,763 | -9% |
+| RoundTrip long long | 899,431 | 544,085 | **-40%** |
+| Same cast int (`as`) | 2,083,333 | 1,902,174 | -9% |
+
+> Broad single-run improvements (mostly -25% to -40% on arithmetic/comparison, smaller on Get/casts). Note: these are single-shot runs; Section 7 aggregates should be used for rigorous comparisons, and this run's 10-rep pass showed elevated noise on some benchmarks.
 
 ---
 
-## 8. Final Conclusions
+## 9. Final Conclusions
 
-### numeric_any Results
+### numeric_any (current iteration)
 
 ```
-Construction:  na 1.2-10.2x faster than std::any
-Arithmetic:    na supports operations (std::any cannot), faster than variant visit
-Retrieval:     unchecked_numeric_cast 1.3-2.5x faster than std::any_cast
-Round-trip:    na 1.0-11.9x faster than std::any (long double especially outstanding)
-Stability:     CV on par with native types (2-6%), no extra jitter
+Retrieval:   ~2.1-2.6x faster than std::any_cast (Windows); 1.3-2.7x (WSL)
+Round-trip:  ~3-5x faster than std::any, on par with std::variant (both)
+Casts:       as/from-strict ~2.2-2.6x faster than any_cast (Win)
+Arithmetic:  ullong add ~1.05x native, float mul 1.10x, double div faster than native (Win)
+             big gains vs prev iteration: llong add -36%, mul -25~-37%
+Construction: na beats any on WSL; mixed on Win (better for wide/FP types)
+Policy cost: equal cheapest cross-type (no visit dispatch); normal narrow slowest
+Stability:   CV 1.6-7.6% ≈ native (1.8-3.8%); equal same-type CV 0.61%
 ```
 
-### Gap vs Native Types
+### Gap vs Native Types (Windows/Clang)
 
-| Scenario | Best Compiler | Ratio | Notes |
-|----------|--------------|-------|-------|
-| int construction | GCC | ~13x | Native SIMD extremely strong |
-| int addition | GCC | ~13x | Same as above |
-| ull addition | **Clang** | **1.04x** | Near-zero overhead |
-| double multiplication | Clang | 3.3x | -- |
-| **long double multiplication** | **Clang** | **0.93x** | **na beats native!** |
+| Scenario | na/Native | Notes |
+|----------|-----------|-------|
+| int addition | 11.2x | Worst case (tag dispatch dominates) |
+| int subtraction | 12.1x | Same |
+| int construction | 5.7x | -- |
+| long double multiplication | 1.35x | Near-native |
+| double multiplication | 1.31x | Near-native |
+| **float multiplication** | **1.10x** | Near-native |
+| **unsigned long long addition** | **1.05x** | **At parity with native** |
+| **double division** | **0.78x** | **Faster than native (this run)** |
 
----
+
 

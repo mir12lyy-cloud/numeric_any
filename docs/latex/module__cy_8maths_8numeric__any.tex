@@ -1,0 +1,42 @@
+\doxysection{cy.\+maths.\+numeric\+\_\+any Module Reference}
+\hypertarget{module__cy_8maths_8numeric__any}{}\label{module__cy_8maths_8numeric__any}\index{cy.maths.numeric\_any Module Reference@{cy.maths.numeric\_any Module Reference}}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \doxymbox{\hyperlink{conceptcy_1_1maths_1_1sign__unambiguous__arithmetic}{cy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic}}
+\begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explicit sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{cy::\+maths::\+numeric\+\_\+any}}
+\begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{cy::\+maths::\+casting\+\_\+policy}} :\+ unsigned char \{ \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f}{cy::\+maths::\+equal}}
+, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a2133fd717402a7966ee88d06f9e0b792}{cy::\+maths::\+strict}}
+, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004afea087517c26fadd409bd4b9dc642555}{cy::\+maths::\+normal}}
+ \}
+\begin{DoxyCompactList}\small\item\em Numeric conversion strategy, used for handling different types of number conversions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_aa8cb7251f01ecc97ab3bfeae9b4c1729}{cy::\+maths::\+operator+}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do addition between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a5f143924da2bcff4738dc07bb535d988}{cy::\+maths::\+operator-\/}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do substraction between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a5cbe8baaa87e89a44f3d8c19207a137e}{cy::\+maths::\+operator\texorpdfstring{$\ast$}{*}}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do multiplication between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a7458726e26438981c68bdf5dcd8d3152}{cy::\+maths::\+operator/\+}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do division between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecy_1_1maths_a8902d1a28ad3fd117de218b72c3a7486}{cy::\+maths::\+from}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecy_1_1maths_a4a8f0f5ec416de7feb5c2dcb8da4ff40}{cy::\+maths::\+operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Output \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_af78d5b60b2bff51985ed1c58e3247908}{cy::\+maths::\+make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em A tool function to build \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file src/\+\doxymbox{\hyperlink{numeric__any_8ixx}{numeric\+\_\+any.\+ixx}}
+\end{DoxyCompactItemize}
