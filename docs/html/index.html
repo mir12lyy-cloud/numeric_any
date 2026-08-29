@@ -30,7 +30,7 @@ mermaid.initialize({ startOnLoad: true, theme: theme });
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">numeric_any<span id="projectnumber">&#160;v1.5.0</span>
+   <div id="projectname">numeric_any<span id="projectnumber">&#160;v2.0.0</span>
    </div>
    <div id="projectbrief">A type-erasure-based utility class for arithmetic types. Supports basic arithmetic and some math functions.</div>
   </td>
@@ -151,7 +151,6 @@ Standard Library Dependencies</h2>
 <ul>
 <li><span class="tt">&lt;array&gt;</span> – Static array storage</li>
 <li><span class="tt">&lt;bit&gt;</span> – Bit manipulation functions</li>
-<li><span class="tt">&lt;cmath&gt;</span> – For checking whether a floating-point number is normal</li>
 <li><span class="tt">&lt;compare&gt;</span> – Three-way comparison operator support</li>
 <li><span class="tt">&lt;cstring&gt;</span> – Type punning</li>
 <li><span class="tt">&lt;functional&gt;</span> – Hash specialization</li>
@@ -208,21 +207,21 @@ Methods</h2>
 <div class="line">)</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 Quick Start</h2>
-<p><b>Note: If you think <span class="tt"><a class="el" href="namespacecasyyy_1_1maths.html">casyyy::maths</a></span> is long, you can use <span class="tt">cym</span> instead.</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;print&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;print&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">import</span> <a class="code" href="module__casyyy_8maths_8numeric__any.html">casyyy.maths.numeric_any</a>;</div>
-<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacecasyyy_1_1maths.html">casyyy::maths</a>;</div>
+<div class="line"><span class="keyword">import</span> <a class="code" href="module__cy_8maths_8numeric__any.html">cy.maths.numeric_any</a>;</div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacecy_1_1maths.html">cy::maths</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    <a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 42;</div>
+<div class="line">    <a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 42;</div>
 <div class="line">    std::println(<span class="stringliteral">&quot;{:03d}&quot;</span>, a);</div>
 <div class="line">    a = 31.1653;</div>
 <div class="line">    std::println(<span class="stringliteral">&quot;{:.2f}&quot;</span>, a);</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html">casyyy::maths::numeric_any</a></div><div class="ttdoc">A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:160</div></div>
-<div class="ttc" id="amodule__casyyy_8maths_8numeric__any_html"><div class="ttname"><a href="module__casyyy_8maths_8numeric__any.html">casyyy.maths.numeric_any</a></div></div>
-<div class="ttc" id="anamespacecasyyy_1_1maths_html"><div class="ttname"><a href="namespacecasyyy_1_1maths.html">casyyy::maths</a></div><div class="ttdef"><b>Definition</b> numeric_any.ixx:43</div></div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html">cy::maths::numeric_any</a></div><div class="ttdoc">A type-erasure-based utility class for arithmetic types. Support addition, subtraction,...</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:84</div></div>
+<div class="ttc" id="amodule__cy_8maths_8numeric__any_html"><div class="ttname"><a href="module__cy_8maths_8numeric__any.html">cy.maths.numeric_any</a></div></div>
+<div class="ttc" id="anamespacecy_1_1maths_html"><div class="ttname"><a href="namespacecy_1_1maths.html">cy::maths</a></div><div class="ttdef"><b>Definition</b> numeric_any.ixx:36</div></div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 Ouput</h2>
 <div class="fragment"><div class="line">042</div>
@@ -232,14 +231,13 @@ Example</h1>
 <p><b>Ignore basic <span class="tt">import</span>, <span class="tt">include</span> and <span class="tt">using namespace</span>.</b></p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 Construction</h2>
-<p><b>Code:</b> <a href="/examples/construction.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a;</div>
-<div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> b = 32;</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{} {}&quot;</span>, a, b);</div>
+<p><b>Code:</b> <a href="/examples/construction.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> b = 32;</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, b);</div>
 <div class="line">a = 32;</div>
-<div class="line">b.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#af1e07bdbe0db6846f972f7d8dbb484d2">reset</a>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>&gt;(<span class="charliteral">&#39;a&#39;</span>);</div>
+<div class="line">b.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a70dbbd8efdb30cf6d755ffc4183b0d52">reset</a>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>&gt;(<span class="charliteral">&#39;a&#39;</span>);</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{} {}&quot;</span>, a, b);</div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_af1e07bdbe0db6846f972f7d8dbb484d2"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#af1e07bdbe0db6846f972f7d8dbb484d2">casyyy::maths::numeric_any::reset</a></div><div class="ttdeci">constexpr void reset(sign_unambiguous_arithmetic auto x) noexcept</div><div class="ttdoc">Reset the inner value.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:526</div></div>
-</div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">empty 32</div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_a70dbbd8efdb30cf6d755ffc4183b0d52"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#a70dbbd8efdb30cf6d755ffc4183b0d52">cy::maths::numeric_any::reset</a></div><div class="ttdeci">constexpr void reset(sign_unambiguous_arithmetic auto x) noexcept</div><div class="ttdoc">Reset the inner value.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:353</div></div>
+</div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">32</div>
 <div class="line">32 97</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 Heterogeneous Container</h2>
@@ -259,31 +257,28 @@ Heterogeneous Container</h2>
 </div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">[12, 33, false, 3.14]</div>
 </div><!-- fragment --> <h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 Metadatas</h2>
-<p><b>Code:</b> <a href="/examples/metadata.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a;</div>
-<div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> b = 32;</div>
-<div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> c = 12U;</div>
-<div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> d = -32.2;</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5">type_name</a>(), a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#af4b8819c663f0a901d5031e4e3457143">is_floating_point</a>(), a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aa817cb5234802e49f9570c165c9a880a">is_unsigned_number</a>(), a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aded11d455a668adb4d8203c91acaff5c">is_nonnegative</a>());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, b.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5">type_name</a>(), b.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#af4b8819c663f0a901d5031e4e3457143">is_floating_point</a>(), b.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aa817cb5234802e49f9570c165c9a880a">is_unsigned_number</a>(), b.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aded11d455a668adb4d8203c91acaff5c">is_nonnegative</a>());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, c.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5">type_name</a>(), c.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#af4b8819c663f0a901d5031e4e3457143">is_floating_point</a>(), c.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aa817cb5234802e49f9570c165c9a880a">is_unsigned_number</a>(), c.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aded11d455a668adb4d8203c91acaff5c">is_nonnegative</a>());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, d.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5">type_name</a>(), d.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#af4b8819c663f0a901d5031e4e3457143">is_floating_point</a>(), d.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aa817cb5234802e49f9570c165c9a880a">is_unsigned_number</a>(), d.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#aded11d455a668adb4d8203c91acaff5c">is_nonnegative</a>());</div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_a82355203b908878c69745b42345fe2d5"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5">casyyy::maths::numeric_any::type_name</a></div><div class="ttdeci">constexpr ::std::string_view type_name() const noexcept</div><div class="ttdoc">Get the typename of the value which numeric_any store.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:294</div></div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_aa817cb5234802e49f9570c165c9a880a"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#aa817cb5234802e49f9570c165c9a880a">casyyy::maths::numeric_any::is_unsigned_number</a></div><div class="ttdeci">constexpr bool is_unsigned_number() const noexcept</div><div class="ttdoc">Check if what&#39;s stored inside is an unsigned number.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:312</div></div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_aded11d455a668adb4d8203c91acaff5c"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#aded11d455a668adb4d8203c91acaff5c">casyyy::maths::numeric_any::is_nonnegative</a></div><div class="ttdeci">constexpr bool is_nonnegative() const noexcept</div><div class="ttdoc">Check if what&#39;s stored inside is a nonnegative number.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:319</div></div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_af4b8819c663f0a901d5031e4e3457143"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#af4b8819c663f0a901d5031e4e3457143">casyyy::maths::numeric_any::is_floating_point</a></div><div class="ttdeci">constexpr bool is_floating_point() const noexcept</div><div class="ttdoc">Check if what&#39;s stored inside is a floating point number.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:306</div></div>
-</div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">empty false false false</div>
-<div class="line">int false false true</div>
+<p><b>Code:</b> <a href="/examples/metadata.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> b = 32;</div>
+<div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> c = 12U;</div>
+<div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> d = -32.2;</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, b.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#aa693222c30d9a4df88e30ddf169a4e1a">type_name</a>(), b.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a5f65bfe55a8286a8453e7cea03a5020d">is_floating_point</a>(), b.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a52ef8b0e5f6199d904ff9748f7503393">is_unsigned_number</a>(), b.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a2bac1c9e8371beb4fd9ab8b2019c0117">is_nonnegative</a>());</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, c.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#aa693222c30d9a4df88e30ddf169a4e1a">type_name</a>(), c.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a5f65bfe55a8286a8453e7cea03a5020d">is_floating_point</a>(), c.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a52ef8b0e5f6199d904ff9748f7503393">is_unsigned_number</a>(), c.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a2bac1c9e8371beb4fd9ab8b2019c0117">is_nonnegative</a>());</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{} {} {} {}&quot;</span>, d.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#aa693222c30d9a4df88e30ddf169a4e1a">type_name</a>(), d.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a5f65bfe55a8286a8453e7cea03a5020d">is_floating_point</a>(), d.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a52ef8b0e5f6199d904ff9748f7503393">is_unsigned_number</a>(), d.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a2bac1c9e8371beb4fd9ab8b2019c0117">is_nonnegative</a>());</div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_a2bac1c9e8371beb4fd9ab8b2019c0117"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#a2bac1c9e8371beb4fd9ab8b2019c0117">cy::maths::numeric_any::is_nonnegative</a></div><div class="ttdeci">constexpr bool is_nonnegative() const noexcept</div><div class="ttdoc">Check if what&#39;s stored inside is a nonnegative number.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:345</div></div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_a52ef8b0e5f6199d904ff9748f7503393"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#a52ef8b0e5f6199d904ff9748f7503393">cy::maths::numeric_any::is_unsigned_number</a></div><div class="ttdeci">constexpr bool is_unsigned_number() const noexcept</div><div class="ttdoc">Check if what&#39;s stored inside is an unsigned number.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:338</div></div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_a5f65bfe55a8286a8453e7cea03a5020d"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#a5f65bfe55a8286a8453e7cea03a5020d">cy::maths::numeric_any::is_floating_point</a></div><div class="ttdeci">constexpr bool is_floating_point() const noexcept</div><div class="ttdoc">Check if what&#39;s stored inside is a floating point number.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:332</div></div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_aa693222c30d9a4df88e30ddf169a4e1a"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#aa693222c30d9a4df88e30ddf169a4e1a">cy::maths::numeric_any::type_name</a></div><div class="ttdeci">constexpr ::std::string_view type_name() const noexcept</div><div class="ttdoc">Get the typename of the value which numeric_any store.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:320</div></div>
+</div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">int false false true</div>
 <div class="line">unsigned int false true true</div>
 <div class="line">double true false false</div>
 </div><!-- fragment --> <h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Operations:</h2>
-<p><b>Code:</b> <a href="/examples/operations.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 13;</div>
+<p><b>Code:</b> <a href="/examples/operations.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 13;</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a);</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, ++a);</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a += 12.3);</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, -a);</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a &gt; -a);</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a82355203b908878c69745b42345fe2d5">type_name</a>());</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#aa693222c30d9a4df88e30ddf169a4e1a">type_name</a>());</div>
 <div class="line">a = -3;</div>
 <div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a &gt; 12U);</div>
 <div class="line">a = <span class="keyword">true</span>;</div>
@@ -301,38 +296,27 @@ Operations:</h2>
 <div class="line">false</div>
 </div><!-- fragment --> <h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Type Lookup:</h2>
-<p><b>Code:</b> <a href="/examples/type_lookup.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> v = -42;</div>
-<div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> u = 12;</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a782c046baf3d06e457b873ec1cdd4971">is_same_type</a>&lt;<span class="keywordtype">int</span>&gt;());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a782c046baf3d06e457b873ec1cdd4971">is_same_type</a>&lt;<span class="keywordtype">long</span>&gt;());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9">can_safe_convert_to</a>&lt;<span class="keywordtype">long</span> <span class="keywordtype">long</span>&gt;());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, u.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9">can_safe_convert_to</a>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span>&gt;());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9">can_safe_convert_to</a>&lt;<span class="keywordtype">unsigned</span>&gt;());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9">can_safe_convert_to</a>&lt;<span class="keywordtype">short</span>&gt;());</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9">can_safe_convert_to</a>&lt;<span class="keywordtype">float</span>&gt;());</div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_a782c046baf3d06e457b873ec1cdd4971"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#a782c046baf3d06e457b873ec1cdd4971">casyyy::maths::numeric_any::is_same_type</a></div><div class="ttdeci">constexpr bool is_same_type() const noexcept</div><div class="ttdoc">Check if the given type is the type of value stored internally.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:334</div></div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_ac8e1d04c4d13ee4805c19fdabed386d9"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#ac8e1d04c4d13ee4805c19fdabed386d9">casyyy::maths::numeric_any::can_safe_convert_to</a></div><div class="ttdeci">constexpr bool can_safe_convert_to() const noexcept</div><div class="ttdoc">Check the inner value is able to convert to another type safely.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:571</div></div>
+<p><b>Code:</b> <a href="/examples/type_lookup.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> v = -42;</div>
+<div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> u = 12;</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#abced91f78739f267b9168474bc76c357">is_same_type</a>&lt;<span class="keywordtype">int</span>&gt;());</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, v.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#abced91f78739f267b9168474bc76c357">is_same_type</a>&lt;<span class="keywordtype">long</span>&gt;());</div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_abced91f78739f267b9168474bc76c357"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#abced91f78739f267b9168474bc76c357">cy::maths::numeric_any::is_same_type</a></div><div class="ttdeci">constexpr bool is_same_type() const noexcept</div><div class="ttdoc">Check if the given type is the type of value stored internally.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:374</div></div>
 </div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">true</div>
-<div class="line">false</div>
-<div class="line">true</div>
-<div class="line">true</div>
-<div class="line">false</div>
-<div class="line">false</div>
 <div class="line">false</div>
 </div><!-- fragment --> <h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Bytes view:</h2>
-<p><b>Code:</b> <a href="/examples/bytes_view.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 123U;</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{::02x}&quot;</span>, a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a8c9ee07795e9ead39b1c6d953a056554">view_bytes</a>());</div>
+<p><b>Code:</b> <a href="/examples/bytes_view.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 123U;</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{::02x}&quot;</span>, a.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a3b6ed9ddb80ee142b97e1ec053c37065">view_bytes</a>());</div>
 <div class="line"> a = 14123.223;</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{::02x}&quot;</span>, a.<a class="code hl_function" href="classcasyyy_1_1maths_1_1numeric__any.html#a8c9ee07795e9ead39b1c6d953a056554">view_bytes</a>());</div>
-<div class="ttc" id="aclasscasyyy_1_1maths_1_1numeric__any_html_a8c9ee07795e9ead39b1c6d953a056554"><div class="ttname"><a href="classcasyyy_1_1maths_1_1numeric__any.html#a8c9ee07795e9ead39b1c6d953a056554">casyyy::maths::numeric_any::view_bytes</a></div><div class="ttdeci">constexpr ::std::span&lt; const unsigned char &gt; view_bytes() const noexcept</div><div class="ttdoc">Get the inner view of the bytes.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:348</div></div>
+<div class="line">std::println(<span class="stringliteral">&quot;{::02x}&quot;</span>, a.<a class="code hl_function" href="classcy_1_1maths_1_1numeric__any.html#a3b6ed9ddb80ee142b97e1ec053c37065">view_bytes</a>());</div>
+<div class="ttc" id="aclasscy_1_1maths_1_1numeric__any_html_a3b6ed9ddb80ee142b97e1ec053c37065"><div class="ttname"><a href="classcy_1_1maths_1_1numeric__any.html#a3b6ed9ddb80ee142b97e1ec053c37065">cy::maths::numeric_any::view_bytes</a></div><div class="ttdeci">constexpr ::std::span&lt; const unsigned char &gt; view_bytes() const noexcept</div><div class="ttdoc">Get the inner view of the bytes.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:381</div></div>
 </div><!-- fragment --><p> <b>Possible Output(Based on platform):</b> </p><div class="fragment"><div class="line">[7b, 00, 00, 00]</div>
 <div class="line">[81, 95, 43, 8b, 9c, 95, cb, 40]</div>
 </div><!-- fragment --> <h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Casting:</h2>
 <p><b>Code:</b> <a href="/examples/casting.cpp">Example Code</a> </p><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, casting_policy Policy = casting_policy::strict&gt;</div>
-<div class="line"><span class="keywordtype">void</span> check_casting(<span class="keyword">const</span> <a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a>&amp; x) {</div>
-<div class="line">    <span class="keyword">auto</span> result = <a class="code hl_function" href="namespacecasyyy_1_1maths.html#a8a28888f58697ea96d19571d54dbb602">numeric_cast&lt;T, Policy&gt;</a>(x);</div>
+<div class="line"><span class="keywordtype">void</span> check_casting(<span class="keyword">const</span> <a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a>&amp; x) {</div>
+<div class="line">    <span class="keyword">auto</span> result = <a class="code hl_function" href="namespacecy_1_1maths.html#a8902d1a28ad3fd117de218b72c3a7486">from&lt;T, Policy&gt;</a>(x);</div>
 <div class="line">    <span class="keywordflow">if</span> (result.has_value()) {</div>
 <div class="line">        std::println(<span class="stringliteral">&quot;{}&quot;</span>, result.value());</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
@@ -340,21 +324,20 @@ Casting:</h2>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    <a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 12312;         <span class="comment">// int(12312)</span></div>
-<div class="line">    <a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> b;                 <span class="comment">// Empty.</span></div>
-<div class="line">    <a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> c = std::nan(<span class="stringliteral">&quot;1&quot;</span>); <span class="comment">// NaN</span></div>
+<div class="line">    <a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 12312;         <span class="comment">// int(12312)</span></div>
+<div class="line">    <a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> b;                 <span class="comment">// Empty.</span></div>
+<div class="line">    <a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> c = std::nan(<span class="stringliteral">&quot;1&quot;</span>); <span class="comment">// NaN</span></div>
 <div class="line">    check_casting&lt;int&gt;(a);</div>
 <div class="line">    check_casting&lt;double&gt;(a);</div>
 <div class="line">    check_casting&lt;long long&gt;(a);</div>
 <div class="line">    check_casting&lt;int&gt;(b);</div>
 <div class="line">    check_casting&lt;double&gt;(c);</div>
 <div class="line">    check_casting&lt;float, casting_policy::normal&gt;(a);</div>
-<div class="line">    std::println(<span class="stringliteral">&quot;{}&quot;</span>, <a class="code hl_function" href="namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c">unchecked_numeric_cast&lt;double&gt;</a>(b));</div>
-<div class="line">    std::println(<span class="stringliteral">&quot;{}&quot;</span>, <a class="code hl_function" href="namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c">unchecked_numeric_cast&lt;double&gt;</a>(c));</div>
+<div class="line">    std::println(<span class="stringliteral">&quot;{}&quot;</span>, as&lt;double&gt;(b));</div>
+<div class="line">    std::println(<span class="stringliteral">&quot;{}&quot;</span>, as&lt;double&gt;(c));</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacecasyyy_1_1maths_html_a8a28888f58697ea96d19571d54dbb602"><div class="ttname"><a href="namespacecasyyy_1_1maths.html#a8a28888f58697ea96d19571d54dbb602">casyyy::maths::numeric_cast</a></div><div class="ttdeci">constexpr ::std::optional&lt; T &gt; numeric_cast(const numeric_any &amp;x) noexcept</div><div class="ttdoc">Casting a numeric_any to a normal number with check based on policy.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:485</div></div>
-<div class="ttc" id="anamespacecasyyy_1_1maths_html_ae92937bd2c2736954266ffdf85a13b3c"><div class="ttname"><a href="namespacecasyyy_1_1maths.html#ae92937bd2c2736954266ffdf85a13b3c">casyyy::maths::unchecked_numeric_cast</a></div><div class="ttdeci">constexpr T unchecked_numeric_cast(const numeric_any &amp;x) noexcept</div><div class="ttdoc">Casting a numeric_any to a normal number without check.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:467</div></div>
+<div class="ttc" id="anamespacecy_1_1maths_html_a8902d1a28ad3fd117de218b72c3a7486"><div class="ttname"><a href="namespacecy_1_1maths.html#a8902d1a28ad3fd117de218b72c3a7486">cy::maths::from</a></div><div class="ttdeci">constexpr ::std::optional&lt; T &gt; from(const numeric_any &amp;x) noexcept</div><div class="ttdoc">Casting a numeric_any to a normal number with check based on policy.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:490</div></div>
 </div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">12312</div>
 <div class="line">std::nullopt</div>
 <div class="line">12312</div>
@@ -365,7 +348,7 @@ Casting:</h2>
 <div class="line">nan</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Output</h2>
-<p><b>Code:</b> <a href="/examples/output.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 323423, b = 32342.123;</div>
+<p><b>Code:</b> <a href="/examples/output.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 323423, b = 32342.123;</div>
 <div class="line">std::cout &lt;&lt; a &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">std::wcout &lt;&lt; a &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
@@ -387,12 +370,10 @@ Output</h2>
 <div class="line">32342.12</div>
 </div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Visit</h2>
-<p><b>Code:</b> <a href="/examples/visit.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcasyyy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 32, b{};</div>
-<div class="line"><a class="code hl_function" href="namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7">visit</a>(a, [&amp;a](<span class="keyword">auto</span> i){ a = ::sin(i); }, []{});</div>
-<div class="line"><a class="code hl_function" href="namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7">visit</a>(b, [&amp;b](<span class="keyword">auto</span> i){ b = ::cos(i); }, []{});</div>
-<div class="line">std::println(<span class="stringliteral">&quot;{} {}&quot;</span>, a, b);</div>
-<div class="ttc" id="anamespacecasyyy_1_1maths_html_a31af20d3052c671a95c5965c4ad3fdd7"><div class="ttname"><a href="namespacecasyyy_1_1maths.html#a31af20d3052c671a95c5965c4ad3fdd7">casyyy::maths::visit</a></div><div class="ttdeci">constexpr decltype(auto) visit(Any &amp;&amp;x, Func &amp;&amp;f, FuncWhenEmpty &amp;&amp;fwe)</div><div class="ttdoc">Visit the inner value of a numeric_any and apply a function to it.</div><div class="ttdef"><b>Definition</b> numeric_any.ixx:388</div></div>
-</div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">0.55 empty</div>
+<p><b>Code:</b> <a href="/examples/visit.cpp">Example Code</a> </p><div class="fragment"><div class="line"><a class="code hl_class" href="classcy_1_1maths_1_1numeric__any.html">numeric_any</a> a = 32;</div>
+<div class="line">visit(a, [&amp;a](<span class="keyword">auto</span> i){ a = ::sin(i); }, []{});</div>
+<div class="line">std::println(<span class="stringliteral">&quot;{}&quot;</span>, a);</div>
+</div><!-- fragment --><p> <b>Output:</b> </p><div class="fragment"><div class="line">0.55</div>
 </div><!-- fragment --><ul>
 <li><a href="/examples/">Overall example files</a> - Sample code is provided here for you to try and verify on your own.</li>
 </ul>

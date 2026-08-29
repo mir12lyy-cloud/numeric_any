@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['empty_0',['empty',['../classcasyyy_1_1maths_1_1numeric__any.html#ac0b37abb6fabc1868247dc01a63f823d',1,'casyyy::maths::numeric_any']]]
+  ['numeric_5fany_0',['numeric_any',['../classcy_1_1maths_1_1numeric__any.html#ab9f9791b38c501020ab5d08c46a2c665',1,'cy::maths::numeric_any::numeric_any() noexcept=default'],['../classcy_1_1maths_1_1numeric__any.html#aa0d0b169ea938c5cbe1fad8fef891e43',1,'cy::maths::numeric_any::numeric_any(sign_unambiguous_arithmetic auto x) noexcept']]]
 ];

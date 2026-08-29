@@ -2,7 +2,6 @@
 \hypertarget{numeric__any_8ixx}{}\label{numeric__any_8ixx}\index{src/numeric\_any.ixx@{src/numeric\_any.ixx}}
 {\ttfamily \+\#include $<$array$>$}\newline
 {\ttfamily \+\#include $<$bit$>$}\newline
-{\ttfamily \+\#include $<$cmath$>$}\newline
 {\ttfamily \+\#include $<$compare$>$}\newline
 {\ttfamily \+\#include $<$cstring$>$}\newline
 {\ttfamily \+\#include $<$format$>$}\newline
@@ -12,96 +11,102 @@
 {\ttfamily \+\#include $<$span$>$}\newline
 {\ttfamily \+\#include $<$string\+\_\+view$>$}\newline
 {\ttfamily \+\#include $<$type\+\_\+traits$>$}\newline
-{\ttfamily import casyyy.\+maths.\+numeric\+\_\+any\+\_\+parser;}\newline
+{\ttfamily import cy.\+maths.\+numeric\+\_\+any\+\_\+parser;}\newline
 \doxysubsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{casyyy::\+maths::\+numeric\+\_\+any}}
+class \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{cy::\+maths::\+numeric\+\_\+any}}
 \begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\item 
-struct \doxymbox{\hyperlink{structstd_1_1common__type_3_01_t_00_01_1_1casyyy_1_1maths_1_1numeric__any_01_4}{std::\+common\+\_\+type$<$ T, ::\+casyyy::\+maths::\+numeric\+\_\+any $>$}}
+struct \doxymbox{\hyperlink{structstd_1_1common__type_3_01_t_00_01_1_1cy_1_1maths_1_1numeric__any_01_4}{std::\+common\+\_\+type$<$ T, ::\+cy::\+maths::\+numeric\+\_\+any $>$}}
 \item 
-struct \doxymbox{\hyperlink{structstd_1_1common__type_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_t_01_4}{std::\+common\+\_\+type$<$::\+casyyy::\+maths::\+numeric\+\_\+any, T $>$}}
+struct \doxymbox{\hyperlink{structstd_1_1common__type_3_1_1cy_1_1maths_1_1numeric__any_00_01_t_01_4}{std::\+common\+\_\+type$<$::\+cy::\+maths::\+numeric\+\_\+any, T $>$}}
 \item 
-struct \doxymbox{\hyperlink{structstd_1_1hash_3_1_1casyyy_1_1maths_1_1numeric__any_01_4}{std::\+hash$<$::\+casyyy::\+maths::\+numeric\+\_\+any $>$}}
+struct \doxymbox{\hyperlink{structstd_1_1hash_3_1_1cy_1_1maths_1_1numeric__any_01_4}{std::\+hash$<$::\+cy::\+maths::\+numeric\+\_\+any $>$}}
 \begin{DoxyCompactList}\small\item\em Provide hash support. \end{DoxyCompactList}\item 
-struct \doxymbox{\hyperlink{structstd_1_1formatter_3_1_1casyyy_1_1maths_1_1numeric__any_00_01_char_t_01_4}{std::\+formatter$<$::\+casyyy::\+maths::\+numeric\+\_\+any, Char\+T $>$}}
+struct \doxymbox{\hyperlink{structstd_1_1formatter_3_1_1cy_1_1maths_1_1numeric__any_00_01_char_t_01_4}{std::\+formatter$<$::\+cy::\+maths::\+numeric\+\_\+any, Char\+T $>$}}
 \begin{DoxyCompactList}\small\item\em Provide formatted support. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
-namespace \doxymbox{\hyperlink{namespacecasyyy}{casyyy}}
+namespace \doxymbox{\hyperlink{namespacecy}{cy}}
 \item 
-namespace \doxymbox{\hyperlink{namespacecasyyy_1_1maths}{casyyy::\+maths}}
+namespace \doxymbox{\hyperlink{namespacecy_1_1maths}{cy::\+maths}}
 \item 
 namespace \doxymbox{\hyperlink{namespacestd}{std}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Concepts}
 \begin{DoxyCompactItemize}
 \item 
-concept \doxymbox{\hyperlink{conceptcasyyy_1_1maths_1_1sign__unambiguous__arithmetic}{casyyy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic}}
+concept \doxymbox{\hyperlink{conceptcy_1_1maths_1_1sign__unambiguous__arithmetic}{cy::\+maths::\+sign\+\_\+unambiguous\+\_\+arithmetic}}
 \begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explicit sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a7eac2aa0392813b2f68a19a1f241ad85}{FUNCTION\+\_\+\+TWO\+\_\+\+OPERATION}}(name,  op,  op\+\_\+name,  op2,  op2\+\_\+name)
-\begin{DoxyCompactList}\small\item\em To generate operator between numeric\+\_\+any with a value or another numeric\+\_\+any. Including:\+ +, -\/, \texorpdfstring{$\ast$}{*}, /\+. And used +=, -\/=, \texorpdfstring{$\ast$}{*}=, /\+= to do operations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_a3af99897b60119951af8961dbd52dd3f}{UNREACHABLE}}~\+\_\+\+\_\+builtin\+\_\+unreachable()
+\item 
+\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_af2d71ff81125f6291748b6885756f05d}{FUNCTION\+\_\+\+TO\+\_\+\+AS}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
+\item 
+\+\#define \doxymbox{\hyperlink{numeric__any_8ixx_ad0ea4f8350a840238d11c4dc54a3f21d}{FUNCTIONS\+\_\+\+TO\+\_\+\+VISIT}}(type\+\_\+name,  type\+\_\+enum\+\_\+name,  enum\+\_\+value)
+\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum class \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casyyy::\+maths::\+casting\+\_\+policy}} :\+ unsigned char \{ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa2133fd717402a7966ee88d06f9e0b792}{casyyy::\+maths::\+strict}}
-, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaafea087517c26fadd409bd4b9dc642555}{casyyy::\+maths::\+normal}}
-, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceeaa81f32be24a2a62fc472cc43edc97e65b}{casyyy::\+maths::\+relaxed}}
+enum class \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{cy::\+maths::\+casting\+\_\+policy}} :\+ unsigned char \{ \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f}{cy::\+maths::\+equal}}
+, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a2133fd717402a7966ee88d06f9e0b792}{cy::\+maths::\+strict}}
+, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004afea087517c26fadd409bd4b9dc642555}{cy::\+maths::\+normal}}
  \}
 \begin{DoxyCompactList}\small\item\em Numeric conversion strategy, used for handling different types of number conversions. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-{\footnotesize template$<$typename Any, typename Func, typename Func\+When\+Empty$>$ \newline
-requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a31af20d3052c671a95c5965c4ad3fdd7}{casyyy::\+maths::\+visit}} (Any \&\&x, Func \&\&f, Func\+When\+Empty \&\&fwe)
-\begin{DoxyCompactList}\small\item\em Visit the inner value of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and apply a function to it. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename Func, typename Func\+When\+Empty, typename Any$>$ \newline
-requires ::\+std::\+is\+\_\+same\+\_\+v$<$::\+std::\+remove\+\_\+cvref\+\_\+t$<$Any$>$, \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}$>$}\\constexpr decltype(auto) \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a6db62aed1d9e0223971099a749a8046b}{casyyy::\+maths::\+visit}} (Func \&\&f, Func\+When\+Empty \&\&fwe, Any \&\&any)
-\begin{DoxyCompactList}\small\item\em Make the visit look like the std::\+visit. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ab17a23d5c7033b9ad6549d9dc8b8d6bd}{casyyy::\+maths::\+bpow}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&a, unsigned n) noexcept
-\begin{DoxyCompactList}\small\item\em Calculate the integer power of a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a788630ad2a68de5c15708bfd8ffc4c09}{casyyy::\+maths::\+abs}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
-\begin{DoxyCompactList}\small\item\em Compute abs. \end{DoxyCompactList}\item 
-{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T$>$ }\\constexpr T \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ae92937bd2c2736954266ffdf85a13b3c}{casyyy::\+maths::\+unchecked\+\_\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number without check. \end{DoxyCompactList}\item 
-{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ad2c5becd5c7b33e58c95da60f595ceea}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecasyyy_1_1maths_a8a28888f58697ea96d19571d54dbb602}{casyyy::\+maths::\+numeric\+\_\+cast}} (const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
-\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecasyyy_1_1maths_aba943ffd942078bb615e72dccc81d1d1}{casyyy::\+maths::\+operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
-\begin{DoxyCompactList}\small\item\em Output \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
-constexpr \doxymbox{\hyperlink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecasyyy_1_1maths_ac7320982f9e926a61ea8e065d57fc3ef}{casyyy::\+maths::\+make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
-\begin{DoxyCompactList}\small\item\em A tool function to build \doxylink{classcasyyy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_aa8cb7251f01ecc97ab3bfeae9b4c1729}{cy::\+maths::\+operator+}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do addition between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a5f143924da2bcff4738dc07bb535d988}{cy::\+maths::\+operator-\/}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do substraction between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a5cbe8baaa87e89a44f3d8c19207a137e}{cy::\+maths::\+operator\texorpdfstring{$\ast$}{*}}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do multiplication between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a7458726e26438981c68bdf5dcd8d3152}{cy::\+maths::\+operator/\+}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do division between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecy_1_1maths_a8902d1a28ad3fd117de218b72c3a7486}{cy::\+maths::\+from}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecy_1_1maths_a4a8f0f5ec416de7feb5c2dcb8da4ff40}{cy::\+maths::\+operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Output \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_af78d5b60b2bff51985ed1c58e3247908}{cy::\+maths::\+make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em A tool function to build \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \label{numeric__any_8ixx_doc-define-members}
 \Hypertarget{numeric__any_8ixx_doc-define-members}
 \doxysubsection{Macro Definition Documentation}
-\Hypertarget{numeric__any_8ixx_a7eac2aa0392813b2f68a19a1f241ad85}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TWO\_OPERATION@{FUNCTION\_TWO\_OPERATION}}
-\index{FUNCTION\_TWO\_OPERATION@{FUNCTION\_TWO\_OPERATION}!numeric\_any.ixx@{numeric\_any.ixx}}
-\doxysubsubsection{\texorpdfstring{FUNCTION\_TWO\_OPERATION}{FUNCTION\_TWO\_OPERATION}}
-{\footnotesize\ttfamily \label{numeric__any_8ixx_a7eac2aa0392813b2f68a19a1f241ad85} 
-\+\#define FUNCTION\+\_\+\+TWO\+\_\+\+OPERATION(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{op}{, }\item[{}]{op\+\_\+name}{, }\item[{}]{op2}{, }\item[{}]{op2\+\_\+name}{}\end{DoxyParamCaption})}
+\Hypertarget{numeric__any_8ixx_af2d71ff81125f6291748b6885756f05d}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTION\_TO\_AS@{FUNCTION\_TO\_AS}}
+\index{FUNCTION\_TO\_AS@{FUNCTION\_TO\_AS}!numeric\_any.ixx@{numeric\_any.ixx}}
+\doxysubsubsection{\texorpdfstring{FUNCTION\_TO\_AS}{FUNCTION\_TO\_AS}}
+{\footnotesize\ttfamily \label{numeric__any_8ixx_af2d71ff81125f6291748b6885756f05d} 
+\+\#define FUNCTION\+\_\+\+TO\+\_\+\+AS(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
 
 {\bfseries Value:\+}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(numeric\_any\ x,\ sign\_unambiguous\_arithmetic\ \textcolor{keyword}{auto}\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ x\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(sign\_unambiguous\_arithmetic\ \textcolor{keyword}{auto}\ x,\ numeric\_any\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ numeric\_any\{x\}\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{export}\ \textcolor{keyword}{constexpr}\ numeric\_any\ op\_name(numeric\_any\ x,\ numeric\_any\ y)\ \textcolor{keyword}{noexcept}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ x\ op2\ y;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{auto}\ res\ =\ x.restore\_value<type\_name>();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(res);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\}}
 
 \end{DoxyCode}
+\Hypertarget{numeric__any_8ixx_ad0ea4f8350a840238d11c4dc54a3f21d}\index{numeric\_any.ixx@{numeric\_any.ixx}!FUNCTIONS\_TO\_VISIT@{FUNCTIONS\_TO\_VISIT}}
+\index{FUNCTIONS\_TO\_VISIT@{FUNCTIONS\_TO\_VISIT}!numeric\_any.ixx@{numeric\_any.ixx}}
+\doxysubsubsection{\texorpdfstring{FUNCTIONS\_TO\_VISIT}{FUNCTIONS\_TO\_VISIT}}
+{\footnotesize\ttfamily \label{numeric__any_8ixx_ad0ea4f8350a840238d11c4dc54a3f21d} 
+\+\#define FUNCTIONS\+\_\+\+TO\+\_\+\+VISIT(\begin{DoxyParamCaption}\item[{}]{type\+\_\+name}{, }\item[{}]{type\+\_\+enum\+\_\+name}{, }\item[{}]{enum\+\_\+value}{}\end{DoxyParamCaption})}
 
+{\bfseries Value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{case}\ numeric\_types::type\_enum\_name:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ f(x.template\ restore\_value<type\_name>());}
 
-To generate operator between numeric\+\_\+any with a value or another numeric\+\_\+any. Including:\+ +, -\/, \texorpdfstring{$\ast$}{*}, /\+. And used +=, -\/=, \texorpdfstring{$\ast$}{*}=, /\+= to do operations. 
+\end{DoxyCode}
+\Hypertarget{numeric__any_8ixx_a3af99897b60119951af8961dbd52dd3f}\index{numeric\_any.ixx@{numeric\_any.ixx}!UNREACHABLE@{UNREACHABLE}}
+\index{UNREACHABLE@{UNREACHABLE}!numeric\_any.ixx@{numeric\_any.ixx}}
+\doxysubsubsection{\texorpdfstring{UNREACHABLE}{UNREACHABLE}}
+{\footnotesize\ttfamily \label{numeric__any_8ixx_a3af99897b60119951af8961dbd52dd3f} 
+\+\#define UNREACHABLE~\+\_\+\+\_\+builtin\+\_\+unreachable()}
 
-\begin{DoxyReturn}{Returns}
-A new numeric\+\_\+any after operations. 
-\end{DoxyReturn}

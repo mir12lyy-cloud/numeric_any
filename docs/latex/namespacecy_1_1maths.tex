@@ -1,0 +1,207 @@
+\doxysection{cy::\+maths Namespace Reference}
+\hypertarget{namespacecy_1_1maths}{}\label{namespacecy_1_1maths}\index{cy::maths@{cy::maths}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}
+\begin{DoxyCompactList}\small\item\em A type-\/erasure-\/based utility class for arithmetic types. Support addition, subtraction, multiplication, division and comparison. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \doxymbox{\hyperlink{conceptcy_1_1maths_1_1sign__unambiguous__arithmetic}{sign\+\_\+unambiguous\+\_\+arithmetic}}
+\begin{DoxyCompactList}\small\item\em Only for arithmetic types, except the char without explicit sign. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{casting\+\_\+policy}} :\+ unsigned char \{ \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f}{equal}}
+, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a2133fd717402a7966ee88d06f9e0b792}{strict}}
+, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004afea087517c26fadd409bd4b9dc642555}{normal}}
+ \}
+\begin{DoxyCompactList}\small\item\em Numeric conversion strategy, used for handling different types of number conversions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_aa8cb7251f01ecc97ab3bfeae9b4c1729}{operator+}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do addition between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a5f143924da2bcff4738dc07bb535d988}{operator-\/}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do substraction between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a5cbe8baaa87e89a44f3d8c19207a137e}{operator\texorpdfstring{$\ast$}{*}}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do multiplication between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_a7458726e26438981c68bdf5dcd8d3152}{operator/\+}} (\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} x, auto \&\&y) noexcept
+\begin{DoxyCompactList}\small\item\em Do division between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ }\\constexpr ::\+std::\+optional$<$ T $>$ \doxymbox{\hyperlink{namespacecy_1_1maths_a8902d1a28ad3fd117de218b72c3a7486}{from}} (const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x) noexcept
+\begin{DoxyCompactList}\small\item\em Casting a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ }\\::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& \doxymbox{\hyperlink{namespacecy_1_1maths_a4a8f0f5ec416de7feb5c2dcb8da4ff40}{operator$<$$<$}} (::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&os, const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&x)
+\begin{DoxyCompactList}\small\item\em Output \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. \end{DoxyCompactList}\item 
+constexpr \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \doxymbox{\hyperlink{namespacecy_1_1maths_af78d5b60b2bff51985ed1c58e3247908}{make\+\_\+numeric\+\_\+any}} (sign\+\_\+unambiguous\+\_\+arithmetic auto x) noexcept
+\begin{DoxyCompactList}\small\item\em A tool function to build \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{namespacecy_1_1maths_doc-enum-members}
+\Hypertarget{namespacecy_1_1maths_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}\index{cy::maths@{cy::maths}!casting\_policy@{casting\_policy}}
+\index{casting\_policy@{casting\_policy}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{casting\_policy}{casting\_policy}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004} 
+enum class \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{cy::\+maths::\+casting\+\_\+policy}} :\+ unsigned char\hspace{0.3cm}{\ttfamily [export]}, {\ttfamily [strong]}}
+
+
+
+Numeric conversion strategy, used for handling different types of number conversions. 
+
+\begin{DoxyNote}{Note}
+The default policy is set to strict. 
+\end{DoxyNote}
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{equal@{equal}!cy::maths@{cy::maths}}
+\index{cy::maths@{cy::maths}!equal@{equal}}
+}\Hypertarget{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f}\label{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a465289687a70db7aa7217cc240c29f0f} 
+equal&Require that declared type matches stored type. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{strict@{strict}!cy::maths@{cy::maths}}
+\index{cy::maths@{cy::maths}!strict@{strict}}
+}\Hypertarget{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a2133fd717402a7966ee88d06f9e0b792}\label{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004a2133fd717402a7966ee88d06f9e0b792} 
+strict&Allow type promotion between types in the same numeric and signedness domains. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{normal@{normal}!cy::maths@{cy::maths}}
+\index{cy::maths@{cy::maths}!normal@{normal}}
+}\Hypertarget{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004afea087517c26fadd409bd4b9dc642555}\label{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004afea087517c26fadd409bd4b9dc642555} 
+normal&As long as no overflow occurs during conversion. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{namespacecy_1_1maths_doc-func-members}
+\Hypertarget{namespacecy_1_1maths_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecy_1_1maths_a8902d1a28ad3fd117de218b72c3a7486}\index{cy::maths@{cy::maths}!from@{from}}
+\index{from@{from}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{from()}{from()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_a8902d1a28ad3fd117de218b72c3a7486} 
+template$<$sign\+\_\+unambiguous\+\_\+arithmetic T, \doxymbox{\hyperlink{namespacecy_1_1maths_a1358cc39844dfea00d8bf21edd634004}{casting\+\_\+policy}} Policy = casting\+\_\+policy::\+strict$>$ \\
+::\+std::\+optional$<$ T $>$ cy::\+maths::\+from (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [nodiscard]}, {\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+
+
+
+Casting a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to a normal number with check based on policy. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The basic arithmetic types in C++, except char without explicit sign. \\
+\hline
+{\em Policy} & The casting policy which will be based on. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & A \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A normal value represents the value stored in a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after casting to given type or null. 
+\end{DoxyReturn}
+\Hypertarget{namespacecy_1_1maths_af78d5b60b2bff51985ed1c58e3247908}\index{cy::maths@{cy::maths}!make\_numeric\_any@{make\_numeric\_any}}
+\index{make\_numeric\_any@{make\_numeric\_any}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{make\_numeric\_any()}{make\_numeric\_any()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_af78d5b60b2bff51985ed1c58e3247908} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} cy::\+maths::\+make\+\_\+numeric\+\_\+any (\begin{DoxyParamCaption}\item[{sign\+\_\+unambiguous\+\_\+arithmetic auto}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+
+
+
+A tool function to build \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value used to make \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} store the given value. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Follow the rules in constructors. 
+\end{DoxyNote}
+\Hypertarget{namespacecy_1_1maths_a5cbe8baaa87e89a44f3d8c19207a137e}\index{cy::maths@{cy::maths}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_a5cbe8baaa87e89a44f3d8c19207a137e} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} cy::\+maths::\+operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}}]{x}{, }\item[{auto \&\&}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+
+
+
+Do multiplication between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+\begin{DoxyReturn}{Returns}
+New \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after multiplication. 
+\end{DoxyReturn}
+\Hypertarget{namespacecy_1_1maths_aa8cb7251f01ecc97ab3bfeae9b4c1729}\index{cy::maths@{cy::maths}!operator+@{operator+}}
+\index{operator+@{operator+}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_aa8cb7251f01ecc97ab3bfeae9b4c1729} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} cy::\+maths::\+operator+ (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}}]{x}{, }\item[{auto \&\&}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+
+
+
+Do addition between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+\begin{DoxyReturn}{Returns}
+New \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after addition. 
+\end{DoxyReturn}
+\Hypertarget{namespacecy_1_1maths_a5f143924da2bcff4738dc07bb535d988}\index{cy::maths@{cy::maths}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_a5f143924da2bcff4738dc07bb535d988} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} cy::\+maths::\+operator-\/ (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}}]{x}{, }\item[{auto \&\&}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+
+
+
+Do substraction between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+\begin{DoxyReturn}{Returns}
+New \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after substraction. 
+\end{DoxyReturn}
+\Hypertarget{namespacecy_1_1maths_a7458726e26438981c68bdf5dcd8d3152}\index{cy::maths@{cy::maths}!operator/@{operator/}}
+\index{operator/@{operator/}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_a7458726e26438981c68bdf5dcd8d3152} 
+\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} cy::\+maths::\+operator/\+ (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}}}]{x}{, }\item[{auto \&\&}]{y}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [constexpr]}, {\ttfamily [export]}, {\ttfamily [noexcept]}}
+
+
+
+Do division between a \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} and another number or \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}. 
+
+\begin{DoxyReturn}{Returns}
+New \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} after division. 
+\end{DoxyReturn}
+\Hypertarget{namespacecy_1_1maths_a4a8f0f5ec416de7feb5c2dcb8da4ff40}\index{cy::maths@{cy::maths}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!cy::maths@{cy::maths}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
+{\footnotesize\ttfamily \label{namespacecy_1_1maths_a4a8f0f5ec416de7feb5c2dcb8da4ff40} 
+template$<$typename CharT, typename Traits = ::\+std::\+char\+\_\+traits$<$\+Char\+T$>$$>$ \\
+::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \& cy::\+maths::\+operator$<$$<$ (\begin{DoxyParamCaption}\item[{::\+std::\+basic\+\_\+ostream$<$ CharT, Traits $>$ \&}]{os}{, }\item[{const \doxymbox{\hyperlink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [export]}}
+
+
+
+Output \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} to the stream. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em CharT} & The character type. (e.\+g., char or wchar\+\_\+t) \\
+\hline
+{\em Traits} & The character traits. (default:\+ std::\+char\+\_\+traits$<$\+Char\+T$>$) \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream reference. \\
+\hline
+{\em x} & The \doxylink{classcy_1_1maths_1_1numeric__any}{numeric\+\_\+any} which will be output. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the original output stream reference, enabling chained operations. 
+\end{DoxyReturn}
